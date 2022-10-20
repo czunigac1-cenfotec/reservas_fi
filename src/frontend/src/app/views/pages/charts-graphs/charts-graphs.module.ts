@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgApexchartsModule } from "ng-apexcharts";
 
 // Ng2-charts
-import { ChartsModule } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
 
 import { ChartsGraphsComponent } from './charts-graphs.component';
 import { ApexchartsComponent } from './apexcharts/apexcharts.component';
@@ -40,7 +40,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     NgApexchartsModule, // Ng-ApexCharts
-    ChartsModule, // Ng2-charts
+    NgChartsModule, // Ng2-charts
   ]
 })
 export class ChartsGraphsModule { }

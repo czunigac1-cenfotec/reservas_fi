@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xl-10 main-content pl-xl-4 pr-xl-5">
+  <div class="col-xl-10 main-content ps-xl-4 pe-xl-5">
     <h1 class="page-title">Navs</h1>
     <p class="lead">Documentation and examples for how to use Bootstrap’s included navigation components. Read the <a href="https://ng-bootstrap.github.io/#/components/nav/examples" target="_blank">Official Ng-Bootstrap Documentation</a> for a full list of instructions and other options.</p>
     
@@ -138,8 +138,8 @@
     <h4 #VAlignment>Vertical alignment</h4>
     <div class="example">
       <div class="row">
-        <div class="col-5 col-md-3">
-          <ul ngbNav #verticalNav="ngbNav" class="nav-tabs nav-tabs-vertical">
+        <div class="col-5 col-md-3 pe-0">
+          <ul ngbNav #verticalNav="ngbNav" class="nav-tabs nav-tabs-vertical" orientation="vertical">
             <li [ngbNavItem]="1">
               <a ngbNavLink>Home</a>
               <ng-template ngbNavContent>
@@ -175,7 +175,7 @@
             </li>
           </ul>
         </div>
-        <div class="col-7 col-md-9">
+        <div class="col-7 col-md-9 ps-0">
           <div [ngbNavOutlet]="verticalNav" class="tab-content-vertical border p-3"></div>
         </div>
       </div>

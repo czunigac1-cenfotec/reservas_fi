@@ -35,16 +35,14 @@ export class DatepickerComponent {
 
 const inPopup = {
   htmlCode: 
-`<form class="form-inline">
-  <div class="form-group">
-    <div class="input-group" (click)="d.toggle()">
+`<form class="d-flex">
+  <div class="mb-3">
+    <div class="input-group">
       <input class="form-control" placeholder="yyyy-mm-dd"
           name="dp" [(ngModel)]="selectedDate" ngbDatepicker #d="ngbDatepicker">
-      <div class="input-group-append">
-        <button class="btn btn-outline-light btn-icon calendar" type="button">
-          <i data-feather="calendar" appFeatherIcon class="text-secondary"></i>
-        </button>
-      </div>
+      <button class="input-group-text" type="button" (click)="d.toggle()">
+        <i class="feather icon-calendar icon-md text-muted"></i>
+      </button>
     </div>
   </div>
 </form>`,
@@ -127,7 +125,7 @@ export class DatepickerComponent {
 
 const rangeSelectionPopup = {
   htmlCode: 
-`<form class="form-inline range-selection">
+`<form class="d-flex range-selection">
   <div class="form-group hidden">
     <div class="input-group">
       <input name="datepicker"
@@ -152,32 +150,28 @@ const rangeSelectionPopup = {
       </ng-template>
     </div>
   </div>
-  <div class="form-group">
+  <div class="mb-3">
     <div class="input-group" (click)="datepicker.toggle()">
       <input #dpFromDate
             class="form-control" placeholder="yyyy-mm-dd"
             name="dpFromDate"
             [value]="formatter.format(fromDate)"
             (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
-      <div class="input-group-append">
-        <button class="btn btn-outline-light btn-icon" type="button">
-          <i data-feather="calendar" appFeatherIcon class="text-secondary"></i>
-        </button>
-      </div>
+      <button class="input-group-text" type="button">
+        <i class="feather icon-calendar icon-md text-muted"></i>
+      </button>
     </div>
   </div>
-  <div class="form-group ml-2">
+  <div class="ms-2">
     <div class="input-group" (click)="datepicker.toggle()">
       <input #dpToDate
             class="form-control" placeholder="yyyy-mm-dd"
             name="dpToDate"
             [value]="formatter.format(toDate)"
             (input)="toDate = validateInput(toDate, dpToDate.value)">
-      <div class="input-group-append">
-        <button class="btn btn-outline-light btn-icon" type="button">
-          <i data-feather="calendar" appFeatherIcon class="text-secondary"></i>
-        </button>
-      </div>
+      <button class="input-group-text" type="button">
+        <i class="feather icon-calendar icon-md text-muted"></i>
+      </button>
     </div>
   </div>
 </form>

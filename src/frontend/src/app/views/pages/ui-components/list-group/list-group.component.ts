@@ -97,6 +97,66 @@ const flushListGroup = {
 export class ListGroupComponent {}`
 }
 
+const withBadges = {
+  htmlCode: 
+`<ul class="list-group">
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    A list item
+    <span class="badge bg-primary rounded-pill">14</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    A second list item
+    <span class="badge bg-primary rounded-pill">2</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    A third list item
+    <span class="badge bg-primary rounded-pill">1</span>
+  </li>
+</ul>`,
+  tsCode: 
+`import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-list-group',
+  templateUrl: './list-group.component.html'
+})
+export class ListGroupComponent {}`
+}
+
+const checkboxesRadios = {
+  htmlCode: 
+`<div class="list-group">
+  <label class="list-group-item">
+    <input class="form-check-input me-1" type="checkbox" value="">
+    First checkbox
+  </label>
+  <label class="list-group-item">
+    <input class="form-check-input me-1" type="checkbox" value="">
+    Second checkbox
+  </label>
+  <label class="list-group-item">
+    <input class="form-check-input me-1" type="checkbox" value="">
+    Third checkbox
+  </label>
+  <label class="list-group-item">
+    <input class="form-check-input me-1" type="checkbox" value="">
+    Fourth checkbox
+  </label>
+  <label class="list-group-item">
+    <input class="form-check-input me-1" type="checkbox" value="">
+    Fifth checkbox
+  </label>
+</div>`,
+  tsCode: 
+`import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-list-group',
+  templateUrl: './list-group.component.html'
+})
+export class ListGroupComponent {}`
+}
+
 @Component({
   selector: 'app-list-group',
   templateUrl: './list-group.component.html'
@@ -108,6 +168,8 @@ export class ListGroupComponent implements OnInit {
   listGroupDisabledItemCode: any;
   linkButtonListGroupCode: any;
   flushListGroupCode: any;
+  withBadgesCode: any;
+  checkboxesRadiosCode: any;
 
   constructor() { }
 
@@ -117,6 +179,8 @@ export class ListGroupComponent implements OnInit {
     this.listGroupDisabledItemCode = listGroupDisabledItem;
     this.linkButtonListGroupCode = linkButtonListGroup;
     this.flushListGroupCode = flushListGroup;
+    this.withBadgesCode = withBadges;
+    this.checkboxesRadiosCode = checkboxesRadios;
   }
 
   scrollTo(element: any) {

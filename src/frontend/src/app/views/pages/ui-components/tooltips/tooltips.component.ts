@@ -5,13 +5,13 @@ const defaultTooltips = {
 `<button type="button" class="btn btn-primary" placement="top" ngbTooltip="Tooltip on top">
   Tooltip on top
 </button>
-<button type="button" class="btn btn-primary" placement="right" ngbTooltip="Tooltip on right">
+<button type="button" class="btn btn-primary" placement="end" ngbTooltip="Tooltip on right">
   Tooltip on right
 </button>
 <button type="button" class="btn btn-primary" placement="bottom" ngbTooltip="Tooltip on bottom">
   Tooltip on bottom
 </button>
-<button type="button" class="btn btn-primary" placement="left" ngbTooltip="Tooltip on left">
+<button type="button" class="btn btn-primary" placement="start" ngbTooltip="Tooltip on left">
   Tooltip on left
 </button>`,
   tsCode: 

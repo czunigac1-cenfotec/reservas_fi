@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ChartOptions, ChartType, ChartDataSets, RadialChartOptions } from 'chart.js';
-import { Label, Color, SingleDataSet } from 'ng2-charts';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-chartjs',
@@ -10,48 +9,159 @@ import { Label, Color, SingleDataSet } from 'ng2-charts';
 })
 export class ChartjsComponent implements OnInit {
 
+  obj = {
+    primary        : "#6571ff",
+    secondary      : "#7987a1",
+    success        : "#05a34a",
+    info           : "#66d1d1",
+    warning        : "#fbbc06",
+    danger         : "#ff3366",
+    light          : "#e9ecef",
+    dark           : "#060c17",
+    muted          : "#7987a1",
+    gridBorder     : "rgba(77, 138, 240, .15)",
+    bodyColor      : "#000",
+    cardBg         : "#fff",
+    fontFamily     : "'Roboto', Helvetica, sans-serif"
+  }
+
 
   /**
    * Bar chart
    */
-  public barChartOptions: ChartOptions = {
+  public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      }
+    },
+    scales: {
+      x: {
+        display: true,
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      },
+      y: {
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      }
+    }
   };
-  public barChartLabels: Label[] = [ "China", "America", "India", "Germany", "Oman"];
   public barChartType: ChartType = 'bar';
-  public barChartColors: Color[] = [
-    { backgroundColor: ["#b1cfec","#7ee5e5","#66d1d1","#f77eb9","#4d8af0"] }
-  ]
-  public barChartLegend = false;
   public barChartPlugins = [];
-  public barChartData: ChartDataSets[] = [
-    { data: [2478,5267,734,2084,1433], label: 'Population' }
-  ];
+  public barChartData: ChartData<'bar'> = {
+    labels: [ "China", "America", "India", "Germany", "Oman"],
+    datasets: [
+      { 
+        label: "Population",
+        backgroundColor: [this.obj.primary, this.obj.danger, this.obj.warning, this.obj.success, this.obj.info],
+        hoverBackgroundColor: [this.obj.primary, this.obj.danger, this.obj.warning, this.obj.success, this.obj.info],
+        borderColor: [this.obj.primary, this.obj.danger, this.obj.warning, this.obj.success, this.obj.info],
+        hoverBorderColor: [this.obj.primary, this.obj.danger, this.obj.warning, this.obj.success, this.obj.info],
+        data: [2478,5267,734,2084,1433],
+      }
+    ],
+  };
 
 
 
   /**
    * Line chart
    */
-  public lineChartData: ChartDataSets[] = [
-    { data: [86,114,106,106,107,111,133,221,783,2478], label: 'Africa', fill: false },
-    { data: [282,350,411,502,635,809,947,1402,3700,5267], label: 'Asia', fill: false }
-  ];
-  public lineChartLabels: Label[] = ['1500','1600','1700','1750','1800','1850','1900','1950','1999','2050'];
-  public lineChartOptions: ChartOptions = {
-    responsive: true,
+  public lineChartData: ChartConfiguration['data'] = {
+    labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+    datasets: [{ 
+        data: [86,114,106,106,107,111,133,221,783,2478],
+        label: "Africa",
+        borderColor: this.obj.info,
+        backgroundColor: "transparent",
+        fill: true,
+        pointBackgroundColor: this.obj.cardBg,
+        pointHoverBackgroundColor: this.obj.cardBg,
+        pointBorderColor: this.obj.info,
+        pointHoverBorderColor: this.obj.info,
+        pointBorderWidth: 2,
+        pointHoverBorderWidth: 3,
+        tension: .3
+      }, { 
+        data: [282,350,411,502,635,809,947,1402,3700,5267],
+        label: "Asia",
+        borderColor: this.obj.danger,
+        backgroundColor: "transparent",
+        fill: true,
+        pointBackgroundColor: this.obj.cardBg,
+        pointHoverBackgroundColor: this.obj.cardBg,
+        pointBorderColor: this.obj.danger,
+        pointHoverBorderColor: this.obj.danger,
+        pointBorderWidth: 2,
+        pointHoverBorderWidth: 3,
+        tension: .3
+      }
+    ]
   };
-  public lineChartColors: Color[] = [
-    {
-      borderColor: '#7ee5e5',
-      backgroundColor: 'rgba(0,0,0,0)',
+  public lineChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins: {
+      legend: { 
+        display: true,
+        labels: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 13,
+            family: this.obj.fontFamily
+          }
+        }
+      },
     },
-    {
-      borderColor: '#f77eb9',
-      backgroundColor: 'rgba(0,0,0,0)',
+    scales: {
+      x: {
+        display: true,
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      },
+      y: {
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      }
     }
-  ];
-  public lineChartLegend = true;
+  };
   public lineChartType: ChartType = 'line';
   public lineChartPlugins = [];
 
@@ -60,145 +170,353 @@ export class ChartjsComponent implements OnInit {
   /**
    * Doughnut chart
    */
-  public doughnutChartLabels: Label[] = ["Africa", "Asia", "Europe"];
-  public doughnutChartData: SingleDataSet = [2478,4267,1334];
+  public doughnutChartOptions: ChartConfiguration['options'] = {
+    aspectRatio: 2,
+    plugins: {
+      legend: { 
+        display: true,
+        labels: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 13,
+            family: this.obj.fontFamily
+          }
+        }
+      },
+    }
+  };
+  public doughnutChartLabels: string[] = ["Africa", "Asia", "Europe"];
+  public doughnutChartData: ChartData<'doughnut'> = {
+    labels: this.doughnutChartLabels,
+    datasets: [
+      {
+        label: "Population (millions)",
+        backgroundColor: [this.obj.primary, this.obj.danger, this.obj.info],
+        hoverBackgroundColor: [this.obj.primary, this.obj.danger, this.obj.info],
+        borderColor: this.obj.cardBg,
+        hoverBorderColor: [this.obj.primary, this.obj.danger, this.obj.info],
+        data: [2478,4267,1334],
+      }
+    ]
+  };
   public doughnutChartType: ChartType = 'doughnut';
-  public doughnutChartColors: Color[] = [
-    { backgroundColor: ["#7ee5e5","#f77eb9","#4d8af0"] }
-  ];
 
 
 
   /**
    * Area chart
    */
-  public areaChartData: ChartDataSets[] = [
-    { data: [86,114,106,106,107,111,133,221,783,2478], label: 'Africa', fill: true },
-    { data: [282,350,411,502,635,809,947,1402,3700,5267], label: 'Asia', fill: true }
-  ];
-  public areaChartLabels: Label[] = ['1500','1600','1700','1750','1800','1850','1900','1950','1999','2050'];
-  public areaChartOptions: ChartOptions = {
-    responsive: true,
+  public areaChartData: ChartConfiguration['data'] = {
+    labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+    datasets: [{ 
+        data: [86,114,106,106,107,111,133,221,783,2478],
+        label: "Africa",
+        borderColor: this.obj.danger,
+        backgroundColor: 'rgba(255,51,102,.3)',
+        fill: true,
+        pointBackgroundColor: this.obj.cardBg,
+        pointHoverBackgroundColor: this.obj.cardBg,
+        pointBorderColor: this.obj.danger,
+        pointHoverBorderColor: this.obj.danger,
+        pointBorderWidth: 2,
+        pointHoverBorderWidth: 3,
+        tension: .3
+      }, { 
+        data: [282,350,411,502,635,809,947,1402,3700,5267],
+        label: "Asia",
+        borderColor: this.obj.info,
+        backgroundColor: 'rgba(102,209,209,.3)',
+        fill: true,
+        pointBackgroundColor: this.obj.cardBg,
+        pointHoverBackgroundColor: this.obj.cardBg,
+        pointBorderColor: this.obj.info,
+        pointHoverBorderColor: this.obj.info,
+        pointBorderWidth: 2,
+        pointHoverBorderWidth: 3,
+        tension: .3
+      }
+    ]
   };
-  public areaChartColors: Color[] = [
-    {
-      borderColor: '#7ee5e5',
-      backgroundColor: '#c2fdfd',
+  public areaChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins: {
+      legend: { 
+        display: true,
+        labels: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 13,
+            family: this.obj.fontFamily
+          }
+        }
+      },
     },
-    {
-      borderColor: '#f77eb9',
-      backgroundColor: '#ffbedd',
+    scales: {
+      x: {
+        display: true,
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      },
+      y: {
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      }
     }
-  ];
-  public areaChartLegend = true;
+  };
   public areaChartType: ChartType = 'line';
   public areaChartPlugins = [];
 
 
 
   /**
-   * Doughnut chart
+   * Pie chart
    */
-  public pieChartLabels: Label[] = ["Africa", "Asia", "Europe"];
-  public pieChartData: SingleDataSet = [2478,4267,1334];
-  public pieChartType: ChartType = 'pie';
-  public pieChartColors: Color[] = [
-    { backgroundColor: ["#7ee5e5","#f77eb9","#4d8af0"] }
-  ];
+  public pieChartOptions: ChartConfiguration['options'] = {
+    aspectRatio: 2,
+    plugins: {
+      legend: { 
+        display: true,
+        labels: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 13,
+            family: this.obj.fontFamily
+          }
+        }
+      },
+    },
+  };
+   public pieChartLabels: string[] = ["Africa", "Asia", "Europe"];
+   public pieChartData: ChartData<'doughnut'> = {
+     labels: this.pieChartLabels,
+     datasets: [{
+      label: "Population (millions)",
+      backgroundColor: [this.obj.primary, this.obj.danger, this.obj.info],
+      hoverBackgroundColor: [this.obj.primary, this.obj.danger, this.obj.info],
+      borderColor: this.obj.cardBg,
+      hoverBorderColor: [this.obj.primary, this.obj.danger, this.obj.info],
+      data: [2478,4267,1334]
+     }]
+   };
+   public pieChartType: ChartType = 'pie';
 
 
 
   /**
    * Bubble chart
    */
-  public bubbleChartOptions: ChartOptions = {
+   public bubbleChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    plugins: {
+      legend: { 
+        display: true,
+        labels: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 13,
+            family: this.obj.fontFamily
+          }
+        }
+      },
+    },
     scales: {
-      xAxes: [{
-        scaleLabel: {
+      x: { 
+        display: true,
+        title: {
           display: true,
-          labelString: "GDP (PPP)"
-        }
-      }],
-      yAxes: [{
-        scaleLabel: {
+          text: "GDP (PPP)",
+          color: this.obj.muted,
+          font: {
+            family: this.obj.fontFamily
+          }
+        },
+        grid: {
           display: true,
-          labelString: "Happiness"
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
         }
-      }]
+      },
+      y: { 
+        display: true,
+        title: {
+          display: true,
+          text: "Happiness",
+          color: this.obj.muted,
+          font: {
+            family: this.obj.fontFamily
+          }
+        },
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      },
     }
   };
   public bubbleChartType: ChartType = 'bubble';
   public bubbleChartLegend = true;
-  public bubbleChartData: ChartDataSets[] = [
-    {
-      label: "China",
-      backgroundColor: "#c2fdfd",
-      borderColor: "#7ee5e5",
-      data: [{
-        x: 21269017,
-        y: 5.245,
-        r: 15
-      }]
-    }, {
-      label: "Denmark",
-      backgroundColor: "#ffbedd",
-      borderColor: "#f77eb9",
-      data: [{
-        x: 258702,
-        y: 7.526,
-        r: 10
-      }]
-    }, {
-      label: "Germany",
-      backgroundColor: "#bbd4ff",
-      borderColor: "#4d8af0",
-      data: [{
-        x: 3979083,
-        y: 6.994,
-        r: 15
-      }]
-    }, {
-      label: "Japan",
-      backgroundColor: "#ffe69d",
-      borderColor: "#fbbc06",
-      data: [{
-        x: 4931877,
-        y: 5.921,
-        r: 15
-      }]
-    }
-  ];
+  public bubbleChartData: ChartData<'bubble'> = {
+    labels: [],
+    datasets: [
+      {
+        label: "China",
+        backgroundColor: 'rgba(102,209,209,.3)',
+        hoverBackgroundColor: 'rgba(102,209,209,.3)',
+        borderColor: this.obj.info,
+        hoverBorderColor: this.obj.info,
+        data: [{
+          x: 21269017,
+          y: 5.245,
+          r: 15
+        }]
+      }, {
+        label: "Denmark",
+        backgroundColor: "rgba(255,51,102,.3)",
+        hoverBackgroundColor: "rgba(255,51,102,.3)",
+        borderColor: this.obj.danger,
+        hoverBorderColor: this.obj.danger,
+        data: [{
+          x: 258702,
+          y: 7.526,
+          r: 10
+        }]
+      }, {
+        label: "Germany",
+        backgroundColor: "rgba(101,113,255,.3)",
+        hoverBackgroundColor: "rgba(101,113,255,.3)",
+        borderColor: this.obj.primary,
+        hoverBorderColor: this.obj.primary,
+        data: [{
+          x: 3979083,
+          y: 6.994,
+          r: 15
+        }]
+      }, {
+        label: "Japan",
+        backgroundColor: "rgba(251,188,6,.3)",
+        hoverBackgroundColor: "rgba(251,188,6,.3)",
+        borderColor: this.obj.warning,
+        hoverBorderColor: this.obj.warning,
+        data: [{
+          x: 4931877,
+          y: 5.921,
+          r: 15
+        }]
+      }
+    ]
+  };
 
 
 
   /**
    * Radar chart
    */
-  public radarChartOptions: RadialChartOptions = {
+  public radarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    aspectRatio: 2,
+    scales: {
+      r: {
+        angleLines: {
+          display: true,
+          color: this.obj.gridBorder,
+        },
+        grid: {
+          color: this.obj.gridBorder
+        },
+        suggestedMin: 0,
+        suggestedMax: 60,
+        ticks: {
+          backdropColor: this.obj.cardBg,
+          color: this.obj.bodyColor,
+          font: {
+            size: 11,
+            family: this.obj.fontFamily
+          }
+        },
+        pointLabels: {
+          color: this.obj.bodyColor,
+          font: {
+            family: this.obj.fontFamily,
+            size: 13
+          }
+        }
+      }
+    },
+    plugins: {
+      legend: { 
+        display: true,
+        labels: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 13,
+            family: this.obj.fontFamily
+          }
+        }
+      },
+    },
   };
-  public radarChartLabels: Label[] = ["Africa", "Asia", "Europe", "Latin America", "North America"];
-
-  public radarChartData: ChartDataSets[] = [
-    {
-      label: "1950",
-      fill: true,
-      backgroundColor: "#ffbedd",
-      borderColor: "#f77eb9",
-      pointBorderColor: "#f77eb9",
-      pointBackgroundColor: "#ffbedd",
-      data: [8.77,55.61,21.69,6.62,6.82]
-    }, {
-      label: "2050",
-      fill: true,
-      backgroundColor: "#c2fdfd",
-      borderColor: "#7ee5e5",
-      pointBorderColor: "#7ee5e5",
-      pointBackgroundColor: "#c2fdfd",
-      data: [25.48,54.16,7.61,8.06,4.45]
-    }
-  ];
+  public radarChartLabels: string[] = ["Africa", "Asia", "Europe", "Latin America", "North America"];
+  public radarChartData: ChartData<'radar'> = {
+    labels: this.radarChartLabels,
+    datasets: [
+      {
+        label: "1950",
+        fill: true,
+        backgroundColor: "rgba(255,51,102,.3)",
+        borderColor: this.obj.danger,
+        pointBorderColor: this.obj.danger,
+        pointHoverBorderColor: this.obj.danger,
+        pointBackgroundColor: this.obj.cardBg,
+        pointHoverBackgroundColor: this.obj.cardBg,
+        pointBorderWidth: 2,
+        pointHoverBorderWidth: 3,
+        data: [8.77,55.61,21.69,6.62,6.82]
+      }, {
+        label: "2050",
+        fill: true,
+        backgroundColor: "rgba(102,209,209,.3)",
+        borderColor: this.obj.info,
+        pointBorderColor: this.obj.info,
+        pointHoverBorderColor: this.obj.info,
+        pointBackgroundColor: this.obj.cardBg,
+        pointHoverBackgroundColor: this.obj.cardBg,
+        pointBorderWidth: 2,
+        pointHoverBorderWidth: 3,
+        data: [25.48,54.16,7.61,8.06,4.45]
+      }
+    ]
+  };
   public radarChartType: ChartType = 'radar';
 
 
@@ -206,13 +524,63 @@ export class ChartjsComponent implements OnInit {
   /**
    * Polar area chart
    */
-  public polarAreaChartLabels: Label[] = ["Africa", "Asia", "Europe", "Latin America"];
-  public polarAreaChartData: SingleDataSet = [2478,5267,734,784]
-  public polarAreaChartColors: Color[] = [
-    {
-      backgroundColor: ["#f77eb9", "#7ee5e5","#4d8af0","#fbbc06"],
-    }
-  ];
+  public polarChartOptions: ChartConfiguration['options'] = {
+    aspectRatio: 2,
+    scales: {
+      r: {
+        angleLines: {
+          display: true,
+          color: this.obj.gridBorder,
+        },
+        grid: {
+          color: this.obj.gridBorder
+        },
+        suggestedMin: 1000,
+        suggestedMax: 5500,
+        ticks: {
+          backdropColor: this.obj.cardBg,
+          color: this.obj.bodyColor,
+          font: {
+            size: 11,
+            family: this.obj.fontFamily
+          }
+        },
+        pointLabels: {
+          color: this.obj.bodyColor,
+          font: {
+            family: this.obj.fontFamily,
+            size: 13
+          }
+        }
+      }
+    },
+    plugins: {
+      legend: { 
+        display: true,
+        labels: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 13,
+            family: this.obj.fontFamily
+          }
+        }
+      },
+    },
+  };
+  public polarAreaChartLabels: string[] = ["Africa", "Asia", "Europe", "Latin America"];
+  public polarAreaChartData: ChartData<'polarArea'> = {
+    labels: this.polarAreaChartLabels,
+    datasets: [
+      {
+        label: "Population (millions)",
+        backgroundColor: [this.obj.primary, this.obj.danger, this.obj.success, this.obj.info],
+        hoverBackgroundColor: [this.obj.primary, this.obj.danger, this.obj.success, this.obj.info],
+        borderColor: this.obj.cardBg,
+        hoverBorderColor: [this.obj.primary, this.obj.danger, this.obj.success, this.obj.info],
+        data: [3578,5000,1034,2034]
+      }
+    ]
+  };
   public polarAreaLegend = true;
   public polarAreaChartType: ChartType = 'polarArea';
 
@@ -221,66 +589,172 @@ export class ChartjsComponent implements OnInit {
   /**
    * Grouped bar chart
    */
-  public groupedBarChartOptions: ChartOptions = {
+  public groupedBarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
-  };
-  public groupedBarChartLabels: Label[] = ["1900", "1950", "1999", "2050"];
-  public groupedBarChartType: ChartType = 'bar';
-  public groupedBarChartData: ChartDataSets[] = [
-    {
-      label: "Africa",
-      backgroundColor: "#f77eb9",
-      data: [133,221,783,2478]
-    }, {
-      label: "Europe",
-      backgroundColor: "#7ee5e5",
-      data: [408,547,675,734]
+    plugins: {
+      legend: { 
+        display: true,
+        labels: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 13,
+            family: this.obj.fontFamily
+          }
+        }
+      },
+    },
+    scales: {
+      x: {
+        display: true,
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      },
+      y: {
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      }
     }
-  ];
+  };
+  public groupedBarChartType: ChartType = 'bar';
+  public groupedBarChartPlugins = [];
+  public groupedBarChartData: ChartData<'bar'> = {
+    labels: ["1900", "1950", "1999", "2050"],
+    datasets: [
+      {
+        label: "Africa",
+        backgroundColor: this.obj.danger,
+        hoverBackgroundColor: this.obj.danger,
+        borderColor: this.obj.danger,
+        hoverBorderColor: this.obj.danger,
+        data: [133,221,783,2478]
+      }, {
+        label: "Europe",
+        backgroundColor: this.obj.primary,
+        hoverBackgroundColor: this.obj.primary,
+        borderColor: this.obj.primary,
+        hoverBorderColor: this.obj.primary,
+        data: [408,547,675,734]
+      }
+    ],
+  };
 
 
 
   /**
    * Mixed chart
    */
-  public mixedChartOptions: ChartOptions = {
+  public mixedChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    plugins: {
+      legend: { 
+        display: true,
+        labels: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 13,
+            family: this.obj.fontFamily
+          }
+        }
+      },
+    },
+    scales: {
+      x: {
+        display: true,
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      },
+      y: {
+        grid: {
+          display: true,
+          color: this.obj.gridBorder,
+          borderColor: this.obj.gridBorder,
+        },
+        ticks: {
+          color: this.obj.bodyColor,
+          font: {
+            size: 12
+          }
+        }
+      }
+    }
   };
-  public mixedChartLabels: Label[] = ["1900", "1950", "1999", "2050"];
   public mixedChartType: ChartType = 'bar';
-  public mixedChartColors: Color[] = [
-    { 
-      backgroundColor: "rgba(0,0,0,0)",
-      borderColor:  "#66d1d1"
-    },
-    {
-      backgroundColor: "rgba(0,0,0,0)",
-      borderColor:  "#ff3366"
-    },
-    {
-      backgroundColor: "#f77eb9"
-    },
-    {
-      backgroundColor: "#7ee5e5"
-    }
-  ];
-  public mixedChartData: ChartDataSets[] = [
-    {
-      label: "Europe",
-      data: [408,547,675,734],
-      type: 'line'
-    }, {
-      label: "Africa",
-      data: [133,221,783,2478],
-      type: 'line'
-    }, {
-      label: "Europe",
-      data: [408,547,675,734],
-    }, {
-      label: "Africa",
-      data: [133,221,783,2478]
-    }
-  ];
+  public mixedChartPlugins = [];
+  public mixedChartData: ChartData = {
+    labels: ["1900", "1950", "1999", "2050"],
+    datasets: [
+      {
+        label: "Europe",
+        type: "line",
+        borderColor: this.obj.danger,
+        backgroundColor: "transparent",
+        data: [408,547,675,734],
+        fill: false,
+        pointBackgroundColor: this.obj.cardBg,
+        pointHoverBackgroundColor: this.obj.cardBg,
+        pointBorderColor: this.obj.danger,
+        pointHoverBorderColor: this.obj.danger,
+        pointBorderWidth: 2,
+        pointHoverBorderWidth: 3,
+        tension: .3
+      }, {
+        label: "Africa",
+        type: "line",
+        borderColor: this.obj.primary,
+        backgroundColor: "transparent",
+        data: [133,221,783,2478],
+        fill: false,
+        pointBackgroundColor: this.obj.cardBg,
+        pointHoverBackgroundColor: this.obj.cardBg,
+        pointBorderColor: this.obj.primary,
+        pointHoverBorderColor: this.obj.primary,
+        pointBorderWidth: 2,
+        pointHoverBorderWidth: 3,
+        tension: .3
+      }, {
+        label: "Europe",
+        type: "bar",
+        backgroundColor: this.obj.danger,
+        hoverBackgroundColor: this.obj.danger,
+        borderColor: '',
+        data: [408,547,675,734],
+      }, {
+        label: "Africa",
+        type: "bar",
+        backgroundColor: this.obj.primary,
+        hoverBackgroundColor: this.obj.primary,
+        borderColor: '',
+        data: [133,221,783,2478]
+      }
+    ],
+  };
 
 
 

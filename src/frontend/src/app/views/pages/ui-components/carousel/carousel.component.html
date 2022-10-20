@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xl-10 main-content pl-xl-4 pr-xl-5">
+  <div class="col-xl-10 main-content ps-xl-4 pe-xl-5">
     <h1 class="page-title">Carousel</h1>
     <p class="lead">A slideshow component for cycling through elements—images or slides of text—like a carousel. Read the <a href="https://ng-bootstrap.github.io/#/components/carousel/examples" target="_blank">Official Ng-Bootstrap Documentation</a> for a full list of instructions and other options.</p>
     
@@ -51,7 +51,7 @@
     <hr>
 
     <h4 #withCaptions>With captions</h4>
-    <p class="mb-3">Add captions to your slides easily with the <code>.carousel-caption</code> element within any <code>ngbSlide</code>. They can be easily hidden on smaller viewports, as shown below, with optional display utilities. We can hide them initially with <code>.d-none</code> and bring them back on medium-sized devices with <code>.d-md-block</code>.</p>
+    <p class="mb-3">Add captions to your slides easily with the <code>.carousel-caption</code> element within any <code>.carousel-item</code>. They can be easily hidden on smaller viewports, as shown below, with optional <a href="https://getbootstrap.com/docs/5.1/utilities/display/" target="_blank">display utilities</a>. We hide them initially with <code>.d-none</code> and bring them back on medium-sized devices with <code>.d-md-block</code>.</p>
     <div class="example">
       <ngb-carousel *ngIf="images" [showNavigationArrows]="true" [showNavigationIndicators]="true">
         <ng-template ngbSlide>

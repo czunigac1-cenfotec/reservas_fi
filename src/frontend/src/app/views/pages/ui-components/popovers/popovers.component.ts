@@ -18,14 +18,14 @@ const popoverDirecions = {
 `<button type="button" class="btn btn-primary mb-1 mb-md-0" placement="top" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
   Popover on top
 </button>
-<button type="button" class="btn btn-primary mb-1 mb-md-0" placement="right" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+<button type="button" class="btn btn-primary mb-1 mb-md-0" placement="end" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
   Popover on right
 </button>
 <button type="button" class="btn btn-primary" placement="bottom" ngbPopover="Vivamus
 sagittis lacus vel augue laoreet rutrum faucibus.">
   Popover on bottom
 </button>
-<button type="button" class="btn btn-primary" placement="left" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+<button type="button" class="btn btn-primary" placement="start" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
   Popover on left
 </button>`,
   tsCode: 

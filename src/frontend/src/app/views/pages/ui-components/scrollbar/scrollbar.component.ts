@@ -27,7 +27,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 const component = {
   htmlCode: 
-`<div class="perfect-scrollbar-example p-4" [perfectScrollbar]>
+`<div class="perfect-scrollbar-example p-4 border" [perfectScrollbar]>
   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, quam vitae? Saepe, quidem at in non quibusdam sint ipsa suscipit inventore. Dolore quae, quas obcaecati officia autem itaque numquam magni?</p>
   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium dolores vel ipsa fugiat maiores culpa accusamus, quisquam veniam quo deleniti velit facere aliquid, ut quis quibusdam reprehenderit quod aliquam perspiciatis?</p>
   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae placeat cumque ea, temporibus, ipsam officia nesciunt rem quas quibusdam necessitatibus ad. Quos, nihil consequatur doloribus dicta dolore ab quibusdam assumenda!</p>

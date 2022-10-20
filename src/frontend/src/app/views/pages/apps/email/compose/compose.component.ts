@@ -9,10 +9,10 @@ import { PeoplesData } from '../../../../../core/dummy-datas/peoples.data';
 })
 export class ComposeComponent implements OnInit {
 
-  peoples = [];
-  selectedTo = [];
-  selectedCc = [];
-  messageValue = "";
+  peoples: any[] = [];
+  selectedTo: any[] = [];
+  selectedCc: any[] = [];
+  messageValue: string = "";
 
   constructor() { }
 

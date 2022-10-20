@@ -19,10 +19,10 @@ const defaultBreadcrumb = {
 export class BreadcrumbsComponent {}`
 }
 
-const breadcrumbVariations = {
+const lineSeperator = {
   htmlCode: 
 `<nav aria-label="breadcrumb">
-  <ol class="breadcrumb bg-primary">
+  <ol class="breadcrumb breadcrumb-line">
     <li class="breadcrumb-item"><a routerLink=".">Home</a></li>
     <li class="breadcrumb-item"><a routerLink=".">Library</a></li>
     <li class="breadcrumb-item active" aria-current="page">Data</li>
@@ -38,10 +38,10 @@ const breadcrumbVariations = {
 export class BreadcrumbsComponent {}`
 }
 
-const inverseBreadcrumb = {
+const dotSeperator = {
   htmlCode: 
 `<nav aria-label="breadcrumb">
-  <ol class="breadcrumb bg-inverse-primary">
+  <ol class="breadcrumb breadcrumb-dot">
     <li class="breadcrumb-item"><a routerLink=".">Home</a></li>
     <li class="breadcrumb-item"><a routerLink=".">Library</a></li>
     <li class="breadcrumb-item active" aria-current="page">Data</li>
@@ -79,8 +79,8 @@ const changingSeperatorNone = {
 export class BreadcrumbsComponent implements OnInit {
 
   defaultBreadcrumbCode: any;
-  breadcrumbVariationsCode: any;
-  inverseBreadcrumbCode: any;
+  lineSeperatorCode: any;
+  dotSeperatorCode: any;
   changingSeperatorCode: any;
   changingSeperatorSvgCode: any;
   changingSeperatorNoneCode: any;
@@ -89,8 +89,8 @@ export class BreadcrumbsComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultBreadcrumbCode = defaultBreadcrumb;
-    this.breadcrumbVariationsCode = breadcrumbVariations;
-    this.inverseBreadcrumbCode = inverseBreadcrumb;
+    this.lineSeperatorCode = lineSeperator;
+    this.dotSeperatorCode = dotSeperator;
     this.changingSeperatorCode = changingSeperator;
     this.changingSeperatorSvgCode = changingSeperatorSvg;
     this.changingSeperatorNoneCode = changingSeperatorNone;

@@ -34,7 +34,7 @@ ngb-datepicker {
           border-top: 1px solid $border-color;
           border-color: $border-color;
           .ngb-dp-weekday {
-            color: theme-color(primary);
+            color: $primary;
             font-style: normal;
             font-size: 95%;
           }
@@ -44,8 +44,9 @@ ngb-datepicker {
             outline: none;
           }
           .btn-light {
-            &:hover {
-              background-color: rgba(theme-color(primary), .2);
+            &:hover,
+            &.active {
+              background-color: rgba($primary, .2);
             }
           }
         }
@@ -72,10 +73,10 @@ ngb-datepicker {
     background-color: #e6e6e6;
   }
   .custom-day.range, .custom-day:hover {
-    background-color: theme-color(primary);
+    background-color: $primary;
     color: white;
   }
   .custom-day.faded {
-    background-color: rgba(theme-color(primary), .5);
+    background-color: rgba($primary, .5);
   }
 }

@@ -12,10 +12,10 @@ const defaultNavbar = {
 
   <!-- Add the ngbCollapse directive to the element below. -->
   <div [ngbCollapse]="isBasicExampleMenuCollapsed" class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav me-auto">
       <li class="nav-item active">
         <!-- Close the menu when a link is clicked. -->
-        <a class="nav-link" routerLink="." (click)="isBasicExampleMenuCollapsed = true">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" routerLink="." (click)="isBasicExampleMenuCollapsed = true">Home <span class="visually-hidden">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="." (click)="isBasicExampleMenuCollapsed = true">Blog</a>
@@ -35,8 +35,8 @@ const defaultNavbar = {
         <a class="nav-link disabled" tabindex="-1" aria-disabled="true">Disabled</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="d-flex my-2 my-lg-0">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
@@ -79,7 +79,7 @@ const brandImage = {
 `<!-- Just an image -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" routerLink=".">
-    <img src="assets/images/logo-placeholder.png" width="30" height="30" alt="">
+    <img src="assets/images/others/logo-placeholder.png" width="30" height="30" alt="">
   </a>
 </nav>`,
   tsCode: 
@@ -97,7 +97,7 @@ const brandImageText = {
 `<!-- Image and text -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" routerLink=".">
-    <img src="assets/images/logo-placeholder.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    <img src="assets/images/others/logo-placeholder.png" width="30" height="30" class="d-inline-block align-top" alt="">
     Logo
   </a>
 </nav>`,
@@ -114,8 +114,8 @@ export class NavbarComponent {}`
 const navbarForm = {
   htmlCode: 
 `<nav class="navbar navbar-light bg-light">
-  <form class="form-inline ml-auto">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+  <form class="d-flex ms-auto">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
 </nav>`,
@@ -173,7 +173,7 @@ const navbarToggler = {
 
   <!-- Add the ngbCollapse directive to the element below. -->
   <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav me-auto">
       <li class="nav-item active">
         <!-- Close the menu when a link is clicked. -->
         <a class="nav-link active" routerLink="." (click)="isMenuCollapsed = true">Home</a>
@@ -188,8 +188,8 @@ const navbarToggler = {
         <a class="nav-link" routerLink="." (click)="isMenuCollapsed = true">About</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="d-flex my-2 my-lg-0">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>

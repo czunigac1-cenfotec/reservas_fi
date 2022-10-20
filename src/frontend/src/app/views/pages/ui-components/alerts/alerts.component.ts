@@ -40,7 +40,7 @@ export class AlertsComponent {}`
 
 const iconAlert = {
   htmlCode: 
-`<ngb-alert [dismissible]="false" [type]="'icon-primary'">
+`<ngb-alert [dismissible]="false" [type]="'primary'">
   <i class="feather icon-alert-circle"></i>
   A simple primary alert—check it out!
 </ngb-alert>`,

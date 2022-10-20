@@ -1,12 +1,16 @@
-/* Tables */
+// Tables 
 
 .table {
   margin-bottom: 0;
+
+  >:not(:last-child)>:last-child>* {
+		border-bottom-color: inherit;
+	}
+
   thead {
     th {
       border-top: 0;
-      border-bottom-width: 1px;
-      font-weight: bold;
+      font-weight: 500;
       font-size: 12px;
       text-transform: uppercase;
       color: $text-muted;
@@ -15,41 +19,17 @@
       }
     }
   }
+
   th,
   td {
-    vertical-align: middle;
-    line-height: 1;
     white-space: nowrap;
   }
+  
   td {
-    font-size: $default-font-size;
     img {
       width: 36px;
       height: 36px;
       border-radius: 100%;
-    }
-    .badge {
-      margin-bottom: 0;
-    }
-  }
-  &.table-borderless {
-    border: none;
-    tr,
-    td,
-    th {
-      border: none;
-    }
-  }
-  &.table-bordered {
-    border-top: 1px solid $border-color;
-  }
-  &.table-dark {
-    thead {
-      tr {
-        th {
-          color: lighten($text-muted, 30%);
-        }
-      }
     }
   }
 }

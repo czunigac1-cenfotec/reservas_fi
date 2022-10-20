@@ -43,7 +43,7 @@ export const MENU: MenuItem[] = [
     link: '/apps/calendar',
     badge: {
       variant: 'primary',
-      text: 'New',
+      text: 'Event',
     }
   },
   {
@@ -54,6 +54,10 @@ export const MENU: MenuItem[] = [
     label: 'UI Kit',
     icon: 'feather',
     subItems: [
+      {
+        label: 'Accordion',
+        link: '/ui-components/accordion',
+      },
       {
         label: 'Alerts',
         link: '/ui-components/alerts',
@@ -165,6 +169,10 @@ export const MENU: MenuItem[] = [
         link: '/advanced-ui/owl-carousel',
       },
       {
+        label: 'SortableJs',
+        link: '/advanced-ui/sortablejs',
+      },
+      {
         label: 'Sweet alert',
         link: '/advanced-ui/sweet-alert',
       },
@@ -242,6 +250,10 @@ export const MENU: MenuItem[] = [
       {
         label: 'Data table',
         link: '/tables/data-table',
+      },
+      {
+        label: 'Ngx-datatable',
+        link: '/tables/ngx-datatable'
       }
     ]
   },
@@ -252,10 +264,6 @@ export const MENU: MenuItem[] = [
       {
         label: 'Feather icons',
         link: '/icons/feather-icons',
-      },
-      {
-        label: 'Flag icons',
-        link: '/icons/flag-icons',
       },
       {
         label: 'Mdi icons',

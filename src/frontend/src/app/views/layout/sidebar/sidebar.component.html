@@ -2,9 +2,13 @@
   <div class="sidebar-header">
 
     <!--- Logo -->
-    <a routerLink="/" class="sidebar-brand">
+    <a routerLink="/" class="sidebar-brand nobleui-logo">
       Noble<span>UI</span>
     </a>
+
+    <!-- <a routerLink="/" class="sidebar-brand nobleui-logo">
+      <img src="assets/images/logo.png" alt="logo">
+    </a> -->
 
     <!--- Toggler -->
     <div class="sidebar-toggler not-active" #sidebarToggler (click)="toggleSidebar($event)">
@@ -34,7 +38,7 @@
             [attr.data-parent]="item.parentId">
             <i class="link-icon" [attr.data-feather]="item.icon" appFeatherIcon *ngIf="item.icon"></i>
             <span class="link-title"> {{ item.label }}</span>
-            <span class="badge badge-{{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text}}</span>
+            <span class="badge bg-{{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text}}</span>
           </a>
     
           <ul class="sidebar-nav sub-menu nav-second-level" *ngIf="hasItems(item)" aria-expanded="false">
@@ -83,8 +87,8 @@
     <a href="" class="settings-sidebar-toggler" (click)="toggleSettingsSidebar($event)">
       <i class="icon feather icon-settings"></i>
     </a>
-    <h6 class="text-muted">Sidebar:</h6>
-    <div class="form-group border-bottom">
+    <h6 class="text-muted mb-2">Sidebar:</h6>
+    <div class="mb-3 pb-3 border-bottom">
       <div class="form-check form-check-inline">
         <label class="form-check-label">
           <input type="radio" class="form-check-input" name="sidebarThemeSettings" (change)="onSidebarThemeChange($event)" id="sidebarLight" value="sidebar-light" checked>

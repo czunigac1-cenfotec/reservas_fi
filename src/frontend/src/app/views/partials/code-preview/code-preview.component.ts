@@ -8,11 +8,24 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CodePreviewComponent implements OnInit {
 	// Public properties
   @Input() codeContent: any;
+  defaultNavActiveId = undefined;
+  copy: string = 'copy';
   
   constructor() { }
 
   ngOnInit() {
     // console.log(this.codeContent);
+  }
+
+  copied(e: any) {
+    if(e.isSuccess) {
+      this.copy = 'copied';
+      setTimeout(() => {
+        this.copy = 'copy';
+      }, 500);
+    }
+    
+    
   }
 
 }

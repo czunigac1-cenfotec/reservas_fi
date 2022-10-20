@@ -140,6 +140,17 @@ export class OwlCarouselComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    /**
+     * For RTL layout
+     */
+    if (document.querySelector('html')?.getAttribute('dir') === 'rtl') {
+      this.basicExampleOptions.rtl = true;
+      this.autoPlayExampleOptions.rtl = true;
+      this.animationFadeoutExampleOptions.rtl = true;
+      this.animateCssExampleOptions.rtl = true;
+    }
+
   }
 
 }

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 const borderSpinner = {
   htmlCode: 
 `<div class="spinner-border" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>`,
   tsCode: 
 `import { Component } from '@angular/core';
@@ -18,28 +18,28 @@ export class SpinnersComponent {}`
 const spinnerColors = {
   htmlCode: 
 `<div class="spinner-border text-primary" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>
 <div class="spinner-border text-secondary" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>
 <div class="spinner-border text-success" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>
 <div class="spinner-border text-danger" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>
 <div class="spinner-border text-warning" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>
 <div class="spinner-border text-info" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>
 <div class="spinner-border text-light" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>
 <div class="spinner-border text-dark" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>`,
   tsCode: 
 `import { Component } from '@angular/core';
@@ -54,7 +54,7 @@ export class SpinnersComponent {}`
 const growingSpinner = {
   htmlCode: 
 `<div class="spinner-grow text-primary" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>`,
   tsCode: 
 `import { Component } from '@angular/core';
@@ -70,7 +70,7 @@ const spinnerAlign1 = {
   htmlCode: 
 `<div class="d-flex justify-content-center">
   <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
+    <span class="visually-hidden">Loading...</span>
   </div>
 </div>`,
   tsCode: 
@@ -87,7 +87,7 @@ const spinnerAlign2 = {
   htmlCode: 
 `<div class="d-flex align-items-center">
   <strong>Loading...</strong>
-  <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+  <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
 </div>`,
   tsCode: 
 `import { Component } from '@angular/core';
@@ -102,8 +102,8 @@ export class SpinnersComponent {}`
 const spinnerAlign3 = {
   htmlCode: 
 `<div class="clearfix">
-  <div class="spinner-border float-right" role="status">
-    <span class="sr-only">Loading...</span>
+  <div class="spinner-border float-end" role="status">
+    <span class="visually-hidden">Loading...</span>
   </div>
 </div>`,
   tsCode: 
@@ -120,7 +120,7 @@ const spinnerAlign4 = {
   htmlCode: 
 `<div class="text-center">
   <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
+    <span class="visually-hidden">Loading...</span>
   </div>
 </div>`,
   tsCode: 
@@ -136,10 +136,10 @@ export class SpinnersComponent {}`
 const spinnerSize = {
   htmlCode: 
 `<div class="spinner-border spinner-border-sm" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>
 <div class="spinner-grow spinner-grow-sm" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </div>`,
   tsCode: 
 `import { Component } from '@angular/core';
@@ -155,7 +155,7 @@ const buttonBorderSpinner = {
   htmlCode: 
 `<button class="btn btn-primary" type="button" disabled>
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </button>
 <button class="btn btn-primary" type="button" disabled>
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -175,7 +175,7 @@ const buttonGrowingSpinner = {
   htmlCode: 
 `<button class="btn btn-primary" type="button" disabled>
   <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-  <span class="sr-only">Loading...</span>
+  <span class="visually-hidden">Loading...</span>
 </button>
 <button class="btn btn-primary" type="button" disabled>
   <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>

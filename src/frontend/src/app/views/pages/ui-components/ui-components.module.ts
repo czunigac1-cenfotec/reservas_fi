@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UiComponentsComponent } from './ui-components.component';
-import { AlertsComponent } from './alerts/alerts.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CodePreviewModule } from '../../partials/code-preview/code-preview.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 
-import { FeahterIconModule } from '../../../core/feather-icon/feather-icon.module';
+import { FeatherIconModule } from '../../../core/feather-icon/feather-icon.module';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -17,6 +16,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
 
+import { AccordionComponent } from './accordion/accordion.component';
+import { AlertsComponent } from './alerts/alerts.component';
 import { BadgesComponent } from './badges/badges.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -48,8 +49,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'alerts',
+        redirectTo: 'accordion',
         pathMatch: 'full'
+      },
+      {
+        path: 'accordion',
+        component: AccordionComponent
       },
       {
         path: 'alerts',
@@ -152,7 +157,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [UiComponentsComponent, AlertsComponent, BadgesComponent, BreadcrumbsComponent, ButtonsComponent, ButtonGroupComponent, CardsComponent, CarouselComponent, CollapseComponent, DropdownsComponent, ListGroupComponent, MediaObjectComponent, ModalComponent, NavsComponent, NavbarComponent, PaginationComponent, PopoversComponent, ProgressComponent, ScrollbarComponent, SpinnersComponent, TooltipsComponent, RatingComponent, TimepickerComponent, DatepickerComponent, TypeaheadComponent],
+  declarations: [UiComponentsComponent, AccordionComponent, AlertsComponent, BadgesComponent, BreadcrumbsComponent, ButtonsComponent, ButtonGroupComponent, CardsComponent, CarouselComponent, CollapseComponent, DropdownsComponent, ListGroupComponent, MediaObjectComponent, ModalComponent, NavsComponent, NavbarComponent, PaginationComponent, PopoversComponent, ProgressComponent, ScrollbarComponent, SpinnersComponent, TooltipsComponent, RatingComponent, TimepickerComponent, DatepickerComponent, TypeaheadComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -160,7 +165,7 @@ const routes: Routes = [
     NgbModule,
     PerfectScrollbarModule,
     FormsModule,
-    FeahterIconModule
+    FeatherIconModule
   ],
   providers: [
     {

@@ -152,8 +152,8 @@ export class NavsComponent {}`
 const verticalNav = {
   htmlCode: 
 `<div class="row">
-  <div class="col-5 col-md-3">
-    <ul ngbNav #verticalNav="ngbNav" class="nav-tabs nav-tabs-vertical">
+  <div class="col-5 col-md-3 pe-0">
+    <ul ngbNav #verticalNav="ngbNav" class="nav-tabs nav-tabs-vertical" orientation="vertical">
       <li [ngbNavItem]="1">
         <a ngbNavLink>Home</a>
         <ng-template ngbNavContent>
@@ -189,7 +189,7 @@ const verticalNav = {
       </li>
     </ul>
   </div>
-  <div class="col-7 col-md-9">
+  <div class="col-7 col-md-9 ps-0">
     <div [ngbNavOutlet]="verticalNav" class="tab-content-vertical border p-3"></div>
   </div>
 </div>`,

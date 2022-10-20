@@ -9,13 +9,13 @@ import { PeoplesData, Person } from '../../../../core/dummy-datas/peoples.data';
 })
 export class NgSelectComponent implements OnInit {
 
-  simpleItems = [];
+  simpleItems: any = [];
   selectedSimpleItem: any = null;
 
   people: Person[] = [];
-  selectedPersonId: string = null;
+  selectedPersonId: string = '';
 
-  selectedSearchPersonId: string = null;
+  selectedSearchPersonId: string = '';
 
   selectedPeople: any = null;
 

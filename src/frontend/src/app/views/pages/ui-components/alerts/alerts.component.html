@@ -1,9 +1,11 @@
 <div class="row">
-  <div class="col-xl-10 main-content pl-xl-4 pr-xl-5">
+  <div class="col-xl-10 main-content ps-xl-4 pe-xl-5">
     <h1 class="page-title">Alerts</h1>
     <p class="lead">Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages. Read the <a href="https://ng-bootstrap.github.io/#/components/alert/examples" target="_blank">Official Ng-Bootstrap Documentation</a> for a full list of instructions and other options.</p>
+
     <hr>
-    <h4 #default>Defalult alert</h4>
+
+    <h4 #default>Basic example</h4>
     <div class="example">
       <ngb-alert [dismissible]="false" [type]="'primary'">
         A simple primary alert—check it out!
@@ -67,35 +69,35 @@
     
     <h4 #icon>With icon</h4>
     <div class="example">
-      <ngb-alert [dismissible]="false" [type]="'icon-primary'">
+      <ngb-alert [dismissible]="false" [type]="'primary'">
         <i class="feather icon-alert-circle"></i>
         A simple primary alert—check it out!
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-secondary'">
+      <ngb-alert [dismissible]="false" [type]="'secondary'">
         <i class="feather icon-alert-triangle"></i>
         A simple primary alert—check it out!
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-success'">
+      <ngb-alert [dismissible]="false" [type]="'success'">
         <i class="feather icon-alert-octagon"></i>
         A simple primary alert—check it out!
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-danger'">
+      <ngb-alert [dismissible]="false" [type]="'danger'">
         <i class="feather icon-moon"></i>
         A simple primary alert—check it out!
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-warning'">
+      <ngb-alert [dismissible]="false" [type]="'warning'">
         <i class="feather icon-help-circle"></i>
         A simple primary alert—check it out!
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-info'">
+      <ngb-alert [dismissible]="false" [type]="'info'">
         <i class="feather icon-sun"></i>
         A simple primary alert—check it out!
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-light'">
+      <ngb-alert [dismissible]="false" [type]="'light'">
         <i class="feather icon-info"></i>
         A simple primary alert—check it out!
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-dark'">
+      <ngb-alert [dismissible]="false" [type]="'dark'">
         <i class="feather icon-alert-circle"></i>
         A simple primary alert—check it out!
       </ngb-alert>
@@ -107,28 +109,28 @@
     <h4 #alertLink >Alert Link</h4>
     <p class="mb-3">Use the <code>.alert-link</code> utility class to quickly provide matching colored links within any alert.</p>
     <div class="example">
-      <ngb-alert [dismissible]="false" [type]="'icon-primary'">
+      <ngb-alert [dismissible]="false" [type]="'primary'">
         A simple primary alert with <a href="" (click)="false" class="alert-link">an example link</a>. Give it a click if you like.
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-secondary'">
+      <ngb-alert [dismissible]="false" [type]="'secondary'">
         A simple secondary alert with <a href="" (click)="false" class="alert-link">an example link</a>. Give it a click if you like.
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-success'">
+      <ngb-alert [dismissible]="false" [type]="'success'">
         A simple success alert with <a href="" (click)="false" class="alert-link">an example link</a>. Give it a click if you like.
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-danger'">
+      <ngb-alert [dismissible]="false" [type]="'danger'">
         A simple danger alert with <a href="" (click)="false" class="alert-link">an example link</a>. Give it a click if you like.
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-warning'">
+      <ngb-alert [dismissible]="false" [type]="'warning'">
         A simple warning alert with <a href="" (click)="false" class="alert-link">an example link</a>. Give it a click if you like.
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-info'">
+      <ngb-alert [dismissible]="false" [type]="'info'">
         A simple info alert with <a href="" (click)="false" class="alert-link">an example link</a>. Give it a click if you like.
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-light'">
+      <ngb-alert [dismissible]="false" [type]="'light'">
         A simple light alert with <a href="" (click)="false" class="alert-link">an example link</a>. Give it a click if you like.
       </ngb-alert>
-      <ngb-alert [dismissible]="false" [type]="'icon-dark'">
+      <ngb-alert [dismissible]="false" [type]="'dark'">
         A simple dark alert with <a href="" (click)="false" class="alert-link">an example link</a>. Give it a click if you like.
       </ngb-alert>
     </div>
@@ -183,7 +185,7 @@
   <div class="col-xl-2 content-nav-wrapper">
     <ul class="nav content-nav d-flex flex-column">
       <li class="nav-item">
-        <a (click)="scrollTo(default)" class="nav-link">Default alerts</a>
+        <a (click)="scrollTo(default)" class="nav-link">Basic example</a>
       </li>
       <li class="nav-item">
         <a (click)="scrollTo(fill)" class="nav-link">Fill alerts</a>

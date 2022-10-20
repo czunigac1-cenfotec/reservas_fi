@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
-import MetisMenu from 'metismenujs/dist/metismenujs';
+import MetisMenu from 'metismenujs';
 
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
@@ -16,7 +16,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sidebarToggler') sidebarToggler: ElementRef;
 
-  menuItems = [];
+  menuItems: MenuItem[] = [];
   @ViewChild('sidebarMenu') sidebarMenu: ElementRef;
 
   constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, router: Router) { 
@@ -46,7 +46,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
      * Sidebar-folded on desktop (min-width:992px and max-width: 1199px)
      */
     const desktopMedium = window.matchMedia('(min-width:992px) and (max-width: 1199px)');
-    desktopMedium.addListener(this.iconSidebar);
+    desktopMedium.addEventListener('change', () => {
+      this.iconSidebar;
+    });
     this.iconSidebar(desktopMedium);
   }
 
@@ -60,7 +62,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   /**
    * Toggle sidebar on hamburger button click
    */
-  toggleSidebar(e) {
+  toggleSidebar(e: Event) {
     this.sidebarToggler.nativeElement.classList.toggle('active');
     this.sidebarToggler.nativeElement.classList.toggle('not-active');
     if (window.matchMedia('(min-width: 992px)').matches) {
@@ -76,7 +78,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   /**
    * Toggle settings-sidebar 
    */
-  toggleSettingsSidebar(e) {
+  toggleSettingsSidebar(e: Event) {
     e.preventDefault();
     this.document.body.classList.toggle('settings-open');
   }
@@ -104,8 +106,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   /**
    * Sidebar-folded on desktop (min-width:992px and max-width: 1199px)
    */
-  iconSidebar(e) {
-    if (e.matches) {
+  iconSidebar(mq: MediaQueryList) {
+    if (mq.matches) {
       this.document.body.classList.add('sidebar-folded');
     } else {
       this.document.body.classList.remove('sidebar-folded');
@@ -116,9 +118,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   /**
    * Switching sidebar light/dark
    */
-  onSidebarThemeChange(event) {
+  onSidebarThemeChange(event: Event) {
     this.document.body.classList.remove('sidebar-light', 'sidebar-dark');
-    this.document.body.classList.add(event.target.value);
+    this.document.body.classList.add((<HTMLInputElement>event.target).value);
     this.document.body.classList.remove('settings-open');
   }
 
@@ -161,7 +163,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
             parent2El.classList.remove('mm-show');
           }
 
-          const parent3El = parent2El.parentElement;
+          const parent3El = parent2El?.parentElement;
           if (parent3El) {
             parent3El.classList.remove('mm-active');
 
@@ -193,7 +195,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
    */
   activateMenuItems() {
 
-    const links = document.getElementsByClassName('nav-link-ref');
+    const links: any = document.getElementsByClassName('nav-link-ref');
 
     let menuItemEl = null;
     

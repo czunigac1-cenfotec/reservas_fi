@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FeahterIconModule } from '../../../core/feather-icon/feather-icon.module';
+import { FeatherIconModule } from '../../../core/feather-icon/feather-icon.module';
 
 import { NgbAccordionModule, NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -57,7 +57,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FeahterIconModule,
+    FeatherIconModule,
     NgbAccordionModule,
     NgbDropdownModule,
     NgbTooltipModule

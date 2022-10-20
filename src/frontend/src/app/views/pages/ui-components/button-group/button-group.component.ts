@@ -17,16 +17,70 @@ const defaultButtonGroup = {
 export class ButtonGroupComponent {}`
 }
 
+const checkboxGroup = {
+  htmlCode: 
+`<div class="btn-group btn-group-toggle">
+  <label class="btn-outline-primary" ngbButtonLabel>
+    <input type="checkbox" class="btn-check" ngbButton [(ngModel)]="model.left"> Left (pre-checked)
+  </label>
+  <label class="btn-outline-primary" ngbButtonLabel>
+    <input type="checkbox" class="btn-check" ngbButton [(ngModel)]="model.middle"> Middle
+  </label>
+  <label class="btn-outline-primary" ngbButtonLabel>
+    <input type="checkbox" class="btn-check" ngbButton [(ngModel)]="model.right"> Right
+  </label>
+</div>`,
+  tsCode: 
+`import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-button-group',
+  templateUrl: './button-group.component.html'
+})
+export class ButtonGroupComponent {
+  modelCheckbox = {
+    left: true,
+    middle: false,
+    right: false
+  };
+}`
+}
+
+const radioGroup = {
+  htmlCode: 
+`<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="model">
+  <label ngbButtonLabel class="btn-outline-primary">
+    <input ngbButton type="radio" class="btn-check" [value]="1"> Left (pre-checked)
+  </label>
+  <label ngbButtonLabel class="btn-outline-primary">
+    <input ngbButton type="radio" class="btn-check" value="middle"> Middle
+  </label>
+  <label ngbButtonLabel class="btn-outline-primary">
+    <input ngbButton type="radio" class="btn-check" [value]="false"> Right
+  </label>
+</div>`,
+  tsCode: 
+`import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-button-group',
+  templateUrl: './button-group.component.html'
+})
+export class ButtonGroupComponent {
+  modelRadio = 1;
+}`
+}
+
 const buttonToolbar = {
   htmlCode: 
 `<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-  <div class="btn-group mr-2" role="group" aria-label="First group">
+  <div class="btn-group me-2" role="group" aria-label="First group">
     <button type="button" class="btn btn-primary">1</button>
     <button type="button" class="btn btn-primary">2</button>
     <button type="button" class="btn btn-primary">3</button>
     <button type="button" class="btn btn-primary">4</button>
   </div>
-  <div class="btn-group mr-2" role="group" aria-label="Second group">
+  <div class="btn-group me-2" role="group" aria-label="Second group">
     <button type="button" class="btn btn-primary">5</button>
     <button type="button" class="btn btn-primary">6</button>
     <button type="button" class="btn btn-primary">7</button>
@@ -48,7 +102,7 @@ export class ButtonGroupComponent {}`
 const mixedToolbar = {
   htmlCode: 
 `<div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-  <div class="btn-group mr-2" role="group" aria-label="First group">
+  <div class="btn-group me-2" role="group" aria-label="First group">
     <button type="button" class="btn btn-primary">1</button>
      ..
   </div>
@@ -158,7 +212,19 @@ export class ButtonGroupComponent {}`
 })
 export class ButtonGroupComponent implements OnInit {
 
+  // Checkbox buttons
+  modelCheckbox = {
+    left: true,
+    middle: false,
+    right: false
+  };
+
+  // Radio buttons
+  modelRadio = 1;
+
   defaultButtonGroupCode: any;
+  checkboxGroupCode: any;
+  radioGroupCode: any;
   buttonToolbarCode: any;
   mixedToolbarCode: any;
   buttonGroupSizingCode: any;
@@ -169,6 +235,8 @@ export class ButtonGroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultButtonGroupCode = defaultButtonGroup;
+    this.checkboxGroupCode = checkboxGroup;
+    this.radioGroupCode = radioGroup;
     this.buttonToolbarCode = buttonToolbar;
     this.mixedToolbarCode = mixedToolbar;
     this.buttonGroupSizingCode = buttonGroupSizing;

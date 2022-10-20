@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
   /**
    * Sidebar toggle on hamburger button click
    */
-  toggleSidebar(e) {
+  toggleSidebar(e: Event) {
     e.preventDefault();
     this.document.body.classList.toggle('sidebar-open');
   }
@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
   /**
    * Logout
    */
-  onLogout(e) {
+  onLogout(e: Event) {
     e.preventDefault();
     localStorage.removeItem('isLoggedin');
 

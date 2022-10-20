@@ -1,7 +1,7 @@
 <div class="row">
-  <div class="col-xl-10 main-content pl-xl-4 pr-xl-5">
+  <div class="col-xl-10 main-content ps-xl-4 pe-xl-5">
     <h1 class="page-title">Navbar</h1>
-    <p class="lead">Read the <a href="https://getbootstrap.com/docs/4.3/components/navbar/" target="_blank">Official Bootstrap Documentation</a> for a full list of instructions and other options.</p>
+    <p class="lead">Read the <a href="https://getbootstrap.com/docs/5.1/components/navbar/" target="_blank">Official Bootstrap Documentation</a> for a full list of instructions and other options.</p>
     
     <hr>
     
@@ -18,10 +18,10 @@
 
         <!-- Add the ngbCollapse directive to the element below. -->
         <div [ngbCollapse]="isBasicExampleMenuCollapsed" class="collapse navbar-collapse">
-          <ul class="navbar-nav mr-auto">
+          <ul class="navbar-nav me-auto">
             <li class="nav-item active">
               <!-- Close the menu when a link is clicked. -->
-              <a class="nav-link" routerLink="." (click)="isBasicExampleMenuCollapsed = true">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" routerLink="." (click)="isBasicExampleMenuCollapsed = true">Home <span class="visually-hidden">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLink="." (click)="isBasicExampleMenuCollapsed = true">Blog</a>
@@ -41,9 +41,9 @@
               <a class="nav-link disabled" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+          <form class="d-flex my-2 my-lg-0">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
       </nav>
@@ -71,7 +71,7 @@
       <!-- Just an image -->
       <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" routerLink=".">
-          <img src="assets/images/logo-placeholder.png" width="30" height="30" alt="">
+          <img src="assets/images/others/logo-placeholder.png" width="30" height="30" alt="">
         </a>
       </nav>
     </div>
@@ -81,7 +81,7 @@
       <!-- Image and text -->
       <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" routerLink=".">
-          <img src="assets/images/logo-placeholder.png" width="30" height="30" class="d-inline-block align-top" alt="">
+          <img src="assets/images/others/logo-placeholder.png" width="30" height="30" class="d-inline-block align-top" alt="">
           Logo
         </a>
       </nav>
@@ -91,12 +91,12 @@
     <hr>
 
     <h4 #forms>Forms</h4>
-    <p class="mb-3">Place various form controls and components within a navbar with <code>.form-inline</code>.</p>
+    <p class="mb-3">Place various form controls and components within a navbar.</p>
     <div class="example">
       <nav class="navbar navbar-light bg-light">
-        <form class="form-inline ml-auto">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+        <form class="d-flex ms-auto">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </nav>
     </div>
@@ -128,7 +128,7 @@
         </button>
         <!-- Add the ngbCollapse directive to the element below. -->
         <div [ngbCollapse]="isNavbarDarkMenuCollapsed" class="collapse navbar-collapse">
-          <ul class="navbar-nav mr-auto">
+          <ul class="navbar-nav me-auto">
             <li class="nav-item active">
               <!-- Close the menu when a link is clicked. -->
               <a class="nav-link active" routerLink="." (click)="isNavbarDarkMenuCollapsed = true">Home</a>
@@ -143,9 +143,9 @@
               <a class="nav-link" routerLink="." (click)="isNavbarDarkMenuCollapsed = true">About</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+          <form class="d-flex my-2 my-lg-0">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
       </nav>
@@ -158,7 +158,7 @@
         </button>
         <!-- Add the ngbCollapse directive to the element below. -->
         <div [ngbCollapse]="isNavbarPrimaryMenuCollapsed" class="collapse navbar-collapse">
-          <ul class="navbar-nav mr-auto">
+          <ul class="navbar-nav me-auto">
             <li class="nav-item active">
               <!-- Close the menu when a link is clicked. -->
               <a class="nav-link active" routerLink="." (click)="isNavbarPrimaryMenuCollapsed = true">Home</a>
@@ -173,9 +173,9 @@
               <a class="nav-link" routerLink="." (click)="isNavbarPrimaryMenuCollapsed = true">About</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+          <form class="d-flex my-2 my-lg-0">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
       </nav>
@@ -188,7 +188,7 @@
         </button>
         <!-- Add the ngbCollapse directive to the element below. -->
         <div [ngbCollapse]="isNavbarDangerMenuCollapsed" class="collapse navbar-collapse">
-          <ul class="navbar-nav mr-auto">
+          <ul class="navbar-nav me-auto">
             <li class="nav-item active">
               <!-- Close the menu when a link is clicked. -->
               <a class="nav-link active" routerLink="." (click)="isNavbarDangerMenuCollapsed = true">Home</a>
@@ -203,9 +203,9 @@
               <a class="nav-link" routerLink="." (click)="isNavbarDangerMenuCollapsed = true">About</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+          <form class="d-flex my-2 my-lg-0">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
       </nav>
@@ -228,7 +228,7 @@
 
         <!-- Add the ngbCollapse directive to the element below. -->
         <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
-          <ul class="navbar-nav mr-auto">
+          <ul class="navbar-nav me-auto">
             <li class="nav-item active">
               <!-- Close the menu when a link is clicked. -->
               <a class="nav-link active" routerLink="." (click)="isMenuCollapsed = true">Home</a>
@@ -243,9 +243,9 @@
               <a class="nav-link" routerLink="." (click)="isMenuCollapsed = true">About</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+          <form class="d-flex my-2 my-lg-0">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
       </nav>
@@ -256,7 +256,7 @@
   <div class="col-xl-2 content-nav-wrapper">
     <ul class="nav content-nav d-flex flex-column">
       <li class="nav-item">
-        <a (click)="scrollTo(default)" class="nav-link">Default</a>
+        <a (click)="scrollTo(default)" class="nav-link">Basic example</a>
       </li>
       <li class="nav-item">
         <a (click)="scrollTo(brand)" class="nav-link">Brand</a>

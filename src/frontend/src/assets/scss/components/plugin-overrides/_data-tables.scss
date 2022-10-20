@@ -1,53 +1,93 @@
-.dataTable-wrapper {
-  .dataTable-top {
-    .dataTable-dropdown {
-      label {
-        display: flex;
-        align-items: center;
-        white-space: nowrap;
-        select {
-          margin-right: 10px;
-        }
-      }
-    }
-    .dataTable-search {
-      .dataTable-input {
-        @extend .form-control;
+// Plugin: Simple-DataTables
+// github: https://github.com/fiduswriter/Simple-DataTables
+
+.dataTable-top {
+
+  // RTL fix: begin
+  display: flex;
+  justify-content: space-between;
+  &::after {
+    content: none;
+  }
+  // RTL fix: end
+
+  .dataTable-dropdown {
+    label {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      select {
+        margin-right: 10px;
+        @extend .form-select;
       }
     }
   }
-  .dataTable-container {
-    .dataTable-table {
-      th {
-        a.dataTable-sorter {
-          &::before {
-            bottom: -2px;
-          }
-          &::after {
-            top: -2px;
-          }
-        }
-      }
-      th, td {
-        padding: $table-cell-padding;
-      }
+  .dataTable-search {
+    .dataTable-input {
+      @extend .form-control;
     }
   }
-  .dataTable-bottom {
-    .dataTable-pagination {
-      li {
-        @extend .page-item;
+}
+
+.dataTable-sorter::before {
+  border-top-color: $text-muted;
+}
+
+.dataTable-sorter::after {
+  border-bottom-color: $text-muted;
+}
+
+.dataTable-sorter::before,
+.dataTable-sorter::after {
+  // RTL fix: begin
+  right: 4px;
+  left: auto;
+  // RTL fix: end
+}
+
+
+.dataTable-table > tbody > tr > td, 
+.dataTable-table > tbody > tr > th, 
+.dataTable-table > tfoot > tr > td, 
+.dataTable-table > tfoot > tr > th, 
+.dataTable-table > thead > tr > td, 
+.dataTable-table > thead > tr > th {
+  padding: $table-cell-padding-y $table-cell-padding-x;
+  text-align: left; // RTL fix
+}
+
+.dataTable-wrapper.no-footer .dataTable-container {
+  border-bottom-color: $border-color;
+}
+
+.dataTable-bottom {
+
+  // RTL fix: begin
+  display: flex;
+  justify-content: space-between;
+  &::after {
+    content: none;
+  }
+  // RTL fix: end
+
+  .dataTable-pagination ul {
+    @extend .pagination;
+    li {
+      @extend .page-item;
+      a {
+        @extend .page-link;
+      }
+      &.active {
         a {
-          @extend .page-link;
-          color: theme-color(primary);
+          color: $white;
+          background-color: $primary;
+          border-color: $primary;
         }
-        &.active {
-          a {
-            color: #fff;
-            background-color: theme-color(primary);
-            border-color: theme-color(primary);
-          }
-        }
+      }
+      &:not(:first-child) a {
+        /*rtl:raw:
+          margin-right: -3px;
+        */
       }
     }
   }

@@ -81,3 +81,11 @@ $num: 150;
   .wd-xl-auto { width: auto; }
   .wd-xl-auto { width: auto !important; }
 }
+
+@include media-breakpoint-up(xxl) {
+  @include do-make-width("xxl",5,100,5);
+  @include do-make-width("xxl",150,1000,50);
+
+  .wd-xxl-auto { width: auto; }
+  .wd-xxl-auto { width: auto !important; }
+}

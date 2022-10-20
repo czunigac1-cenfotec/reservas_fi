@@ -1,12 +1,6 @@
 /* Buttons */
 
-.btn {
-  font-size: $btn-font-size;
-  line-height: 1;
-  padding: .5rem 1rem;
-  i {
-    font-size: 1rem;
-  }
+.btn {  
   &.btn-rounded {
     @include border-radius(50px);
   }
@@ -14,138 +8,109 @@
     padding: $btn-padding-y-xs $btn-padding-x-xs;
     font-size: $btn-font-size-xs;
   }
-  &.btn-sm {
-    font-size: $btn-font-size-sm;
-    padding: .45rem 1rem;
-  }
-  &.btn-lg {
-    font-size: $btn-font-size-lg;
-  }
 
-  &.btn-link {
-    color: theme-color(primary);
-  }
-  
-
-  /* Buttons with only icons */
+  // Button with only icons 
   &.btn-icon {
+    height: 38px;
+    width: 38px;
+    padding: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    svg {
-      height: 15px;
-    }
     i {
-      font-size: 15px;
+      font-size: 1.125rem;
     }
-    &.btn-sm {
+    svg {
+      height: 18px;
+      width: 18px;
+    }
+    &.btn-xs {
       width: 30px;
       height: 30px;
-      svg {
-        height: 13px;
-      }
       i {
-        font-size: 13px;
+        font-size: .875rem;
+      }
+      svg {
+        height: 14px;
+      }
+    }
+    &.btn-sm {
+      width: 36px;
+      height: 36px;
+      i {
+        font-size: 1rem;
+      }
+      svg {
+        height: 16px;
+        width: 16px;
       }
     }
     &.btn-lg {
-      width: 48px;
-      height: 48px;
+      width: 42px;
+      height: 42px;
+      i {
+        font-size: 1.25rem;
+      }
       svg {
         height: 20px;
+        width: 20px;
       }
-      i {
-        font-size: 20px;
-      }
-    }
-    .input-group-prepend &,
-    .input-group-append & {
-      width: 48px;
-      height: 35px;
     }
   }
 
-  /* Buttons with icon and text */
+  // Button with icon and text 
   &.btn-icon-text {
+    height: 38px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     .btn-icon-prepend {
       margin-right: .5rem;
     }
     .btn-icon-append {
       margin-left: .5rem;
     }
-    .btn-icon-prepend,
-    .btn-icon-append {
-      width: 15px;
-      height: 15px;
+    i {
+      font-size: 1.125rem;
+    }
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+    &.btn-xs {
+      height: 30px;
+      i {
+        font-size: .875rem;
+      }
+      svg {
+        width: 14px;
+        height: 14px;
+      }
     }
     &.btn-sm {
-      .btn-icon-prepend,
-      .btn-icon-append {
-        width: 12px;
-        height: 12px;
+      height: 36px;
+      i {
+        font-size: 1rem;
+      }
+      svg {
+        width: 16px;
+        height: 16px;
       }
     }
     &.btn-lg {
-      .btn-icon-prepend,
-      .btn-icon-append {
+      height: 42px;
+      i {
+        font-size: 1.25rem;
+      }
+      svg {
         width: 20px;
         height: 20px;
       }
     }
   }
-  &.btn-social-icon {
-    width: 50px;
-    height: 50px;
-    padding: 0;
-  }
 }
 
-.btn-group {
-  .btn {
-    + .btn {
-      border-left: 0;
-    }
-  }
-}
-
-.rtl {
-  .btn-group {
-    .btn {
-      + .btn {
-        border-left: 1px solid;
-        border-right: 0;
-      }
-    }
-
-    > .btn:not(:first-child):not(:last-child):not(.dorpdown-toggle) {
-      border-radius: 0;
-    }
-
-    // Reset rounded corners
-    > .btn:not(:last-child):not(.dropdown-toggle),
-    > .btn-group:not(:last-child) > .btn {
-      border-radius: $btn-border-radius;
-      @include border-left-radius(0);
-    }
-
-    > .btn:not(:first-child),
-    > .btn-group:not(:first-child) > .btn {
-      border-radius: $btn-border-radius;
-      @include border-right-radius(0);
-    }
-  }
-}
-
-.btn-toolbar {
-  .btn-group {
-    +.btn-group {
-      @extend .ml-2;
-    }
-  }
-}
-/*social buttons*/
+// Social buttons
 @each $color, $value in $social-colors {
   .btn-#{$color} {
     @include social-button(social-color($color));
@@ -154,57 +119,10 @@
     @include social-outline-button(social-color($color));
   }
 }
-/* inverse buttons */
+
+// Inverse buttons 
 @each $color, $value in $theme-colors {
   .btn-inverse-#{$color} {
     @include button-inverse-variant($value);
-  }
-}
-
-.btn-outline-info {
-  &:hover {
-    color: #fff;
-  }
-}
-
-.rtl {
-  .btn {
-    /* Buttons with icon and text */
-    &.btn-icon-text {
-      .btn-icon-prepend {
-        margin-right: 0;
-        margin-left: .5rem;
-      }
-      .btn-icon-append {
-        margin-left: 0;
-        margin-right: .5rem;
-      }
-    }
-  }
-
-  .btn-group {
-    .btn {
-      + .btn {
-        border-left: 1px solid;
-        // border-right: 1px solid;
-      }
-    }
-
-    > .btn:not(:first-child):not(:last-child):not(.dorpdown-toggle) {
-      border-radius: 0;
-    }
-
-    // Reset rounded corners
-    > .btn:not(:last-child):not(.dropdown-toggle),
-    > .btn-group:not(:last-child) > .btn {
-      border-radius: $btn-border-radius;
-      @include border-left-radius(0);
-    }
-
-    > .btn:not(:first-child),
-    > .btn-group:not(:first-child) > .btn {
-      border-radius: $btn-border-radius;
-      @include border-right-radius(0);
-    }
   }
 }

@@ -1,4 +1,4 @@
-/* Animation mixins */
+// Animation mixins 
 
 @keyframes dropdownAnimation {
   from {
@@ -8,14 +8,17 @@
   to {
     opacity: 1;
     transform: none;
-    transform: translate3d(0, 0 , 0);
+    transform: translate3d(0, 0px , 0);
   }
 }
 
 .dropdownAnimation {
-  animation-name: dropdownAnimation;
-  @include animation-duration($action-transition-duration);
-  @include animation-fill-mode(both);
+  -webkit-animation-name: dropdownAnimation;
+          animation-name: dropdownAnimation;
+  -webkit-animation-duration: $action-transition-duration;
+  animation-duration: $action-transition-duration;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 
 @keyframes fadeOut {
@@ -83,8 +86,8 @@
     
     95% {
       opacity: 0.1;
-      left: -(($dim * $mult) - $dim)/2;
-      top: -(($dim * $mult) - $dim)/2;
+      left: -(($dim * $mult) - $dim) * .5;
+      top: -(($dim * $mult) - $dim) * .5;
       width: $dim * $mult;
       height: $dim * $mult;
     }

@@ -110,7 +110,7 @@ export class DropdownsComponent {}`
 
 const dropUp = {
   htmlCode: 
-`<div ngbDropdown placement="top-right" class="btn-group">
+`<div ngbDropdown placement="top-end" class="btn-group">
   <button class="btn btn-secondary" id="dropupMenu" ngbDropdownToggle>Dropup</button>
   <div ngbDropdownMenu aria-labelledby="dropupMenu">
     ...
@@ -118,7 +118,7 @@ const dropUp = {
 </div>
 <div class="btn-group">
   <button type="button" class="btn btn-secondary">Split dropup</button>
-  <div class="btn-group" ngbDropdown placement="top-right" role="group">
+  <div class="btn-group" ngbDropdown placement="top-end" role="group">
     <button class="btn btn-secondary dropdown-toggle-split" ngbDropdownToggle></button>
     <div ngbDropdownMenu>
       ...
@@ -137,7 +137,7 @@ export class DropdownsComponent {}`
 
 const dropRight = {
   htmlCode: 
-`<div ngbDropdown placement="right-top" class="btn-group dropright">
+`<div ngbDropdown placement="end-top" class="btn-group">
   <button class="btn btn-secondary" id="droprightMenu" ngbDropdownToggle>Dropright</button>
   <div ngbDropdownMenu aria-labelledby="droprightMenu">
     ...
@@ -145,7 +145,7 @@ const dropRight = {
 </div>
 <div class="btn-group">
   <button type="button" class="btn btn-secondary">Split dropright</button>
-  <div class="btn-group" ngbDropdown placement="right-top" role="group">
+  <div class="btn-group" ngbDropdown placement="end-top" role="group">
     <button class="btn btn-secondary dropdown-toggle-split" ngbDropdownToggle></button>
     <div ngbDropdownMenu>
       ...
@@ -164,7 +164,7 @@ export class DropdownsComponent {}`
 
 const dropLeft = {
   htmlCode: 
-`<div ngbDropdown placement="left-top" class="btn-group dropleft">
+`<div ngbDropdown placement="start-top" class="btn-group">
   <button class="btn btn-secondary" id="dropleftMenu" ngbDropdownToggle>Dropleft</button>
   <div ngbDropdownMenu aria-labelledby="dropleftMenu">
     ...
@@ -172,7 +172,7 @@ const dropLeft = {
 </div>
 <div class="btn-group">
   <button type="button" class="btn btn-secondary">Split dropleft</button>
-  <div class="btn-group dropleft" ngbDropdown placement="left-top" role="group">
+  <div class="btn-group dropleft" ngbDropdown placement="start-top" role="group">
     <button class="btn btn-secondary dropdown-toggle-split" ngbDropdownToggle></button>
     <div ngbDropdownMenu>
       ...
@@ -296,12 +296,12 @@ const dropdownForm = {
 `<div ngbDropdown>
   <button class="btn btn-secondary" id="dropdownFormExample" ngbDropdownToggle>Dropdown button</button>
   <form ngbDropdownMenu class="p-4" aria-labelledby="dropdownFormExample">
-    <div class="form-group">
-      <label for="exampleDropdownFormEmail2">Email address</label>
+    <div class="mb-3">
+      <label for="exampleDropdownFormEmail2" class="form-label">Email address</label>
       <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
     </div>
-    <div class="form-group">
-      <label for="exampleDropdownFormPassword2">Password</label>
+    <div class="mb-3">
+      <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
       <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
     </div>
     <button type="submit" class="btn btn-primary">Sign in</button>

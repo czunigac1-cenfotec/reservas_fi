@@ -1,10 +1,7 @@
-// Badge outlined variations
-@each $color, $value in $theme-colors {
-  .badge-outline#{$color} {
-    @include badge-outline-variatons($value);
-  }
-}
+// Badges
 
-.badge {
-  padding: 5px 5px 3px;
+a.badge { // for link badges
+  &:hover {
+    color: $white;
+  }
 }

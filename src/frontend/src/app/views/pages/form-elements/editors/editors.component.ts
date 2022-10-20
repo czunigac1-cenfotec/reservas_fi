@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContentChange, SelectionChange } from 'ngx-quill';
 
 @Component({
   selector: 'app-editors',
@@ -37,7 +38,7 @@ export class EditorsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSelectionChanged = (event) => {
+  onSelectionChanged = (event: SelectionChange) => {
     if(event.oldRange == null) {
       this.onFocus();
     }
@@ -46,7 +47,7 @@ export class EditorsComponent implements OnInit {
     }
   }
 
-  onContentChanged = (event) => {
+  onContentChanged = (event: ContentChange) => {
     // console.log(event.html);
   }
 

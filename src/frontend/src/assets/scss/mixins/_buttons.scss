@@ -18,14 +18,16 @@
     }
   }
 }
+
 @mixin social-outline-button($color) {
 border: 1px solid $color;
 color: $color;
-&:hover {
-  background: $color;
-  color: $white;
+  &:hover {
+    background: $color;
+    color: $white;
+  }
 }
-}
+
 @mixin button-inverse-variant($color, $color-hover: $white) {
   background-color: rgba($color, 0.2);
   background-image: none;
@@ -33,10 +35,12 @@ color: $color;
   &:not(.btn-inverse-light) {
     color: $color;      
   }
-  @include hover {
-    color: $color-hover;
-    background-color: $color;
-    border-color: $color;
+  &:hover,
+  &.active,
+  &:active,
+  .show > &.dropdown-toggle {
+    background-color: rgba($color, 0.3);
+    border-color: rgba($color, 0);
   }
 
   &.focus,
@@ -48,13 +52,5 @@ color: $color;
   &:disabled {
     color: $color;
     background-color: transparent;
-  }
-
-  &.active,
-  &:active,
-  .show > &.dropdown-toggle {
-    color: $color-hover;
-    background-color: $color;
-    border-color: $color;
   }
 }

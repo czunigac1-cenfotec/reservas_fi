@@ -17,7 +17,7 @@ const slidesOnly = {
   templateUrl: './carousel.component.html'
 })
 export class CarouselComponent {
-  images = ['assets/images/sample1.jpg', 'assets/images/sample2.jpg', 'assets/images/sample3.jpg'];
+  images = ['assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg'];
 }`
 }
 
@@ -38,7 +38,7 @@ const widthControls = {
   templateUrl: './carousel.component.html'
 })
 export class CarouselComponent {
-  images = ['assets/images/sample1.jpg', 'assets/images/sample2.jpg', 'assets/images/sample3.jpg'];
+  images = ['assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg'];
 }`
 }
 
@@ -59,7 +59,7 @@ const widthIndicators = {
   templateUrl: './carousel.component.html'
 })
 export class CarouselComponent {
-  images = ['assets/images/sample1.jpg', 'assets/images/sample2.jpg', 'assets/images/sample3.jpg'];
+  images = ['assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg'];
 }`
 }
 
@@ -102,7 +102,7 @@ const widthCaptions = {
   templateUrl: './carousel.component.html'
 })
 export class CarouselComponent {
-  images = ['assets/images/sample1.jpg', 'assets/images/sample2.jpg', 'assets/images/sample3.jpg'];
+  images = ['assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg'];
 }`
 }
 
@@ -123,7 +123,7 @@ const crossfadeCarousel = {
   templateUrl: './carousel.component.html'
 })
 export class CarouselComponent {
-  images = ['assets/images/sample1.jpg', 'assets/images/sample2.jpg', 'assets/images/sample3.jpg'];
+  images = ['assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg'];
 }`
 }
 
@@ -133,7 +133,7 @@ export class CarouselComponent {
 })
 export class CarouselComponent implements OnInit {
 
-  images = ['assets/images/placeholder.jpg', 'assets/images/placeholder.jpg', 'assets/images/placeholder.jpg'];
+  images = ['assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg', 'assets/images/others/placeholder.jpg'];
 
   slidesOnlyCode: any;
   widthControlsCode: any;

@@ -1,62 +1,38 @@
-/* Forms */
+// Forms 
 
-.input-group-append,
-.input-group-prepend {
-  color: $input-placeholder-color;
-  width: auto;
-  border: none;
-
-  .input-group-text {
-    border-color: $border-color;
-    padding: $input-padding-y .75rem;
-    color: $input-placeholder-color;
-  }
+.form-control-xs,
+.form-select-xs {
+  padding: $input-padding-y-xs $input-padding-x-xs;
+  font-size: $input-font-size-xs;
 }
-.form-control {
-  border: 1px solid darken($border-color, 2%);
-  font-weight: 400;
-  font-size: $input-font-size;
-  &.form-control-sm {
-    padding: .25rem .75rem;
+
+.form-control-xs {
+  + .input-group-text {
+    padding-top: $input-padding-y-xs;
+    padding-bottom: $input-padding-y-xs;
   }
 }
 
-select {
-  @extend .form-control;
-  border-radius: 0;
-  &.form-control {
-    padding: 0 .75rem;
-    border: 1px solid $border-color;
-    border-radius: 0;
-    outline: none;
-    color: $input-placeholder-color;
-    @each $color, $value in $theme-colors {
-      &.border-#{$color} {
-        outline: 1px solid $value;
-        &:focus {
-          outline: 1px solid $value;
-        }
-      }
-    }
+.form-check-input {
+  margin-top: .13em; // height adjustment
+}
+
+.input-group-text {
+  svg {
+    width: 18px;
+    height: 18px;
   }
 }
-.form-group {
-  label {
-    font-size: $default-font-size;
-    line-height: 1.4rem;
-    vertical-align: top;
-    margin-bottom: .5rem;
-  }
-  &.has-danger {
-    .form-control {
-      border-color: theme-color(danger);
-    }
-  }
-  .file-upload-default {
-    visibility: hidden;
-    position: absolute;
-  }
-  .file-upload-info {
-    background: transparent;
-  }
+
+.input-group {
+  // To fix Bootstrap-datepicker in RTL
+  direction: ltr;
+}
+
+// For RTL
+[type="tel"], 
+[type="url"], 
+[type="email"], 
+[type="number"] {
+  direction: ltr;
 }

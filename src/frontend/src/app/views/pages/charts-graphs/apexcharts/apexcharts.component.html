@@ -10,7 +10,7 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Ng-ApexCharts</h4>
-        <p class="card-description mb-0">Read the <a href="https://github.com/apexcharts/ng-apexcharts" target="_blank"> Official Ng-ApexCharts Documentation </a>for a full list of instructions and other options.</p>
+        <p class=“text-muted”>Read the <a href="https://github.com/apexcharts/ng-apexcharts" target="_blank"> Official Ng-ApexCharts Documentation </a>for a full list of instructions and other options.</p>
       </div>
     </div>
   </div>
@@ -24,13 +24,14 @@
 
         <apx-chart
           [series]="lineChartOptions.series"
+          [chart]="lineChartOptions.chart"
           [colors]="lineChartOptions.colors"
           [grid]="lineChartOptions.grid"
-          [chart]="lineChartOptions.chart"
           [xaxis]="lineChartOptions.xaxis"
+          [yaxis]="lineChartOptions.yaxis"
           [markers]="lineChartOptions.markers"
-          [stroke]="lineChartOptions.stroke"
           [legend]="lineChartOptions.legend"
+          [stroke]="lineChartOptions.stroke"
         ></apx-chart>
 
       </div>
@@ -43,10 +44,12 @@
 
         <apx-chart
           [series]="barChartOptions.series"
+          [chart]="barChartOptions.chart"
           [colors]="barChartOptions.colors"
           [grid]="barChartOptions.grid"
-          [chart]="barChartOptions.chart"
           [xaxis]="barChartOptions.xaxis"
+          [yaxis]="barChartOptions.yaxis"
+          [plotOptions]="barChartOptions.plotOptions"
         ></apx-chart>
 
       </div>
@@ -62,17 +65,16 @@
 
         <apx-chart
           [series]="areaChartOptions.series"
+          [chart]="areaChartOptions.chart"
           [colors]="areaChartOptions.colors"
           [stroke]="areaChartOptions.stroke"
           [dataLabels]="areaChartOptions.dataLabels"
-          [grid]="areaChartOptions.grid"
-          [chart]="areaChartOptions.chart"
           [xaxis]="areaChartOptions.xaxis"
           [yaxis]="areaChartOptions.yaxis"
-          [markers]="areaChartOptions.markers"
+          [grid]="areaChartOptions.grid"
           [tooltip]="areaChartOptions.tooltip"
-          [legend]="areaChartOptions.legend"
           [fill]="areaChartOptions.fill"
+          [legend]="areaChartOptions.legend"
         ></apx-chart>
 
       </div>
@@ -86,13 +88,16 @@
         <apx-chart
           [series]="mixedChartOptions.series"
           [chart]="mixedChartOptions.chart"
-          [xaxis]="mixedChartOptions.xaxis"
+          [colors]="mixedChartOptions.colors"
           [grid]="mixedChartOptions.grid"
+          [stroke]="mixedChartOptions.stroke"
+          [plotOptions]="mixedChartOptions.plotOptions"
+          [legend]="mixedChartOptions.legend"
+          [fill]="mixedChartOptions.fill"
           [labels]="mixedChartOptions.labels"
           [markers]="mixedChartOptions.markers"
-          [legend]="mixedChartOptions.legend"
-          [stroke]="mixedChartOptions.stroke"
-          [fill]="mixedChartOptions.fill"
+          [xaxis]="mixedChartOptions.xaxis"
+          [yaxis]="mixedChartOptions.yaxis"
           [tooltip]="mixedChartOptions.tooltip"
         ></apx-chart>
 
@@ -108,7 +113,7 @@
         <h6 class="card-title">Donut chart</h6>
 
         <apx-chart
-          [series]="donutChartOptions.nonAxisSeries"
+          [series]="donutChartOptions.series"
           [chart]="donutChartOptions.chart"
           [colors]="donutChartOptions.colors"
           [stroke]="donutChartOptions.stroke"
@@ -125,7 +130,7 @@
         <h6 class="card-title">Pie chart</h6>
 
         <apx-chart
-          [series]="pieChartOptions.nonAxisSeries"
+          [series]="pieChartOptions.series"
           [chart]="pieChartOptions.chart"
           [colors]="pieChartOptions.colors"
           [stroke]="pieChartOptions.stroke"
@@ -147,9 +152,15 @@
         <apx-chart
           [series]="heatMapChartOptions.series"
           [chart]="heatMapChartOptions.chart"
-          [dataLabels]="heatMapChartOptions.dataLabels"
-          [title]="heatMapChartOptions.title"
           [colors]="heatMapChartOptions.colors"
+          [grid]="heatMapChartOptions.grid"
+          [dataLabels]="heatMapChartOptions.dataLabels"
+          [stroke]="heatMapChartOptions.stroke"
+          [xaxis]="heatMapChartOptions.xaxis"
+          [yaxis]="heatMapChartOptions.yaxis"
+          [title]="heatMapChartOptions.title"
+          [plotOptions]="heatMapChartOptions.plotOptions"
+          [theme]="heatMapChartOptions.theme"
         ></apx-chart>
 
       </div>
@@ -164,12 +175,15 @@
           [series]="radarChartOptions.series"
           [chart]="radarChartOptions.chart"
           [colors]="radarChartOptions.colors"
-          [stroke]="radarChartOptions.stroke"
-          [markers]="radarChartOptions.markers"
-          [fill]="radarChartOptions.fill"
-          [labels]="radarChartOptions.labels"
-          [legend]="radarChartOptions.legend"
           [grid]="radarChartOptions.grid"
+          [legend]="radarChartOptions.legend"
+          [labels]="radarChartOptions.labels"
+          [stroke]="radarChartOptions.stroke"
+          [fill]="radarChartOptions.fill"
+          [xaxis]="radarChartOptions.xaxis"
+          [yaxis]="radarChartOptions.yaxis"
+          [markers]="radarChartOptions.markers"
+          [plotOptions]="radarChartOptions.plotOptions"
         ></apx-chart>
 
       </div>
@@ -188,7 +202,7 @@
           [chart]="scatterChartOptions.chart"
           [colors]="scatterChartOptions.colors"
           [grid]="scatterChartOptions.grid"
-          [stroke]="scatterChartOptions.stroke"
+          [markers]="scatterChartOptions.markers"
           [legend]="scatterChartOptions.legend"
           [xaxis]="scatterChartOptions.xaxis"
           [yaxis]="scatterChartOptions.yaxis"
@@ -203,11 +217,13 @@
         <h6 class="card-title">RadialBar chart</h6>
 
         <apx-chart
-          [series]="radialBarChartOptions.nonAxisSeries"
+          [series]="radialBarChartOptions.series"
           [chart]="radialBarChartOptions.chart"
           [colors]="radialBarChartOptions.colors"
+          [grid]="radialBarChartOptions.grid"
           [plotOptions]="radialBarChartOptions.plotOptions"
           [labels]="radialBarChartOptions.labels"
+          [legend]="radialBarChartOptions.legend"
         ></apx-chart>
 
       </div>

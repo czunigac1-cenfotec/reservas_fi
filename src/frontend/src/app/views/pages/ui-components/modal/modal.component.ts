@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 const basicModal = {
@@ -9,9 +9,7 @@ const basicModal = {
 <ng-template #basicModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-    <button type="button" class="close" (click)="modal.close('by: close icon')" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
     <p>Modal body</p>
@@ -37,7 +35,7 @@ export class ModalComponent {
 
   constructor(private modalService: NgbModal) { }
 
-  openBasicModal(content) {
+  openBasicModal(content: TemplateRef<any>) {
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});
@@ -53,9 +51,7 @@ const scrollableModal = {
 <ng-template #scrollableModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-    <button type="button" class="close" (click)="modal.close('by: close icon')" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
     <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
@@ -94,7 +90,7 @@ export class ModalComponent {
   
   constructor(private modalService: NgbModal) { }
 
-  openScrollableModal(content) {
+  openScrollableModal(content: TemplateRef<any>) {
     this.modalService.open(content, {scrollable: true}).result.then((result) => {
       console.log("Modal closed" + result);
     }).catch((res) => {});
@@ -110,9 +106,7 @@ const verticalCenteredModal = {
 <ng-template #verticalCenteredModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-    <button type="button" class="close" (click)="modal.close('by: close icon')" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
     <p>Modal body</p>
@@ -134,7 +128,7 @@ export class ModalComponent {
   
   constructor(private modalService: NgbModal) { }
 
-  openVerticalCenteredModal(content) {
+  openVerticalCenteredModal(content: TemplateRef<any>) {
     this.modalService.open(content, {centered: true}).result.then((result) => {
       console.log("Modal closed" + result);
     }).catch((res) => {});
@@ -150,9 +144,7 @@ const optionalSizesModal = {
 <ng-template #xlModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-    <button type="button" class="close" (click)="modal.close('by: close icon')" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
     <p>Modal body</p>
@@ -169,9 +161,7 @@ const optionalSizesModal = {
 <ng-template #lgModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-    <button type="button" class="close" (click)="modal.close('by: close icon')" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
     <p>Modal body</p>
@@ -188,9 +178,7 @@ const optionalSizesModal = {
 <ng-template #smModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-    <button type="button" class="close" (click)="modal.close('by: close icon')" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
     <p>Modal body</p>
@@ -212,19 +200,19 @@ export class ModalComponent {
   
   constructor(private modalService: NgbModal) { }
 
-  openXlModal(content) {
+  openXlModal(content: TemplateRef<any>) {
     this.modalService.open(content, {size: 'xl'}).result.then((result) => {
       console.log("Modal closed" + result);
     }).catch((res) => {});
   }
 
-  openLgModal(content) {
+  openLgModal(content: TemplateRef<any>) {
     this.modalService.open(content, {size: 'lg'}).result.then((result) => {
       console.log("Modal closed" + result);
     }).catch((res) => {});
   }
   
-  openSmModal(content) {
+  openSmModal(content: TemplateRef<any>) {
     this.modalService.open(content, {size: 'sm'}).result.then((result) => {
       console.log("Modal closed" + result);
     }).catch((res) => {});
@@ -255,37 +243,37 @@ export class ModalComponent implements OnInit {
     this.optionalSizesModalCode = optionalSizesModal;
   }
 
-  openBasicModal(content) {
+  openBasicModal(content: TemplateRef<any>) {
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result;
     }).catch((res) => {});
   }
 
-  openScrollableModal(content) {
+  openScrollableModal(content: TemplateRef<any>) {
     this.modalService.open(content, {scrollable: true}).result.then((result) => {
       console.log("Modal closed" + result);
     }).catch((res) => {});
   }
 
-  openVerticalCenteredModal(content) {
+  openVerticalCenteredModal(content: TemplateRef<any>) {
     this.modalService.open(content, {centered: true}).result.then((result) => {
       console.log("Modal closed" + result);
     }).catch((res) => {});
   }
 
-  openXlModal(content) {
+  openXlModal(content: TemplateRef<any>) {
     this.modalService.open(content, {size: 'xl'}).result.then((result) => {
       console.log("Modal closed" + result);
     }).catch((res) => {});
   }
 
-  openLgModal(content) {
+  openLgModal(content: TemplateRef<any>) {
     this.modalService.open(content, {size: 'lg'}).result.then((result) => {
       console.log("Modal closed" + result);
     }).catch((res) => {});
   }
   
-  openSmModal(content) {
+  openSmModal(content: TemplateRef<any>) {
     this.modalService.open(content, {size: 'sm'}).result.then((result) => {
       console.log("Modal closed" + result);
     }).catch((res) => {});

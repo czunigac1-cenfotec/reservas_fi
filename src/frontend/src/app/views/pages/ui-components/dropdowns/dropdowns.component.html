@@ -1,7 +1,7 @@
 <div class="row">
-  <div class="col-xl-10 main-content pl-xl-4 pr-xl-5">
+  <div class="col-xl-10 main-content ps-xl-4 pe-xl-5">
     <h1 class="page-title">Dropdowns</h1>
-    <p class="lead">Dropdowns are toggleable, contextual overlays for displaying lists of links and more. Read the <a href="https://ng-bootstrap.github.io/#/components/dropdown/examples" target="_blank">Official Ng-Bootstrap Documentation</a> for a full list of instructions and other options.</p>
+    <p class="lead">Toggle contextual overlays for displaying lists of links and more with the Bootstrap dropdown plugin. Read the <a href="https://ng-bootstrap.github.io/#/components/dropdown/examples" target="_blank">Official Ng-Bootstrap Documentation</a> for a full list of instructions and other options.</p>
     
     <hr>
     
@@ -155,7 +155,7 @@
     <div class="example">
       <!-- Large button groups (default and split) -->
       <div class="btn-toolbar">
-        <div class="btn-group mb-1 mb-md-0" ngbDropdown>
+        <div class="btn-group mb-1 mb-md-0 me-1" ngbDropdown>
           <button class="btn btn-secondary btn-lg" id="dropdownButtonLg" ngbDropdownToggle>Large button</button>
           <div ngbDropdownMenu aria-labelledby="dropdownButtonLg">
             <button ngbDropdownItem>Action - 1</button>
@@ -178,7 +178,7 @@
 
       <!-- Large button groups (default and split) -->
       <div class="btn-toolbar">
-        <div class="btn-group mb-1 mb-md-0" ngbDropdown>
+        <div class="btn-group mb-1 mb-md-0 me-1" ngbDropdown>
           <button class="btn btn-secondary btn-sm" id="dropdownButtonLg" ngbDropdownToggle>Small button</button>
           <div ngbDropdownMenu aria-labelledby="dropdownButtonLg">
             <button ngbDropdownItem>Action - 1</button>
@@ -204,9 +204,9 @@
     <hr>
     
     <h4 #dropup>Dropup</h4>
-    <p class="mb-3">Trigger dropdown menus above elements by adding <code>placement="top-right"</code> to the parent element.</p>
+    <p class="mb-3">Trigger dropdown menus above elements by adding <code>placement="top-end"</code> to the parent element.</p>
     <div class="example">
-      <div ngbDropdown placement="top-right" class="btn-group mb-1 mb-md-0">
+      <div ngbDropdown placement="top-end" class="btn-group mb-1 mb-md-0">
         <button class="btn btn-secondary" id="dropupMenu" ngbDropdownToggle>Dropup</button>
         <div ngbDropdownMenu aria-labelledby="dropupMenu">
           <button ngbDropdownItem>Action - 1</button>
@@ -216,7 +216,7 @@
       </div>
       <div class="btn-group mb-1 mb-md-0">
         <button type="button" class="btn btn-secondary">Split dropup</button>
-        <div class="btn-group" ngbDropdown placement="top-right" role="group">
+        <div class="btn-group" ngbDropdown placement="top-end" role="group">
           <button class="btn btn-secondary dropdown-toggle-split" ngbDropdownToggle></button>
           <div ngbDropdownMenu>
             <button ngbDropdownItem>Action - 1</button>
@@ -231,9 +231,9 @@
     <hr>
     
     <h4 #dropright>Dropright</h4>
-    <p class="mb-3">Trigger dropdown menus at the right of the elements by adding <code>placement="right-top"</code> to the parent element.</p>
+    <p class="mb-3">Trigger dropdown menus at the right of the elements by adding <code>placement="end-top"</code> to the parent element.</p>
     <div class="example">
-      <div ngbDropdown placement="right-top" class="btn-group mb-1 mb-md-0">
+      <div ngbDropdown placement="end-top" class="btn-group mb-1 mb-md-0">
         <button class="btn btn-secondary" id="droprightMenu" ngbDropdownToggle>Dropright</button>
         <div ngbDropdownMenu aria-labelledby="droprightMenu">
           <button ngbDropdownItem>Action - 1</button>
@@ -243,7 +243,7 @@
       </div>
       <div class="btn-group mb-1 mb-md-0">
         <button type="button" class="btn btn-secondary">Split dropright</button>
-        <div class="btn-group" ngbDropdown placement="right-top" role="group">
+        <div class="btn-group" ngbDropdown placement="end-top" role="group">
           <button class="btn btn-secondary dropdown-toggle-split" ngbDropdownToggle></button>
           <div ngbDropdownMenu>
             <button ngbDropdownItem>Action - 1</button>
@@ -258,9 +258,9 @@
     <hr>
     
     <h4 #dropleft>Dropleft</h4>
-    <p class="mb-3">Trigger dropdown menus at the right of the elements by adding <code>placement="left-top"</code> to the parent element.</p>
+    <p class="mb-3">Trigger dropdown menus at the right of the elements by adding <code>placement="start-top"</code> to the parent element.</p>
     <div class="example">
-      <div ngbDropdown placement="left-top" class="btn-group mb-1 mb-md-0">
+      <div ngbDropdown placement="start-top" class="btn-group mb-1 mb-md-0">
         <button class="btn btn-secondary" id="dropleftMenu" ngbDropdownToggle>Dropleft</button>
         <div ngbDropdownMenu aria-labelledby="dropleftMenu">
           <button ngbDropdownItem>Action - 1</button>
@@ -270,7 +270,7 @@
       </div>
       <div class="btn-group mb-1 mb-md-0">
         <button type="button" class="btn btn-secondary">Split dropleft</button>
-        <div class="btn-group" ngbDropdown placement="left-top" role="group">
+        <div class="btn-group" ngbDropdown placement="start-top" role="group">
           <button class="btn btn-secondary dropdown-toggle-split" ngbDropdownToggle></button>
           <div ngbDropdownMenu>
             <button ngbDropdownItem>Action - 1</button>
@@ -300,7 +300,7 @@
     
     <hr>
     
-    <h4 #disabledItem>disabled menu item</h4>
+    <h4 #disabledItem>Disabled menu item</h4>
     <p class="mb-3">Add <code>.disabled</code> to items in the dropdown to <strong>style them as disabled</strong>.</p>
     <div class="example">
       <div ngbDropdown>
@@ -372,12 +372,12 @@
       <div ngbDropdown>
         <button class="btn btn-secondary" id="dropdownFormExample" ngbDropdownToggle>Dropdown button</button>
         <form ngbDropdownMenu class="p-4" aria-labelledby="dropdownFormExample">
-          <div class="form-group">
-            <label for="exampleDropdownFormEmail2">Email address</label>
+          <div class="mb-3">
+            <label for="exampleDropdownFormEmail2" class="form-label">Email address</label>
             <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
           </div>
-          <div class="form-group">
-            <label for="exampleDropdownFormPassword2">Password</label>
+          <div class="mb-3">
+            <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
             <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
           </div>
           <button type="submit" class="btn btn-primary">Sign in</button>

@@ -1,70 +1,71 @@
-/* Sweet Alert */
+// Plugin: ngx-sweetalert2
+// github: https://github.com/sweetalert2/ngx-sweetalert2
 
-.swal2-modal {
-  min-height: 300px;
-  @extend .d-flex;
-  @include align-items(center);
-  @include justify-content(center);
-  @include flex-direction(column);
-  @include border-radius(7px);
+.swal2-container {
+  .swal2-popup {
+    font-size: $font-size-base;
+    background: lighten($card-bg, 5%);
+    box-shadow: $card-box-shadow;
+    
+    &.swal2-toast {
+      box-shadow: $card-box-shadow;
+      background: lighten($card-bg, 5%);
+    }
 
-  .swal2-header {
     .swal2-title {
       font-size: 25px;
       line-height: 1;
-      font-weight: 600;
+      font-weight: 500;
       color: $body-color;
       margin-bottom: 0;
     }
 
-    .swal2-icon,
-    .swal2-success-ring {
-      margin-top: 0;
-      margin-bottom: 42px;
+    .swal2-html-container {
+      font-size: $font-size-base;
+      color: $text-muted;
+      font-weight: initial;
+      margin-top: 11px;
+      text-decoration: none;
     }
-    
-    .swal2-icon {
-      margin-bottom: 25px;
-      &::before {
-        height: 100%;
-        font-size: 2.5rem;
-      }
-    }
-  }
 
-  .swal2-actions {
-    button {
-      @extend .btn;
-      &.swal2-confirm {
-        @extend .btn-primary;
-      }
-      &.swal2-cancel {
-        @extend .btn-danger;
-        @extend .border-danger;
-      }
-      svg {
-        width: 16px;
-        height: 16px;
-      }
-      i {
-        font-size: 16px;
+    .swal2-actions {
+      button {
+        @extend .btn;
+        &.swal2-confirm {
+          @extend .btn-primary;
+          &:focus {
+            box-shadow: none;
+          }
+        }
+        &.swal2-cancel {
+          @extend .btn-danger;
+          @extend .border-danger;
+        }
+        svg {
+          width: 16px;
+          height: 16px;
+        }
       }
     }
-  }
 
-  .swal2-content {
-    font-size: $default-font-size;
-    color: $text-muted;
-    font-weight: initial;
-    margin-top: 11px;
-    text-decoration: none;
-  }
+    .swal2-close {
+      font-size: 22px;
+      &:focus {
+        box-shadow: none;
+      }
+    }
 
-  .swal2-close {
-    font-size: 20px;
-  }
+    .swal2-timer-progress-bar {
+      background: $secondary;
+    }
 
-  .swal2-success-ring {
-    left: -30px;
   }
+}
+
+// RTL fix
+body.swal2-toast-shown .swal2-container.swal2-rtl {
+  /*rtl:raw:
+  right: auto !important;
+  left: 0 !important;
+  */
 }

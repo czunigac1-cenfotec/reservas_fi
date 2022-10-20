@@ -9,14 +9,14 @@
   z-index: 999;
 
   .sidebar-header {
-    background: $sidebar-light-bg;
+    background: $card-bg;
     height: $navbar-height;
-    border-bottom: 1px solid $sidebar-light-border-color;
-    @include display-flex;
-    @include justify-content(space-between);
-    @include align-items(center);
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 0 25px;
-    border-right: 1px solid $sidebar-light-border-color;
+    border-right: 1px solid $border-color;
     z-index: 999;
     width: $sidebar-width-lg;
     -webkit-transition: width .1s ease;
@@ -31,16 +31,8 @@
       visibility: visible;
       -webkit-transition: opacity .5s ease;
       transition: opacity .5s ease;
-      font-weight: 900;
-      font-size: 25px;
-      letter-spacing: -1px;
-      color: #031a61;
-      span {
-        color: theme-color(primary);
-        font-weight: 300;
-      }
       img {
-        height: 25px;
+        height: 26px;
       }
     }
     .sidebar-toggler {
@@ -51,7 +43,7 @@
         width: 100%;
         border-radius: 3px;
         height: 2px;
-        background: #535353;
+        background: $body-color;
         -webkit-transition: all .3s;
         transition: all .3s;
         position: relative;
@@ -291,19 +283,19 @@
   .sidebar-body {
     max-height: calc(100% - #{$navbar-height});
     position: relative;
-    border-right: 1px solid $sidebar-light-border-color;
+    border-right: 1px solid $border-color;
     height: 100%;
     -webkit-box-shadow: 0 8px 10px 0 rgba(183,192,206,.2);
             box-shadow: 0 8px 10px 0 rgba(183,192,206,.2); 
-    background: $sidebar-light-bg;     
+    background: $card-bg;   
     .sidebar-nav {
       list-style: none;
       padding: 25px 25px 50px 25px;
       .nav-item {
         position: relative;
         > .nav-link {
-          @include display-flex;
-          @include align-items(center);
+          display: flex;
+          align-items: center;
           padding: 0;
           height: 32px;
           white-space: nowrap;
@@ -354,19 +346,19 @@
         }
         &:hover {
           .nav-link {
-            color: theme-color(primary);
+            color: $primary;
             .link-title {
               margin-left: 31px;
             }
             .link-icon {
-              color: theme-color(primary);
+              color: $primary;
               fill: rgba(239, 243, 255, .5);
             }
           }
         }
         &.mm-active {
           > .nav-link {
-            color: theme-color(primary);
+            color: $primary;
             .link-arrow {
               -webkit-transform: rotate(90deg);
               transform: rotate(180deg);
@@ -375,20 +367,19 @@
               content: '';
               width: 3px;
               height: 26px;
-              background: theme-color(primary);
+              background: $primary;
               position: absolute;
               left: -25px;
             }
             .link-icon {
               fill: rgba(239, 243, 255, .5);
-              color: theme-color(primary);
+              color: $primary;
             }
           }
         }
       }
       &.sub-menu {
-        padding: 0;
-        padding-left: 33px;
+        padding: 0 0 0 33px;
         .nav-item {
           position: relative;
           .nav-link {
@@ -412,21 +403,21 @@
               transition: all .4s ease-in-out;
             }
             &.mm-active {
-              color: theme-color(primary);
+              color: $primary;
               &::before {
-              border: 1px solid theme-color(primary);
-              background: theme-color(primary);       
+              border: 1px solid $primary;
+              background: $primary;       
               }
             }
             .link-title {
               margin-left: 0;
             }
             &:hover {
-              color: theme-color(primary);
+              color: $primary;
               margin-left: 3px;
               &::before {
-                border: 1px solid theme-color(primary);
-                background: theme-color(primary);       
+                border: 1px solid $primary;
+                background: $primary;       
               }
             }
           }
@@ -483,27 +474,27 @@
   .sidebar {
     .sidebar-header {
       background: $sidebar-dark-bg;
-      border-bottom: 1px solid $sidebar-dark-border-color;
-      border-right: 1px solid $sidebar-dark-border-color;
+      border-bottom: 1px solid rgba($border-color, .1);
+      border-right: 1px solid rgba($border-color, .1);
       .sidebar-brand {
-        color: #f8f9fc;
+        color: $light;
       }
       .sidebar-toggler {
         span {
-          background: #9fa2ab;
+          background: $text-muted;
         }
       }
     }
     .sidebar-body {
       background: $sidebar-dark-bg;
-      border-right: 1px solid $sidebar-dark-border-color;
+      border-right: 1px solid rgba($border-color, .1);
       .sidebar-nav {
         .nav-item {
           &.nav-category {
             color: $white;
           }
           .nav-link {
-            color: #bfc3ce;
+            color: $text-muted;
             svg {
               fill: none;
             }
@@ -511,12 +502,12 @@
           &:hover,
           &.mm-active {
             > .nav-link {
-              color: theme-color(primary);
+              color: $primary;
               svg {
-                fill: rgba(theme-color(primary), .2);
+                fill: rgba($primary, .2);
               }
               .link-title {
-                color: theme-color(primary);
+                color: $primary;
               }
             }
           }
@@ -567,7 +558,7 @@
         display: block;
         margin-bottom: 19px;
         border-radius: 6px;
-        border: 3px solid theme-color(light);
+        border: 3px solid $light;
         &::after {
           content: '';
           position: absolute;
@@ -575,13 +566,13 @@
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(theme-color(primary), 0);
+          background: rgba($primary, 0);
         }
         &:last-child {
           margin-bottom: 0;
         }
         &.active {
-          border: 3px solid lighten(theme-color(primary), 15%);
+          border: 3px solid lighten($primary, 15%);
         }
         img {
           width: 100%;
@@ -589,7 +580,7 @@
         }
         &:hover {
           &::after {
-            background: rgba(theme-color(primary), .2);
+            background: rgba($primary, .2);
             -webkit-transition: all .3s ease-in-out;
             transition: all .3s ease-in-out;
           }
@@ -598,4 +589,3 @@
     }
   }
 }
-

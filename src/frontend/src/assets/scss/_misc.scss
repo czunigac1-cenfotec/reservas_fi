@@ -1,18 +1,5 @@
 // Miscellaneous
 
-body,
-html {
-  padding-right: 0 !important; //resets padding right added by Bootstrap modal
-}
-
-body {
-    margin: 0;
-    color: $body-color;
-    text-align: left;
-    background-color: $content-bg;
-    height: 100%;
-  }
-
 *:-moz-full-screen,
 *:-webkit-full-screen,
 *:fullscreen *:-ms-full-screen {
@@ -21,20 +8,18 @@ body {
 
 
 pre {
-  background-color: color(gray-lighter);
+  background-color: $gray-200;
   padding: 15px;
   font-size: 14px;
 }
 
 code {
   padding: 5px;
-  font-family: $type1;
+  font-family: $font-family-sans-serif;
   font-weight: 400;
-  font-size: $default-font-size;
+  font-size: $font-size-base;
   border-radius: 4px;
-}
-
-a {
-  cursor: pointer;
-  color: theme-color(primary);
+  /*rtl:raw:
+  direction: ltr;
+  */
 }

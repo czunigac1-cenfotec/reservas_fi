@@ -18,7 +18,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
     // Show chat-content when clicking on chat-item for tablet and mobile devices
     document.querySelectorAll('.chat-list .chat-item').forEach(item => {
       item.addEventListener('click', event => {
-        document.querySelector('.chat-content').classList.toggle('show');
+        document.querySelector('.chat-content')!.classList.toggle('show');
       })
     });
 
@@ -26,7 +26,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   // back to chat-list for tablet and mobile devices
   backToChatList() {
-    document.querySelector('.chat-content').classList.toggle('show');
+    document.querySelector('.chat-content')!.classList.toggle('show');
   }
 
   save() {

@@ -1,40 +1,22 @@
-aw-wizard {
-  aw-wizard-navigation-bar.horizontal.small {
-    ul.steps-indicator {
-      li {
-        a {
-          .label {
-            color: $text-muted;
-          }
-          .step-indicator {
-            background-color: theme-color(light);
-          }
-        }
-        &.done {
-          a {
-            .step-indicator {
-              background-color: theme-color(success);
-            }
-          }
-        }
-      }
-    }
-  }
+// Plugin: angular-archwizard
+// github: https://github.com/madoar/angular-archwizard
+
+aw-wizard-navigation-bar ul.steps-indicator li a .label {
+  color: $text-muted;
 }
 
-.rtl {
-  aw-wizard {
-    aw-wizard-navigation-bar.horizontal.small {
-      ul.steps-indicator {
-        li {
-          &:not(:last-child) {
-            &::after {
-              left: auto;
-              right: calc(50% + 7px);
-            }
-          }
-        }
-      }
-    }
-  }
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li .step-indicator {
+  background-color: $border-color;
+}
+
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li.current .step-indicator {
+  background-color: $primary;
+}
+
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li.done .step-indicator {
+  background-color: $success;
+}
+
+aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li:not(:last-child):after {
+  background-color: $border-color;
 }

@@ -1,13 +1,13 @@
 .main-wrapper {
-  @include display-flex;
-  overflow: hidden;
+  display: flex;
+  // overflow: hidden; // commented for fixing content-nav sticky position
   .page-wrapper {
     min-height: 100vh;
-    background: $content-bg;
+    background: $body-bg;
     width: calc(100% - #{$sidebar-width-lg});
     margin-left: $sidebar-width-lg;
-    @include display-flex;
-    @include flex-direction(column);
+    display: flex;
+    flex-direction: column;
     -webkit-transition: margin .1s ease, width .1s ease;
     transition: margin .1s ease, width .1s ease;
     .page-content {
@@ -37,27 +37,25 @@
   }
   .content-nav-wrapper {
     padding: 0;
-    position: fixed;
-    // top: calc(#{$navbar-height} + 30px);
-    right: 0;
-    width: $content-nav-width;
-    max-height: calc(100% - #{$navbar-height} - 51px);
+    position: sticky;
+    top: 80px;
+    height: calc(100vh - 6rem);
+    overflow-y: auto;
     border-left: 1px solid $border-color;
     display: none;
     @media(min-width: 1200px) {
       display: block;
     }
     .content-nav {
-      padding: 0 25px;
+      padding: 0px 25px;
       .nav-item {
         .nav-link {
           padding: 0;
           height: 30px;
           white-space: nowrap;
-          color: #383838;
-          font-size: $default-font-size;
-          @include display-flex;
-          @include align-items(center);
+          color: $text-muted;
+          display: flex;
+          align-items: center;
         }
       }
     }

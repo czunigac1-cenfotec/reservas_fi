@@ -70,8 +70,10 @@ export class ButtonsComponent {}`
 
 const blockButton = {
   htmlCode: 
-`<button type="button" class="btn btn-primary btn-block">Block level button</button>
-<button type="button" class="btn btn-secondary btn-block">Block level button</button>`,
+`<div class="d-grid gap-2">
+  <button type="button" class="btn btn-primary">Block level button</button>
+  <button type="button" class="btn btn-secondary">Block level button</button>
+</div>`,
   tsCode: 
 `import { Component } from '@angular/core';
 
@@ -162,6 +164,79 @@ const iconTextButton = {
 export class ButtonsComponent {}`
 }
 
+const socialIconButton = {
+  htmlCode: 
+`<button type="button" class="btn btn-icon btn-facebook">
+  <i class="feather icon-facebook"></i>
+</button>
+<button type="button" class="btn btn-icon btn-instagram">
+  <i class="feather icon-instagram"></i>
+</button>
+<button type="button" class="btn btn-icon btn-twitter">
+  <i class="feather icon-twitter"></i>
+</button>
+<button type="button" class="btn btn-icon btn-youtube">
+  <i class="feather icon-youtube"></i>
+</button>
+<button type="button" class="btn btn-icon btn-github">
+  <i class="feather icon-github"></i>
+</button>
+<button type="button" class="btn btn-icon btn-linkedin">
+  <i class="feather icon-linkedin"></i>
+</button>
+<button type="button" class="btn btn-icon btn-outline-twitter">
+  <i class="feather icon-twitter"></i>
+</button>`,
+  tsCode: 
+`import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-buttons',
+  templateUrl: './buttons.component.html'
+})
+export class ButtonsComponent {}`
+}
+
+const socialIconTextButton = {
+  htmlCode: 
+`<button type="button" class="btn btn-icon-text btn-facebook">
+  <i class="feather icon-facebook btn-icon-prepend"></i>
+  Facebook
+</button>
+<button type="button" class="btn btn-icon-text btn-instagram">
+  <i class="feather icon-instagram btn-icon-prepend"></i>
+  Instagram
+</button>
+<button type="button" class="btn btn-icon-text btn-twitter">
+  <i class="feather icon-twitter btn-icon-prepend"></i>
+  Twitter
+</button>
+<button type="button" class="btn btn-icon-text btn-youtube">
+  <i class="feather icon-youtube btn-icon-prepend"></i>
+  Youtube
+</button>
+<button type="button" class="btn btn-icon-text btn-github">
+  <i class="feather icon-github btn-icon-prepend"></i>
+  Github
+</button>
+<button type="button" class="btn btn-icon-text btn-linkedin">
+  <i class="feather icon-linkedin btn-icon-prepend"></i>
+  LinkedIn
+</button>
+<button type="button" class="btn btn-icon-text btn-outline-twitter">
+  <i class="feather icon-twitter btn-icon-prepend"></i>
+  Twitter
+</button>`,
+  tsCode: 
+`import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-buttons',
+  templateUrl: './buttons.component.html'
+})
+export class ButtonsComponent {}`
+}
+
 @Component({
   selector: 'app-buttons',
   templateUrl: './buttons.component.html',
@@ -179,6 +254,8 @@ export class ButtonsComponent implements OnInit {
   disabledStateLinkButtonCode: any;
   iconButtonCode: any;
   iconTextButtonCode: any;
+  socialIconButtonCode: any;
+  socialIconTextButtonCode: any;
 
   constructor() { }
 
@@ -193,6 +270,8 @@ export class ButtonsComponent implements OnInit {
     this.disabledStateLinkButtonCode = disabledStateLinkButton;
     this.iconButtonCode = iconButton;
     this.iconTextButtonCode = iconTextButton;
+    this.socialIconButtonCode = socialIconButton;
+    this.socialIconTextButtonCode = socialIconTextButton;
   }
 
   scrollTo(element: any) {

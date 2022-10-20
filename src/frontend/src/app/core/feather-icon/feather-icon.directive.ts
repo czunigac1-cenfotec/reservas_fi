@@ -1,5 +1,5 @@
 import { Directive, AfterViewInit } from '@angular/core';
-import feather from 'feather-icons';
+import * as feather from 'feather-icons';
 
 @Directive({
   selector: '[appFeatherIcon]'

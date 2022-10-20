@@ -1,51 +1,49 @@
 .nav {
   &.nav-tabs {
     .nav-item {
-      margin-bottom: -1px;
       .nav-link {
-        border-color: $border-color;
-        border-bottom: 0;
-        border-right: 0;
+        border-color: $nav-tabs-link-border-color;
         color: $body-color;
-        background-color: rgba(theme-color(dark), .025);
+        background-color: $nav-tabs-link-bg;
+        cursor: pointer;
         &.active {
-          background-color: $card-bg;
-          color: theme-color(primary);
-          border-bottom: none;
+          border-color: $nav-tabs-link-active-border-color;
+          color: $primary;
+          background: $nav-tabs-link-active-bg;
         }
         &.disabled {
           background-color: transparent;
           color: $text-muted;
-          border-color: rgba($border-color, .7);
-        }
-      }
-      &:last-child {
-        .nav-link {
-          border-right: 1px solid $border-color;
+          border-color: rgba($border-color, .7) rgba($border-color, .7) transparent;
         }
       }
     }
     &.nav-tabs-vertical {
-      border-bottom: 0;
+      border-bottom-color: transparent;
       .nav-item {
-        width: 100%;
         .nav-link {
-          border: 1px solid $border-color;
+          width: 100%;
+          border: 1px solid transparent;
           border-radius: 0;
-          border-color: $border-color;
-          background-color: rgba(theme-color(dark), .025);
-          &:first-child {
-            border-radius: .25rem .25rem 0 0;
-          }
-          &:last-child {
-            border-radius: 0 0 .25rem .25rem;
+          border-color: $nav-tabs-link-border-color;
+          background-color: $nav-tabs-link-bg;
+          &:not(.disabled) {
+            color: $body-color;
           }
           &.active {
-            background-color: $card-bg;
-            color: theme-color(primary);
+            background-color: $nav-tabs-link-active-bg;
+            color: $primary;
+            border-right-color: transparent;
           }
-          &:not(:last-child) {
-            border-bottom: 0;
+        }
+        &:first-child {
+          .nav-link {
+            border-radius: $border-radius 0 0 0;
+          }
+        }
+        &:last-child {
+          .nav-link {
+            border-radius: 0 0 0 $border-radius;
           }
         }
       }
@@ -55,7 +53,7 @@
         border: 0;
         background-color: transparent;
         &.active {
-          border-bottom: 2px solid theme-color(primary);
+          border-bottom: 2px solid $primary;
         }
       }
     }
@@ -63,7 +61,6 @@
 }
 .tab-content {
   &.tab-content-vertical {
-    border: 1px solid $border-color;
     height: 100%;
   }
 }

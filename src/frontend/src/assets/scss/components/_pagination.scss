@@ -1,27 +1,4 @@
 .pagination {
-  .page-item {
-    .page-link {
-      color: theme-color(primary);
-      min-width: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      svg {
-        width: 17px;
-        height: 17px;
-      }
-      i {
-        font-size: 17px;
-      }
-    }
-    &.active {
-      .page-link {
-        background-color: theme-color(primary);
-        border-color: theme-color(primary);
-        color: #fff;
-      }
-    }
-  }
   .pagination-separated & {
     .page-item {
       margin-left: 2px;
@@ -33,7 +10,7 @@
         margin-right: 0;
       }
       .page-link {
-        @include border-radius(2px);
+        border-radius: 4px;
       }
     }
   }
@@ -42,28 +19,7 @@
       margin-right: 3px;
       margin-left: 3px;
       .page-link {
-        @include border-radius(50px);
-      }
-    }
-  }
-}
-
-.rtl {
-  .pagination {
-    .page-item {
-      &:first-child {
-        .page-link {
-          margin-left: 0;
-          @include border-left-radius(0);
-          @include border-right-radius($border-radius);
-        }
-      }
-      &:last-child {
-        .page-link {
-          margin-left: 0;
-          @include border-right-radius(0);
-          @include border-left-radius($border-radius);
-        }
+        border-radius: 50px;
       }
     }
   }

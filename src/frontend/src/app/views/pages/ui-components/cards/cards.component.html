@@ -1,19 +1,21 @@
 <div class="row">
-  <div class="col-xl-10 main-content pl-xl-4 pr-xl-5">
+  <div class="col-xl-10 main-content ps-xl-4 pe-xl-5">
     <h1 class="page-title">Cards</h1>
-    <p class="lead">A flexible and extensible content container with multiple variants and options. Read the <a href="https://getbootstrap.com/docs/4.4/components/card/" target="_blank">Official Bootstrap Documentation</a> for a full list of instructions and other options.</p>
+    <p class="lead">A flexible and extensible content container with multiple variants and options. Read the <a href="https://getbootstrap.com/docs/5.1/components/card/" target="_blank">Official Bootstrap Documentation</a> for a full list of instructions and other options.</p>
+
     <hr>
+
     <h4 #default>Basic Example</h4>
     <p class="mb-3">Below is an example of a basic card with mixed content and a fixed width. Cards have no fixed width to start, so they’ll naturally fill the full width of its parent element. This is easily customized with our various <a class="text-primary" (click)="scrollTo(sizing)">sizing options</a>.</p>
     <div class="example">
       <div class="row">
         <div class="col-12 col-md-6 col-xl-4">
           <div class="card">
-              <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
+              <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="" (click)="false" class="btn btn-primary mt-2">Go somewhere</a>
+              <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="" (click)="false" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
         </div>
@@ -49,7 +51,7 @@
             <div class="card-body">
               <h5 class="card-title">Card title</h5>
               <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text mb-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               <a href="" (click)="false" class="card-link">Card link</a>
               <a href="" (click)="false" class="card-link">Another link</a>
             </div>
@@ -65,7 +67,7 @@
       <div class="row">
         <div class="col-12 col-md-6 col-xl-4 grid-margin grid-margin-md-0">
           <div class="card">
-            <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
+            <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
@@ -76,7 +78,7 @@
             <div class="card-body">
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
-            <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
+            <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
           </div>
         </div>
       </div>
@@ -131,7 +133,7 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text mb-1">With supporting text below as a natural lead-in to additional content.</p>
+              <p class="card-text mb-3">With supporting text below as a natural lead-in to additional content.</p>
               <a href="" (click)="false" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
@@ -140,7 +142,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text mb-1">With supporting text below as a natural lead-in to additional content.</p>
+              <p class="card-text mb-3">With supporting text below as a natural lead-in to additional content.</p>
               <a href="" (click)="false" class="btn btn-primary">Go somewhere</a>
             </div>
             <div class="card-footer">
@@ -162,7 +164,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text mb-1">With supporting text below as a natural lead-in to additional content.</p>
+              <p class="card-text mb-3">With supporting text below as a natural lead-in to additional content.</p>
               <a href="" (click)="false" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
@@ -171,7 +173,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text mb-1">With supporting text below as a natural lead-in to content.</p>
+              <p class="card-text mb-3">With supporting text below as a natural lead-in to content.</p>
               <a href="" (click)="false" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
@@ -197,7 +199,7 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text mb-2">With supporting text below as a natural lead-in to additional content.</p>
+              <p class="card-text mb-3">With supporting text below as a natural lead-in to additional content.</p>
               <a href="" (click)="false" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
@@ -214,9 +216,9 @@
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="card text-white">
-            <img src="https://via.placeholder.com/410x251" class="card-img" alt="...">
+            <img src="assets/images/others/placeholder.jpg" class="card-img" alt="...">
             <div class="card-img-overlay">
-              <h5 class="card-title text-white font-weight-bold">Card title</h5>
+              <h5 class="card-title text-white fw-bolder">Card title</h5>
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
               <p class="card-text">Last updated 3 mins ago</p>
             </div>
@@ -229,7 +231,7 @@
     <hr>
 
     <h4 #bgColor>Background Color</h4>
-    <p class="mb-3">Use text and background utilities to change the appearance of a card.</p>
+    <p class="mb-3">Use <a href="https://getbootstrap.com/docs/5.1/utilities/colors/" target="_blank">text color</a> and <a href="https://getbootstrap.com/docs/5.1/utilities/background/" target="_blank">background utilities</a> to change the appearance of a card.</p>
     <div class="example">
       <div class="row">
         <div class="col-12 col-md-6 grid-margin">
@@ -315,7 +317,7 @@
     <div class="example">
       <div class="card-group">
         <div class="card">
-          <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
+          <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -323,7 +325,7 @@
           </div>
         </div>
         <div class="card">
-          <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
+          <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
@@ -331,7 +333,7 @@
           </div>
         </div>
         <div class="card">
-          <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
+          <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
@@ -344,109 +346,51 @@
     
     <hr>
 
-    <h4 #decks>Card decks</h4>
-    <p class="mb-3">Need a set of equal width and height cards that aren’t attached to one another? Use card decks.</p>
+    <h4 #grid>Grid cards</h4>
+    <p class="mb-3">Use the Bootstrap grid system and its <a href="https://getbootstrap.com/docs/5.1/layout/grid/#row-columns" target="_blank"><code>.row-cols</code> classes</a> 
+      to control how many grid columns (wrapped around your cards) you show per row. For example, here’s <code>.row-cols-1</code> laying out the cards on one column, 
+      and <code>.row-cols-md-2</code> splitting four cards to equal width across multiple rows, from the medium breakpoint up.</p>
     <div class="example">
-      <div class="card-deck">
-        <div class="card">
-          <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
           </div>
         </div>
-        <div class="card">
-          <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
           </div>
         </div>
-        <div class="card">
-          <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <app-code-preview [codeContent]="cardDecksCode"></app-code-preview>
-    
-    <hr>
-
-    <h4 #columns>Card columns</h4>
-    <p class="mb-3">Cards can be organized into <a href="https://masonry.desandro.com/" target="_blank">Masonry</a>-like columns with just CSS by wrapping them in <code>.card-columns</code>. Cards are built with CSS <code>column</code> properties instead of flexbox for easier alignment. Cards are ordered from top to bottom and left to right.</p>
-    <div class="example">
-      <div class="card-columns">
-        <div class="card">
-          <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title that wraps to a new line</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-        </div>
-        <div class="card p-3">
-          <blockquote class="blockquote mb-0 card-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-            <footer class="blockquote-footer">
-              <small class="text-muted">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </small>
-            </footer>
-          </blockquote>
-        </div>
-        <div class="card">
-          <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-        <div class="card bg-primary text-white text-center p-3">
-          <blockquote class="blockquote mb-0">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
-            <footer class="blockquote-footer text-white">
-              <small>
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </small>
-            </footer>
-          </blockquote>
-        </div>
-        <div class="card text-center">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This card has a regular title and short paragraphy of text below it.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="assets/images/placeholder.jpg" class="card-img-top" alt="...">
-        </div>
-        <div class="card p-3 text-right">
-          <blockquote class="blockquote mb-0">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-            <footer class="blockquote-footer">
-              <small class="text-muted">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </small>
-            </footer>
-          </blockquote>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is another card with title and supporting text below. This card has some additional content to make it slightly taller overall.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <app-code-preview [codeContent]="cardColumnsCode"></app-code-preview>
+    <app-code-preview [codeContent]="gridCardsCode"></app-code-preview>
     
   </div>
   <div class="col-xl-2 content-nav-wrapper">
@@ -476,10 +420,7 @@
         <a (click)="scrollTo(cardGroup)" class="nav-link">Card groups</a>
       </li>
       <li class="nav-item">
-        <a (click)="scrollTo(decks)" class="nav-link">Card decks</a>
-      </li>
-      <li class="nav-item">
-        <a (click)="scrollTo(columns)" class="nav-link">Card columns</a>
+        <a (click)="scrollTo(grid)" class="nav-link">Grid cards</a>
       </li>
     </ul>
   </div>

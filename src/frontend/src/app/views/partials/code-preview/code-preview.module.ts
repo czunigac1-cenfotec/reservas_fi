@@ -4,7 +4,7 @@ import { CodePreviewComponent } from './code-preview.component';
 
 import { HighlightModule } from 'ngx-highlightjs';
 import { ClipboardModule } from 'ngx-clipboard';
-import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     HighlightModule, // https://www.npmjs.com/package/ngx-highlightjs
     ClipboardModule, // https://www.npmjs.com/package/ngx-clipboard,
-    NgbTabsetModule
+    NgbNavModule
   ],
   exports: [CodePreviewComponent],
 })

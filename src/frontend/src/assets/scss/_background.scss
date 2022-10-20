@@ -3,9 +3,3 @@
     background: social-color($color);
   }
 }
-
-@each $color, $value in $theme-gradient-colors {
-  .bg-gradient-#{$color} {
-    background: $value;
-  }
-}

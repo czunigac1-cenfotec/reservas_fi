@@ -2,11 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FeahterIconModule } from '../../../core/feather-icon/feather-icon.module';
+import { FeatherIconModule } from '../../../core/feather-icon/feather-icon.module';
 
 import { IconsComponent } from './icons.component';
 import { FeatherComponent } from './feather/feather.component';
-import { FlagComponent } from './flag/flag.component';
 import { MdiComponent } from './mdi/mdi.component';
 
 const routes: Routes = [
@@ -24,10 +23,6 @@ const routes: Routes = [
         component: FeatherComponent
       },
       {
-        path: 'flag-icons',
-        component: FlagComponent
-      },
-      {
         path: 'mdi-icons',
         component: MdiComponent
       }
@@ -36,11 +31,11 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [IconsComponent, FeatherComponent, FlagComponent, MdiComponent],
+  declarations: [IconsComponent, FeatherComponent, MdiComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FeahterIconModule
+    FeatherIconModule
   ]
 })
 export class IconsModule { }

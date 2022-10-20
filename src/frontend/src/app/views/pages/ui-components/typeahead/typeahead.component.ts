@@ -76,7 +76,7 @@ const defaultTypeahead = {
   <li>limits to 10 results</li>
 </ul>
 
-<label for="typeahead-basic">Search for a state:</label>
+<label for="typeahead-basic" class="form-label">Search for a state:</label>
 <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"/>
 <p class="text-muted mt-2">Model: {{ model | json }}</p>`,
   tsCode: 
@@ -115,11 +115,11 @@ export class TypeaheadComponent {
 const resultTemplate = {
   htmlCode: 
 `<ng-template #rt let-r="result" let-t="term">
-  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1" style="width: 16px">
+  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="me-1" style="width: 16px">
   <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
 </ng-template>
 
-<label for="typeahead-template">Search for a state:</label>
+<label for="typeahead-template" class="form-label">Search for a state:</label>
 <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" [resultTemplate]="rt"
   [inputFormatter]="formatter" />`,
   tsCode: 
