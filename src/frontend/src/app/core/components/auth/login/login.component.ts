@@ -19,10 +19,11 @@ export class LoginComponent implements OnInit {
 
   onLoggedin(e: Event) {
     e.preventDefault();
+
+    //TODO: Call auth service
     localStorage.setItem('isLoggedin', 'true');
     if (localStorage.getItem('isLoggedin')) {
       this.router.navigate([this.returnUrl]);
     }
   }
-
 }
