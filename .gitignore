@@ -1,0 +1,8 @@
+#Ignore mac files
+.DS_store
+
+#Ignore node_modules directory
+node_modules
+
+#Angular cache
+.angular/cache
