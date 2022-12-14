@@ -6,3 +6,19 @@ node_modules
 
 #Angular cache
 .angular/cache
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
