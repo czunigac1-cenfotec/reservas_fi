@@ -6,6 +6,11 @@ node_modules
 
 #Angular cache
 .angular/cache
+
+#Frontend build artifact
+frontend/.angular/
+frontend/dist/
+
 # Eclipse
 .classpath
 .project
