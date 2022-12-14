@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  reservas-database:
+    image: mysql
+    container_name: reservas-database
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: ucr_reservas   
+      MYSQL_USER: reservas_user
+      MYSQL_PASSWORD: UDCW6fqxXOSs
+    ports:
+      - 3306:3306
+    volumes:
+     - reservas_db:/var/lib/mysql
+    networks:
+     - backendNetwork
+     
+  reservas-application-backend:
+    image: azul/zulu-openjdk:17
+    container_name: reservas-application-backend
+    ports:
+      - 8080:8080
+    depends_on:
+      - reservas-database
+    volumes:
+      - ./backend/target/backend-1.0-SNAPSHOT.jar:/application.jar
+    command: ["java", "-jar", "application.jar"]
+    networks:
+      - backendNetwork
+      - frontendNetwork
+      
+  reservas-application-frontend:
+    image: nginx:alpine
+    container_name: reservas-application-frontend
+    ports: 
+      - 4200:80
+    depends_on:
+      - reservas-application-backend
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/dist/angular/:/usr/share/nginx/html
+    networks:
+      - frontendNetwork
+
+
+volumes:
+  reservas_db:
+  
+networks:
+  backendNetwork:
+  frontendNetwork:
