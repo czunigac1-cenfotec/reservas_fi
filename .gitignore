@@ -1,0 +1,29 @@
+#Ignore mac files
+.DS_store
+
+#Ignore node_modules directory
+node_modules
+
+#Angular cache
+.angular/cache
+
+#Frontend build artifact
+frontend/.angular/
+frontend/dist/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
