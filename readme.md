@@ -55,7 +55,6 @@ Este comando genera los artefactos necesarios para el contenedor.
 ## backend
 Navegue al directorio de **backend** y ejecute:
  
-> mvn build
 > mvn package
  
 Este comando genera el artefacto (.jar) necesario para el contenedor del backend. Para probarlo, puede ejecutar
