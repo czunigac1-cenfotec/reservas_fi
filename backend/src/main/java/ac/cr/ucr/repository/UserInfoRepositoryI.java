@@ -1,6 +1,7 @@
 package ac.cr.ucr.repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import ac.cr.ucr.service.UserInfoService;
@@ -32,9 +33,9 @@ public class UserInfoRepositoryI implements UserInfoService {
     }
 
     @Override
-    public UserInfo updateUserInfo(UserInfo userInfo) {
-        UserInfo existingUserInfo = repository.findById(userInfo.getUserInfoId()).get();
-        if (existingUserInfo != null) {
+    public UserInfo updateUserInfo(UserInfo userInfo, UUID uuid) {
+        Optional<UserInfo> existingUserInfo = repository.findById(uuid);
+        if (existingUserInfo.isPresent()) {
             return repository.save(userInfo);
         }
         return null;

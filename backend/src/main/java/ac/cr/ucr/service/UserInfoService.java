@@ -12,7 +12,7 @@ public interface UserInfoService {
 
     UserInfo addUserInfo(UserInfo userInfo);
 
-    UserInfo updateUserInfo(UserInfo userInfo);
+    UserInfo updateUserInfo(UserInfo userInfo, UUID uuid);
 
     boolean deleteUserInfo(UUID userInfoId);
 

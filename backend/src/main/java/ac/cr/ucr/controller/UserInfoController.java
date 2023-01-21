@@ -24,7 +24,7 @@ public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<UserInfo> getAllUserInfo() {
         return this.userInfoService.findAllUserInfo();
     }
@@ -42,7 +42,7 @@ public class UserInfoController {
 
     @PutMapping("/{uuid}")
     public UserInfo updateUserInfo(@PathVariable("uuid") UUID uuid, @RequestBody UserInfo userInfo) {
-        return this.userInfoService.updateUserInfo(userInfo);
+        return this.userInfoService.updateUserInfo(userInfo, uuid);
 
     }
 
