@@ -106,6 +106,5 @@ public class UserLoginController {
         ldapDevMode = PropertyManager.GetBooleanValue(PropertyManager.LDAP_PROP_FILE, PropertyManager.LDAP_PROP_DEV_MODE);
 
         ldapUrl = ldapConfigAddressPrefix + ldapConfigAddress + ":" + ldapConfigPort;
-        
     }
 }
