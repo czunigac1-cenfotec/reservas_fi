@@ -12,6 +12,7 @@ export class UserDetailComponent implements OnInit {
 
   userInfoId: string;
   isUpdate: boolean = true; 
+
   user = {
     userInfoId:'',
     nombre:'',
@@ -104,7 +105,8 @@ export class UserDetailComponent implements OnInit {
 
   saveUser(): void {
     console.log('saveUser');
-    
+    this.user.userInfoId = "00000000-0000-0000-0000-000000000000";
+    console.log(this.user);
     this.userService.create(this.user).subscribe({
       next:(result)=>{
         Swal.fire({

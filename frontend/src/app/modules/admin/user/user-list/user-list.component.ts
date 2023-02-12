@@ -39,7 +39,6 @@ export class UserListComponent implements OnInit {
 
     const dataTableRows: any = [];
 
-
     this.userService.getAll().subscribe({
       next:(data)=>{
 
@@ -66,5 +65,9 @@ export class UserListComponent implements OnInit {
         console.log("done");
       } 
     })                      
+  }
+
+  newUser(): void{
+    this.router.navigate(['/admin/user-detail/-1']);
   }
 }

@@ -14,11 +14,11 @@
             <form class="forms-sample">
               <div class="mb-3">
                 <label for="emailInput" class="form-label">Correo Electr&oacute;nico</label>
-                <input type="email" class="form-control" id="emailInput" placeholder="Correo Electr&oacute;nico" value="admin@demo.com">
+                <input type="email" class="form-control" id="emailInput" placeholder="Correo Electr&oacute;nico" [(ngModel)]="loginForm.username" name="username">
               </div>
               <div class="mb-3">
                 <label for="passwordInput" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="passwordInput" autocomplete="current-password" placeholder="Contrase&ntilde;a" value="12345678">
+                <input type="password" class="form-control" id="passwordInput" autocomplete="current-password" placeholder="Contrase&ntilde;a" [(ngModel)]="loginForm.password" name="password">
               </div>
               <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="authCheck">
