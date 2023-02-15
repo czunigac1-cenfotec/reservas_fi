@@ -30,9 +30,12 @@ export class LoginComponent implements OnInit {
     e.preventDefault();
 
     console.log(this.loginForm);
-    debugger;
 
-    //TODO: Call auth service
+    localStorage.setItem('isLoggedin', 'true');
+    if (localStorage.getItem('isLoggedin')) {
+      this.router.navigate([this.returnUrl]);
+    }
+/*
     this.authService.doLogin({userName:this.loginForm.username,
                               password:this.loginForm.password}
                             ).subscribe({
@@ -50,5 +53,6 @@ export class LoginComponent implements OnInit {
         }
       }
     }) 
+    */
   }
 }

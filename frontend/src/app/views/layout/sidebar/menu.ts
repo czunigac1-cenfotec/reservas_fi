@@ -13,7 +13,12 @@ export const MENU: MenuItem[] = [
   {
     label: 'Administrador',
     icon: 'user-check',
-    link: '/admin'
+    subItems: [
+      {
+        label: 'Usuarios',
+        link: 'admin/user-list',
+      },
+    ]
   },
   {
     label: 'Web Apps',

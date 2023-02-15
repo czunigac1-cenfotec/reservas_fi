@@ -23,7 +23,11 @@ const routes: Routes = [
   {
     path: 'user-detail/:userInfoId',
     component: UserDetailComponent,
-  }
+  },
+  {
+    path: 'user-list',
+    component: UserListComponent,
+  },
 ]
 
 @NgModule({
