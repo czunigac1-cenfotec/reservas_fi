@@ -17,6 +17,10 @@ const routes: Routes = [
         loadChildren: () => import('./core/components/dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
+        path: 'admin',
+        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+      },
+      {
         path: 'apps',
         loadChildren: () => import('./views/pages/apps/apps.module').then(m => m.AppsModule)
       },

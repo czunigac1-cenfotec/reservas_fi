@@ -1,6 +1,5 @@
 package ac.cr.ucr.model;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -23,10 +22,8 @@ public class UserInfo implements Serializable {
 
     private String telefono;
 
-    private Date creationDate;
     public UserInfo() {
         this.userInfoId = UUID.randomUUID();
-        this.creationDate = new Date();
     }
 
     public UserInfo(String nombre,
@@ -36,7 +33,6 @@ public class UserInfo implements Serializable {
                     String unidadAcademica,
                     String telefono) {
         this.userInfoId = UUID.randomUUID();
-        this.creationDate = new Date();
         this.nombre = nombre;
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;

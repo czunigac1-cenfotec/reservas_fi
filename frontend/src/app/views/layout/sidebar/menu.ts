@@ -11,6 +11,16 @@ export const MENU: MenuItem[] = [
     link: '/dashboard'
   },
   {
+    label: 'Administrador',
+    icon: 'user-check',
+    subItems: [
+      {
+        label: 'Usuarios',
+        link: 'admin/user-list',
+      },
+    ]
+  },
+  {
     label: 'Web Apps',
     isTitle: true
   },

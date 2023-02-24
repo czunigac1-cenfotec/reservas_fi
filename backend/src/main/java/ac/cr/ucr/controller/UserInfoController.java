@@ -51,5 +51,4 @@ public class UserInfoController {
         return this.userInfoService.deleteUserInfo(uuid);
     }
 
-
 }
