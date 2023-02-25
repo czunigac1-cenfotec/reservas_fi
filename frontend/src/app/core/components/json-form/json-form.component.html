@@ -7,6 +7,8 @@
                     
                     <div class="form-group row mb-3" *ngFor="let control of jsonFormData?.controls">                            
                         <label class="col-sm-3 col-form-label" *ngIf="control.label !== ''">{{ control.label }}</label> 
+                        <span class="text-danger form-check-inline" *ngIf="!formGroup.valid ? control.validators.required : false">*</span>
+                        <span class="text-danger form-check-inline"> </span>
                         <div class="col-sm-9">
                         <input *ngIf="[
                                         'text',

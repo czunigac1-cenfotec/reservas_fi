@@ -5,6 +5,7 @@
         "label": "First name:",
         "value": "",
         "type": "text",
+        "required":true,
         "validators": {
           "required": true,
           "minLength": 2,
@@ -15,6 +16,7 @@
         "name": "lastName",
         "label": "Last name:",
         "value": "",
+        "required":true,
         "type": "text",
         "validators": {}
       }
