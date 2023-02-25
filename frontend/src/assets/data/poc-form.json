@@ -1,0 +1,22 @@
+{
+    "controls": [
+      {
+        "name": "firstName",
+        "label": "First name:",
+        "value": "",
+        "type": "text",
+        "validators": {
+          "required": true,
+          "minLength": 2,
+          "maxLength":8
+        }
+      },
+      {
+        "name": "lastName",
+        "label": "Last name:",
+        "value": "",
+        "type": "text",
+        "validators": {}
+      }
+    ]
+  }

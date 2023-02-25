@@ -18,6 +18,10 @@ export const MENU: MenuItem[] = [
         label: 'Usuarios',
         link: 'admin/user-list',
       },
+      {
+        label: 'POC',
+        link: './admin/dynamic-form-poc',
+      },
     ]
   },
   {

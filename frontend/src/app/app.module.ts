@@ -15,7 +15,7 @@ import { ErrorPageComponent } from './views/pages/error-page/error-page.componen
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
-import {NgxMaskModule} from 'ngx-mask';
+import {NgxMaskModule} from 'ngx-mask'
 
 @NgModule({
   declarations: [
