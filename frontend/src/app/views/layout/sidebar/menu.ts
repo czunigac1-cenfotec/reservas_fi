@@ -18,9 +18,19 @@ export const MENU: MenuItem[] = [
         label: 'Usuarios',
         link: 'admin/user-list',
       },
+    ]
+  },
+  {
+    label: 'Reservaciones',
+    icon: 'calendar',
+    subItems: [
+      {
+        label: 'Nueva Reserva',
+        link: './reserves/reserve-calendar',
+      },
       {
         label: 'POC',
-        link: './admin/dynamic-form-poc',
+        link: './home/home',
       },
     ]
   },
