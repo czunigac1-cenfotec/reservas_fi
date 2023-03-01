@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/angular';
 import { Draggable } from '@fullcalendar/interaction'; // for dateClick
@@ -18,13 +19,18 @@ export class ReserveCalendarComponent implements OnInit {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
-    initialView: 'dayGridMonth',
+    initialView: 'timeGridWeek',
     initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
+    allDaySlot:false,
+    slotEventOverlap:false,
+    eventMinHeight:30,
+    slotMinTime:"06:00:00",
+    slotMaxTime:"23:00:00",
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this)
@@ -36,27 +42,15 @@ export class ReserveCalendarComponent implements OnInit {
   };
   currentEvents: EventApi[] = [];
 
-  constructor() { }
+  constructor(private router: Router,
+              private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
-
-    // For external-events dragging
-    new Draggable(this.externalEvents.nativeElement, {
-      itemSelector: '.fc-event',
-      eventData: function(eventEl) {
-        return {
-          title: eventEl.innerText,
-          backgroundColor: eventEl.getAttribute('bgColor'),
-          borderColor: eventEl.getAttribute('bdColor')
-        };
-      }
-    });
-
-  }
+  ngOnInit(): void {  }
 
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
+    console.log('handleDateSelect');
+    /*const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
@@ -71,7 +65,13 @@ export class ReserveCalendarComponent implements OnInit {
         backgroundColor: 'rgba(0,204,204,.25)',
         borderColor: '#00cccc'
       });
-    }
+    }*/
+
+    debugger;
+
+
+    this.router.navigate([`/reserves/reserve-detail/-1/${selectInfo.startStr}/${selectInfo.endStr}`])
+   // this.router.navigate([`/reserves/reserve-detail/"-1"/${selectInfo.startStr}/${selectInfo.endStr}`]);
   }
 
   handleEventClick(clickInfo: EventClickArg) {
@@ -83,5 +83,6 @@ export class ReserveCalendarComponent implements OnInit {
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
   }
+
 
 }

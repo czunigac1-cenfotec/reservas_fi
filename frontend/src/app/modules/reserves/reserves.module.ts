@@ -21,6 +21,7 @@ import {NgxMaskModule} from 'ngx-mask'
 import { HomeComponent } from './home/home.component';  
 import { JsonFormComponent } from 'src/app/core/components/json-form/json-form.component';
 import { ReserveCalendarComponent } from './reserve-calendar/reserve-calendar.component';
+import { ReserveDetailComponent } from './reserve-detail/reserve-detail.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -42,10 +43,14 @@ const routes: Routes = [
     path: 'reserve-calendar',
     component: ReserveCalendarComponent,
   },
+  {
+    path: 'reserve-detail/:reserveId/:startStr/:endStr',
+    component: ReserveDetailComponent,
+  },
 ]
 
 @NgModule({
-  declarations: [HomeComponent,JsonFormComponent, ReserveCalendarComponent],
+  declarations: [HomeComponent,JsonFormComponent, ReserveCalendarComponent, ReserveDetailComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
