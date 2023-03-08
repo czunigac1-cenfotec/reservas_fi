@@ -5,7 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { NgbDropdownModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -50,7 +51,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [HomeComponent,JsonFormComponent, ReserveCalendarComponent, ReserveDetailComponent],
+  declarations: [HomeComponent,JsonFormComponent, ReserveCalendarComponent, ReserveDetailComponent,],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -58,9 +59,11 @@ const routes: Routes = [
     NgbDropdownModule,
     NgbDatepickerModule,
     NgApexchartsModule,
+    NgbModule,
     FormsModule,
     FullCalendarModule,
     ReactiveFormsModule,
+    NgSelectModule,
     NgxMaskModule.forRoot(),
   ]
 })
