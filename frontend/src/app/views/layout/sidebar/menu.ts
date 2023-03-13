@@ -18,6 +18,14 @@ export const MENU: MenuItem[] = [
         label: 'Usuarios',
         link: 'admin/user-list',
       },
+      {
+        label: 'Salones',
+        link: 'admin/room-list',
+      },
+      {
+        label: 'Recursos',
+        link: 'admin/resource-list',
+      },
     ]
   },
   {

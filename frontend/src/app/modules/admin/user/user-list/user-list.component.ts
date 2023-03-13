@@ -17,11 +17,10 @@ export class UserListComponent implements OnInit {
 
 
   usersDataTable: any;
-  
 
   ngOnInit(): void {
     this.initTable();
-    this.getUsers();
+    this.getList();
   }
 
   initTable(): void{
@@ -35,7 +34,7 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  getUsers(): void{
+  getList(): void{
 
     const dataTableRows: any = [];
 
@@ -67,7 +66,7 @@ export class UserListComponent implements OnInit {
     })                      
   }
 
-  newUser(): void{
+  new(): void{
     this.router.navigate(['/admin/user-detail/-1']);
   }
 }
