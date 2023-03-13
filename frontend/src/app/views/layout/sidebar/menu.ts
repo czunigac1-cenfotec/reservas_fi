@@ -19,7 +19,7 @@ export const MENU: MenuItem[] = [
         link: 'admin/user-list',
       },
       {
-        label: 'Salones',
+        label: 'Salas',
         link: 'admin/room-list',
       },
       {
