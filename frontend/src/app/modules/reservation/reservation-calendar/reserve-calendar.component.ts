@@ -10,7 +10,7 @@ import { INITIAL_EVENTS, createEventId } from './event-utils';
   templateUrl: './reserve-calendar.component.html',
   styleUrls: ['./reserve-calendar.component.scss']
 })
-export class ReserveCalendarComponent implements OnInit {
+export class ReservationCalendarComponent implements OnInit {
   @ViewChild('externalEvents', {static: true}) externalEvents: ElementRef;
 
   calendarOptions: CalendarOptions = {
@@ -70,8 +70,8 @@ export class ReserveCalendarComponent implements OnInit {
     debugger;
 
 
-    this.router.navigate([`/reserves/reserve-detail/-1/${selectInfo.startStr}/${selectInfo.endStr}`])
-   // this.router.navigate([`/reserves/reserve-detail/"-1"/${selectInfo.startStr}/${selectInfo.endStr}`]);
+    this.router.navigate([`/reservation/reservation-detail/-1/${selectInfo.startStr}/${selectInfo.endStr}`])
+   // this.router.navigate([`/reservation/reservation-detail/"-1"/${selectInfo.startStr}/${selectInfo.endStr}`]);
   }
 
   handleEventClick(clickInfo: EventClickArg) {

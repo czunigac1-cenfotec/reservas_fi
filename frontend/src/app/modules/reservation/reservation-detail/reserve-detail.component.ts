@@ -8,7 +8,7 @@ import { RoomList } from 'src/app/core/dummy-datas/room.data';
   templateUrl: './reserve-detail.component.html',
   styleUrls: ['./reserve-detail.component.scss']
 })
-export class ReserveDetailComponent implements OnInit {
+export class ReservationDetailComponent implements OnInit {
 
   reserveId: string;
   isUpdate: boolean = true; 
@@ -72,6 +72,10 @@ export class ReserveDetailComponent implements OnInit {
 
   getReserveInfo():void{
     console.log("get info");  
+  }
+
+  navigateToCalendar(): void {
+    this.router.navigate(['/reservation/reservation-calendar']);
   }
   
 }

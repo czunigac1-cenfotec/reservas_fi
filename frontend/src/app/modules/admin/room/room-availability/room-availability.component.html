@@ -1,9 +1,8 @@
 <form novalidate name="frmNewUser">
     <div class="row">
-        <div class="col-md-8 grid-margin stretch-card">
+        <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Datos de Disponibilidad de Sala</h6>
                     <div class="form-group row mb-3">                            
                         <label for="txtMinReservationTime" class="col-sm-3 col-form-label">Tiempo mínimo de reserva:
                             <span class="text-danger form-check-inline" *ngIf="txtMinReservationTimeReq?.errors?.required"> *</span>
@@ -42,7 +41,7 @@
                             <span></span>
                         </label>                           
                         <div class="col-sm-9">
-                            <input type="checkbox" class="form-check-input" id="chkApprovalRequired" [(ngModel)]="roomAvailability.approvalRequired">
+                            <input type="checkbox" class="form-check-input" id="chkApprovalRequired" [(ngModel)]="roomAvailability.approvalRequired" name="approvalRequired">
                             <label class="form-check-label" for="chkApprovalRequired">
                                 &nbsp;Requiere aprobación
                             </label>
@@ -53,17 +52,12 @@
                             <span></span>
                         </label>                           
                         <div class="col-sm-9">
-                            <input type="checkbox" class="form-check-input" id="chkIsPrivate" [(ngModel)]="roomAvailability.private">
+                            <input type="checkbox" class="form-check-input" id="chkIsPrivate" [(ngModel)]="roomAvailability.private" name="private">
                             <label class="form-check-label" for="chkIsPrivate">
                                 &nbsp;Es privado
                             </label>
                         </div>
                     </div>
-                        <button class="btn btn-primary mr-2  me-2 float-left" [disabled]="txtMinReservationTimeReq?.errors?.required ||
-                                                                                          txtMaxReservationTimeReq?.errors?.required"
-                                (click)="saveOrUpdate()">{{ isUpdate ? "Actualizar" : "Crear" }}</button>
-                        <button class="btn btn-secondary mr-2 me-2 float-right" [hidden]="!isUpdate" (click)="showDeleteConfirmation()">Eliminar</button>
-                        <button class="btn btn-light mr-2  me-2" (click)="navigateToList()">Cancelar</button>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { RoomAvailabilityComponent } from '../room-availability/room-availability.component';
 
 @Component({
   selector: 'app-room-detail',
@@ -9,8 +10,11 @@ import Swal from 'sweetalert2';
 })
 export class RoomDetailComponent implements OnInit {
 
+  @ViewChild(RoomAvailabilityComponent) roomAvailabilityComponent: RoomAvailabilityComponent
+
   roomId: string;
   isUpdate: boolean = true; 
+  roomAvailabilityId: string = '-1';
 
   room = {
     code:'',
@@ -63,19 +67,21 @@ export class RoomDetailComponent implements OnInit {
     })
   }
 
-  delete(): void {
-   
+  delete(): void { 
+    console.log('delete');
   }
 
   save(): void {
-  
+    console.log('save');
+    this.roomAvailabilityComponent.save();
   }
 
   update(): void {
     console.log('update');
+    this.roomAvailabilityComponent.update();
   }
 
   navigateToList(): void {
-    this.router.navigate(['/admin']);
+    this.router.navigate(['admin/room-list']);
   }
 }

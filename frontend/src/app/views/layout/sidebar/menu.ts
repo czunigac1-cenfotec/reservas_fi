@@ -33,8 +33,8 @@ export const MENU: MenuItem[] = [
     icon: 'calendar',
     subItems: [
       {
-        label: 'Nueva Reserva',
-        link: './reserves/reserve-calendar',
+        label: 'Nueva Reservación',
+        link: './reservation/reservation-calendar',
       },
       {
         label: 'POC',

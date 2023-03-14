@@ -21,8 +21,9 @@ import {NgxMaskModule} from 'ngx-mask'
 
 import { HomeComponent } from './home/home.component';  
 import { JsonFormComponent } from 'src/app/core/components/json-form/json-form.component';
-import { ReserveCalendarComponent } from './reserve-calendar/reserve-calendar.component';
-import { ReserveDetailComponent } from './reserve-detail/reserve-detail.component';
+import { ReservationCalendarComponent } from './reservation-calendar/reserve-calendar.component';
+import { ReservationDetailComponent } from './reservation-detail/reserve-detail.component';
+import { ReservationGroupComponent } from './reservation-group/reservation-group.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -41,17 +42,17 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'reserve-calendar',
-    component: ReserveCalendarComponent,
+    path: 'reservation-calendar',
+    component: ReservationCalendarComponent,
   },
   {
-    path: 'reserve-detail/:reserveId/:startStr/:endStr',
-    component: ReserveDetailComponent,
+    path: 'reservation-detail/:reserveId/:startStr/:endStr',
+    component: ReservationDetailComponent,
   },
 ]
 
 @NgModule({
-  declarations: [HomeComponent,JsonFormComponent, ReserveCalendarComponent, ReserveDetailComponent,],
+  declarations: [HomeComponent,JsonFormComponent,ReservationCalendarComponent,ReservationDetailComponent, ReservationGroupComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -67,4 +68,4 @@ const routes: Routes = [
     NgxMaskModule.forRoot(),
   ]
 })
-export class ReservesModule { }
+export class ReservationModule { }

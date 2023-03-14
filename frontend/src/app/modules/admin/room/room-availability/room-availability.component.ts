@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
@@ -9,8 +9,7 @@ import Swal from 'sweetalert2';
 })
 export class RoomAvailabilityComponent implements OnInit {
 
-  roomId: string;
-  roomAvailabilityId: string;
+  @Input() roomAvailabilityId: string;
   isUpdate: boolean = true; 
 
   roomAvailability = {
@@ -70,15 +69,10 @@ export class RoomAvailabilityComponent implements OnInit {
   }
 
   save(): void {
-  
+    console.log('Inner method called [save]');
   }
 
   update(): void {
-    console.log('update');
+    console.log('Inner method called [update]');
   }
-
-  navigateToList(): void {
-    this.router.navigate(['/admin']);
-  }
-
 }

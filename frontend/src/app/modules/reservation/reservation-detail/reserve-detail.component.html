@@ -109,13 +109,7 @@
                     </div>
 
                     <button class="btn btn-primary mr-2  me-2 float-left">{{ isUpdate ? "Actualizar" : "Guardar" }}</button>
-                    <button class="btn btn-light mr-2  me-2" >Cancelar</button>
-                    <!--<button class="btn btn-primary mr-2  me-2 float-left" [disabled]="txtIdReq?.errors?.required ||
-                                                                     txtMiddleNameReq?.errors?.required || txtLastNameReq?.errors?.required ||
-                                                                     txtUnidadAcademicaReq?.errors?.required || txtPhoneReq?.errors?.required"
-                            (click)="saveOrUpdate()">{{ isUpdate ? "Actualizar" : "Crear" }}</button>
-                    <button class="btn btn-secondary mr-2 me-2 float-right" [hidden]="!isUpdate" (click)="showDeleteConfirmation()">Eliminar</button>
-                    <button class="btn btn-light mr-2  me-2" (click)="navigateToList()">Cancelar</button>-->
+                    <button class="btn btn-light mr-2  me-2" (click)="navigateToCalendar()">Cancelar</button>
                 </div>
             </div>
         </div>

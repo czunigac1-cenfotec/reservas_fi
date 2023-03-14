@@ -1,4 +1,4 @@
-<form novalidate name="frmNewUser">
+<form novalidate name="frmRoomDetail">
     <div class="row">
         <div class="col-md-8 grid-margin stretch-card">
             <div class="card">
@@ -59,19 +59,29 @@
                             <span></span>
                         </label>                           
                         <div class="col-sm-9">
-                            <input type="checkbox" class="form-check-input" id="chkState" [(ngModel)]="room.state">
+                            <input type="checkbox" class="form-check-input" id="chkState" [(ngModel)]="room.state" name="state">
                             <label class="form-check-label" for="chkState">
                               &nbsp;Activo
                             </label>
                         </div>
                     </div>
-                        
-                        <button class="btn btn-primary mr-2  me-2 float-left" [disabled]="txtCodeReq?.errors?.required ||
-                                                                         txtNameReq?.errors?.required || txtDescriptionReq?.errors?.required ||
-                                                                         txtLocationReq?.errors?.required || txtCapacityReq?.errors?.required"
-                                (click)="saveOrUpdate()">{{ isUpdate ? "Actualizar" : "Crear" }}</button>
-                        <button class="btn btn-secondary mr-2 me-2 float-right" [hidden]="!isUpdate" (click)="showDeleteConfirmation()">Eliminar</button>
-                        <button class="btn btn-light mr-2  me-2" (click)="navigateToList()">Cancelar</button>
+                    
+                    <div class="form-group row mb-3">   
+                        <ngb-accordion [closeOthers]="true" activeIds="roomAvailability" [class.collapsed]="true">
+                            <ngb-panel id="roomAvailability" title="Disponibilidad de Sala">
+                              <ng-template ngbPanelContent>
+                                <app-room-availability [roomAvailabilityId]="roomAvailabilityId"></app-room-availability>
+                              </ng-template>
+                            </ngb-panel>
+                          </ngb-accordion>
+                    </div>
+                   
+                    <button class="btn btn-primary mr-2  me-2 float-left" [disabled]="txtCodeReq?.errors?.required ||
+                                                                     txtNameReq?.errors?.required || txtDescriptionReq?.errors?.required ||
+                                                                     txtLocationReq?.errors?.required || txtCapacityReq?.errors?.required"
+                            (click)="saveOrUpdate()">{{ isUpdate ? "Actualizar" : "Crear" }}</button>
+                    <button class="btn btn-secondary mr-2 me-2 float-right" [hidden]="!isUpdate" (click)="showDeleteConfirmation()">Eliminar</button>
+                    <button class="btn btn-light mr-2  me-2" (click)="navigateToList()">Cancelar</button>
                 </div>
             </div>
         </div>

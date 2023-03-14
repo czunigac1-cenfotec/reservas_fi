@@ -13,8 +13,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'reserves',
-        loadChildren: () => import('./modules/reserves/reserves.module').then(m => m.ReservesModule)
+        path: 'reservation',
+        loadChildren: () => import('./modules/reservation/reservation.module').then(m => m.ReservationModule)
       },
       {
         path: 'dashboard',
