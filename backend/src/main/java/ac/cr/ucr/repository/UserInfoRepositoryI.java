@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import ac.cr.ucr.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ac.cr.ucr.service.UserInfoService;
 import ac.cr.ucr.model.UserInfo;
 
 @Service("userInfo")

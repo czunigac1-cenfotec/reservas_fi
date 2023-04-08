@@ -43,6 +43,16 @@ services:
     networks:
       - frontendNetwork
 
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./backend/spec/openapi.json:/openapi.json
+    environment:
+      SWAGGER_JSON: /openapi.json
+
 
 volumes:
   reservas_db:
