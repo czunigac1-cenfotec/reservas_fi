@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "939da542-d45f-4398-b934-cb35fe70e667",
+		"name": "reservas_fi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "reservation_group",
+			"item": [
+				{
+					"name": "new_reservation_group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userUuid\": \"b66c689f-717b-43cc-a355-36ce71d58d3f\",\n    \"schedule\": {\n        \"weekdays\": {\n            \"0\": [\n                {\n                    \"startDateTime\": \"2023-04-09T10:00:00\",\n                    \"endDateTime\": \"2023-04-09T11:00:00\",\n                    \"motive\": \"yes\",\n                    \"notes\": \"testing\",\n                    \"roomUuid\": \"98a19fdb-ad65-4c91-b75f-6a48727359de\"\n                },\n                {\n                    \"startDateTime\": \"2023-04-09T13:00:00\",\n                    \"endDateTime\": \"2023-04-09T15:00:00\",\n                    \"motive\": \"yes\",\n                    \"notes\": \"testing\",\n                    \"roomUuid\": \"98a19fdb-ad65-4c91-b75f-6a48727359de\"\n                }\n            ]\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/reservation-groups",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservation-groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_reservation_group",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user_info",
+			"item": [
+				{
+					"name": "new_user_info",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"testing_user\",\n    \"primerApellido\": \"primer\",\n    \"segundoApellido\": \"segundo\",\n    \"identificacion\": \"115850509\",\n    \"unidadAcademica\": \"test\",\n    \"telefono\": \"87412335\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/userInfo",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reservation",
+			"item": [
+				{
+					"name": "new reservation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"startDateTime\": \"2023-04-09T13:00:00\",\n    \"endDateTime\": \"2023-04-09T15:00:00\",\n    \"motive\": \"yes\",\n    \"notes\": \"testing\",\n    \"roomUuid\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/reservation",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all reservations",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "room",
+			"item": [
+				{
+					"name": "new room",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "room_availability",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "availabilityPeriod",
+			"item": [
+				{
+					"name": "new av Period",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
