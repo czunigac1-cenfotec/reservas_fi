@@ -38,7 +38,7 @@ export const MENU: MenuItem[] = [
       },
       {
         label: 'POC',
-        link: './home/home',
+        link: './reservation/home',
       },
     ]
   },
