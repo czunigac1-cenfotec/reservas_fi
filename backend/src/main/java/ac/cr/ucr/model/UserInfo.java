@@ -1,4 +1,5 @@
 package ac.cr.ucr.model;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -8,7 +9,13 @@ import jakarta.persistence.Id;
 @Entity
 public class UserInfo implements Serializable {
     @Id
-    private UUID userInfoId;
+    private UUID userInfoUuid;
+
+    public void setUserInfoUuid(UUID userInfoUuid) {
+        this.userInfoUuid = userInfoUuid;
+    }
+
+    private String email;
 
     private String nombre;
 
@@ -23,16 +30,19 @@ public class UserInfo implements Serializable {
     private String telefono;
 
     public UserInfo() {
-        this.userInfoId = UUID.randomUUID();
+        this.userInfoUuid = UUID.randomUUID();
     }
 
-    public UserInfo(String nombre,
-                    String primerApellido,
-                    String segundoApellido,
-                    String identificacion,
-                    String unidadAcademica,
-                    String telefono) {
-        this.userInfoId = UUID.randomUUID();
+    public UserInfo(
+            String email,
+            String nombre,
+            String primerApellido,
+            String segundoApellido,
+            String identificacion,
+            String unidadAcademica,
+            String telefono) {
+        this.email = email;
+        this.userInfoUuid = UUID.randomUUID();
         this.nombre = nombre;
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
@@ -41,9 +51,10 @@ public class UserInfo implements Serializable {
         this.telefono = telefono;
     }
 
-    public UUID getUserInfoId() {
-        return userInfoId;
+    public UUID getUserInfoUuid() {
+        return userInfoUuid;
     }
+
     public String getNombre() {
         return nombre;
     }
@@ -92,9 +103,18 @@ public class UserInfo implements Serializable {
         this.telefono = telefono;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
     @Override
     public String toString() {
-        return this.userInfoId.toString();
+        return this.userInfoUuid.toString();
     }
 }
 

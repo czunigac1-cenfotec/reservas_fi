@@ -67,4 +67,14 @@ Ahora que los artefactos necesarios han sido generados, puede ejecutar
  > docker-compose up
  
 Ahora puede ir a [localhost:4200](http://localhost:4200/) y visitar el proyecto desde el frontend.
+
+## Make
+
+El repositorio incluye un Makefile. En una terminal puede ejectuar
+> make up
+
+Para iniciar los contenedores el proyecto.
+
+Para deterner los contenedores puede ejecutar
+> make down
  
