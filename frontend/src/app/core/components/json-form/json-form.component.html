@@ -1,0 +1,34 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Generated Form</h6>
+                    
+                    <div class="form-group row mb-3" *ngFor="let control of jsonFormData?.controls">                            
+                        <label class="col-sm-3 col-form-label" *ngIf="control.label !== ''">{{ control.label }}</label> 
+                        <span class="text-danger form-check-inline" *ngIf="!formGroup.valid ? control.validators.required : false">*</span>
+                        <span class="text-danger form-check-inline"> </span>
+                        <div class="col-sm-9">
+                        <input *ngIf="[
+                                        'text',
+                                        'password',
+                                        'email',
+                                        'number',
+                                        'search',
+                                        'tel',
+                                        'url',
+                                        'checkbox' ].includes(control.type)"
+                            [type]="control.type"
+                            [formControlName]="control.name"
+                            [value]="control.value">
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary mr-2  me-2 float-left" type="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

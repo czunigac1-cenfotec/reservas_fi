@@ -1,0 +1,90 @@
+<form novalidate name="frmRoomDetail">
+    <div class="row">
+        <div class="col-md-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Datos del Sala</h6>
+                    <div class="form-group row mb-3">                            
+                        <label for="txtCode" class="col-sm-3 col-form-label">Código:
+                            <span class="text-danger form-check-inline" *ngIf="txtCodeReq?.errors?.required"> *</span>
+                        </label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" id="txtCode" placeholder="Identificación" name="txtCode"
+                            [(ngModel)]="room.code" #txtCodeReq="ngModel" required maxlength="14" minlength="1" [disabled]="isUpdate">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row mb-3">                            
+                        <label for="txtName" class="col-sm-3 col-form-label">Nombre:
+                            <span class="text-danger form-check-inline" *ngIf="txtNameReq?.errors?.required"> *</span>
+                        </label>
+                        <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtName" autocomplete="off" placeholder="Nombre" name="txtName"
+                                [(ngModel)]="room.name" #txtNameReq="ngModel" required maxlength="30">
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">                            
+                        <label for="txtDescription" class="col-sm-3 col-form-label">Descripción:
+                            <span class="text-danger form-check-inline" *ngIf="txtDescriptionReq?.errors?.required"> *</span>
+                        </label>
+                        <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtDescription" autocomplete="off" placeholder="Descripción" name="txtDescription"
+                                [(ngModel)]="room.description" #txtDescriptionReq="ngModel" required maxlength="30">
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">                            
+                        <label for="txtLocation" class="col-sm-3 col-form-label">Locación:
+                            <span class="text-danger form-check-inline" *ngIf="txtLocationReq?.errors?.required"> *</span>
+                        </label>
+                        <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtLastName" autocomplete="off" placeholder="Ubicación" name="txtLocation"
+                                [(ngModel)]="room.location" #txtLocationReq="ngModel" required maxlength="30">
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">                            
+                        <label for="txtCapacity" class="col-sm-3 col-form-label">Capacidad:
+                            <span class="text-danger form-check-inline" *ngIf="txtCapacityReq?.errors?.required"> *</span>
+                        </label>
+                        <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtCapacity" autocomplete="off" placeholder="Capacidad" name="txtCapacity"
+                                [(ngModel)]="room.capacity" #txtCapacityReq="ngModel" required maxlength="10">
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">                            
+                        <label for="chkState" class="col-sm-3F col-form-label">
+                            <span></span>
+                        </label>                           
+                        <div class="col-sm-9">
+                            <input type="checkbox" class="form-check-input" id="chkState" [(ngModel)]="room.state" name="state">
+                            <label class="form-check-label" for="chkState">
+                              &nbsp;Activo
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row mb-3">   
+                        <ngb-accordion [closeOthers]="true" activeIds="roomAvailability" [class.collapsed]="true">
+                            <ngb-panel id="roomAvailability" title="Disponibilidad de Sala">
+                              <ng-template ngbPanelContent>
+                                <app-room-availability [roomAvailabilityId]="roomAvailabilityId"></app-room-availability>
+                              </ng-template>
+                            </ngb-panel>
+                          </ngb-accordion>
+                    </div>
+                   
+                    <button class="btn btn-primary mr-2  me-2 float-left" [disabled]="txtCodeReq?.errors?.required ||
+                                                                     txtNameReq?.errors?.required || txtDescriptionReq?.errors?.required ||
+                                                                     txtLocationReq?.errors?.required || txtCapacityReq?.errors?.required"
+                            (click)="saveOrUpdate()">{{ isUpdate ? "Actualizar" : "Crear" }}</button>
+                    <button class="btn btn-secondary mr-2 me-2 float-right" [hidden]="!isUpdate" (click)="showDeleteConfirmation()">Eliminar</button>
+                    <button class="btn btn-light mr-2  me-2" (click)="navigateToList()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

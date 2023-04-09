@@ -33,11 +33,11 @@ export class UserDetailComponent implements OnInit {
       if (this.userInfoId === '-1') {
         this.isUpdate = false;
       }else{
-        this.getUserInfo();
+        this.getInfo();
       }
   }
 
-  getUserInfo():void{
+  getInfo():void{
     this.userService.get(this.userInfoId).subscribe({
       next:(data)=>{
         console.log(data);
@@ -54,9 +54,9 @@ export class UserDetailComponent implements OnInit {
 
   saveOrUpdate():void{
     if(this.isUpdate){
-      this.updateUser();
+      this.update();
     }else{
-      this.saveUser();
+      this.save();
     }
   }
 
@@ -69,12 +69,12 @@ export class UserDetailComponent implements OnInit {
       denyButtonText:'',
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        this.deleteUser();
+        this.delete();
       }
     })
   }
 
-  deleteUser(): void {
+  delete(): void {
     this.userService.delete(this.userInfoId).subscribe({
       next:(result)=>{
         Swal.fire({
@@ -103,8 +103,8 @@ export class UserDetailComponent implements OnInit {
     })
   }
 
-  saveUser(): void {
-    console.log('saveUser');
+  save(): void {
+    console.log('save');
     this.user.userInfoId = "00000000-0000-0000-0000-000000000000";
     console.log(this.user);
     this.userService.create(this.user).subscribe({
@@ -134,7 +134,7 @@ export class UserDetailComponent implements OnInit {
     })
   }
 
-  updateUser(): void {
+  update(): void {
     console.log('update');
 
     this.userService.update(this.user).subscribe({
