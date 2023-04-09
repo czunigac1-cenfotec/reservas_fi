@@ -17,8 +17,8 @@ public class ReservationGroup {
     @Column(nullable = false)
     private UUID userUuid;
 
-    @Column(nullable = false)
-    private boolean state;
+    @Column(columnDefinition = "boolean default false")
+    private boolean approvalState;
 
     @ElementCollection
     private List<UUID> reservationUuids;
@@ -27,10 +27,10 @@ public class ReservationGroup {
         this.reservationGroupUuid = UUID.randomUUID();
     }
 
-    public ReservationGroup(UUID userUuid, boolean state, List<UUID> reservationUuids) {
+    public ReservationGroup(UUID userUuid, List<UUID> reservationUuids) {
         this();
         this.userUuid = userUuid;
-        this.state = state;
+        this.approvalState = false;
         this.reservationUuids = reservationUuids;
     }
 
@@ -50,12 +50,12 @@ public class ReservationGroup {
         this.userUuid = userUuid;
     }
 
-    public boolean isState() {
-        return state;
+    public boolean isApprovalState() {
+        return approvalState;
     }
 
-    public void setState(boolean state) {
-        this.state = state;
+    public void setApprovalState(boolean approvalState) {
+        this.approvalState = approvalState;
     }
 
     public List<UUID> getReservationUuids() {
@@ -71,7 +71,7 @@ public class ReservationGroup {
         return "{" +
                 "\"uuid\":\"" + reservationGroupUuid + "\"," +
                 "\"userUuid\":\"" + userUuid + "\"," +
-                "\"state\":\"" + state + "\"," +
+                "\"state\":\"" + approvalState + "\"," +
                 "\"reservationUuids\":\"" + reservationUuids + "\"" +
                 "}";
     }

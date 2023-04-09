@@ -50,4 +50,8 @@ public class ReservationController {
     public boolean deleteReservation(@PathVariable("reservationId") UUID reservationId) {
         return this.reservationService.deleteReservation(reservationId);
     }
+
+    public Reservation createReservation(Reservation newReservation) {
+        return this.reservationService.addReservation(newReservation);
+    }
 }

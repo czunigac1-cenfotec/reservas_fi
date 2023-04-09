@@ -13,7 +13,6 @@ public class Reservation {
     @Id
     private UUID reservationUuid;
 
-    @Column(nullable = false)
     private UUID reservationGroupUuid;
 
     @Column(nullable = false)
@@ -24,7 +23,7 @@ public class Reservation {
 
     private String motive;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "boolean default false")
     private boolean approvalState;
 
     private String notes;
@@ -46,13 +45,12 @@ public class Reservation {
         this.creationDateTime = LocalDateTime.now();
     }
 
-    public Reservation(UUID reservationGroupUuid, LocalDateTime startDateTime, LocalDateTime endDateTime,
-                       boolean approvalState, UUID userUuid, UUID roomUuid) {
+    public Reservation(UUID reservationGroupUuid, LocalDateTime startDateTime, LocalDateTime endDateTime, UUID userUuid, UUID roomUuid) {
         this();
         this.reservationGroupUuid = reservationGroupUuid;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-        this.approvalState = approvalState;
+        this.approvalState = false;
         this.userUuid = userUuid;
         this.roomUuid = roomUuid;
     }

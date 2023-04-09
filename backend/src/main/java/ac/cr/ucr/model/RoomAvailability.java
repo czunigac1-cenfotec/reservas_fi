@@ -1,9 +1,11 @@
 package ac.cr.ucr.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -37,6 +39,9 @@ public class RoomAvailability {
     @Column(nullable = false)
     private boolean privateReservationEnabled;
 
+    @ElementCollection
+    private List<UUID> availabilityPeriods;
+
     public RoomAvailability() {
         this.roomAvailabilityUuid = UUID.randomUUID();
         this.creationDateTime = LocalDateTime.now();
@@ -44,7 +49,8 @@ public class RoomAvailability {
 
     public RoomAvailability(int minReservationTime, int maxReservationTime, boolean approvalRequired,
                             UUID administratorUuid, LocalDateTime startDateTime, LocalDateTime endDateTime,
-                            boolean privateReservationEnabled) {
+                            boolean privateReservationEnabled,
+                            List<UUID> availabilityPeriods) {
         this();
         this.minReservationTime = minReservationTime;
         this.maxReservationTime = maxReservationTime;
@@ -53,6 +59,8 @@ public class RoomAvailability {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.privateReservationEnabled = privateReservationEnabled;
+        this.availabilityPeriods = availabilityPeriods;
+        this.creationDateTime = LocalDateTime.now();
     }
 
     public UUID getRoomAvailabilityUuid() {
@@ -127,10 +135,19 @@ public class RoomAvailability {
         this.privateReservationEnabled = privateReservationEnabled;
     }
 
+
+    public List<UUID> getAvailabilityPeriods() {
+        return availabilityPeriods;
+    }
+
+    public void setAvailabilityPeriods(List<UUID> availabilityPeriods) {
+        this.availabilityPeriods = availabilityPeriods;
+    }
+
     @Override
     public String toString() {
         return "{" +
-                "\"availabilityPeriodUuid\":\"" + roomAvailabilityUuid + "\"," +
+                "\"roomAvailabilityUuid\":\"" + roomAvailabilityUuid + "\"," +
                 "\"minReservationTime\":\"" + minReservationTime + "\"," +
                 "\"maxReservationTime\":\"" + maxReservationTime + "\"," +
                 "\"approvalRequired\":\"" + approvalRequired + "\"," +

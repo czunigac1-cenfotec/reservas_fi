@@ -114,7 +114,7 @@ public class Room implements Serializable {
                 + "\"name\": \"" + name + "\", "
                 + "\"description\": \"" + description + "\", "
                 + "\"location\": \"" + location + "\", "
-                + "\"capacity\": " + capacity + ", "
+                + "\"capacity\": " + "capacity" + ", "
                 + "\"administratorUuid\": \"" + administratorUuid + "\", "
                 + "\"creationDate\": \"" + creationDateTime.toString() + "\""
                 + "}";
