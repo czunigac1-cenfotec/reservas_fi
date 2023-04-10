@@ -26,7 +26,7 @@ public class ResourceController {
         return ResponseEntity.ok(resource);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Resource>> getAllResources() {
         List<Resource> resources = resourceService.findAllResources();
         if (resources.isEmpty()) {
