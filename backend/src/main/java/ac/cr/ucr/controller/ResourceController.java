@@ -35,7 +35,7 @@ public class ResourceController {
         return ResponseEntity.ok(resources);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Resource> addResource(@RequestBody Resource resource) {
         Resource newResource = resourceService.addResource(resource);
         if (newResource == null) {
