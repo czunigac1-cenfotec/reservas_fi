@@ -77,6 +77,7 @@
                                 <ng-select 
                                 [items]="approvalStatus"
                                 id="selApprovalState"
+                                name="selApprovalState"
                                 bindLabel="value"
                                 bindValue="key"
                                 placeholder="type to search"
@@ -100,10 +101,10 @@
                                 <ng-select 
                                 [items]="rooms"
                                 id="selRoom"
-                                bindLabel="value"
-                                bindValue="key"
-                                placeholder="type to search"
-                                [(ngModel)]="rooms">
+                                name="selRoom"
+                                bindLabel="name"
+                                bindValue="roomUuid"
+                                placeholder="type to search">
                             </ng-select>
                         </div>
                     </div>

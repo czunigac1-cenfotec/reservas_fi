@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { RoomAvailabilityComponent } from '../room-availability/room-availability.component';
+import { RoomService } from 'src/app/core/services/room.service';
 
 @Component({
   selector: 'app-room-detail',
@@ -24,11 +25,13 @@ export class RoomDetailComponent implements OnInit {
     state:0,
     capacity:'',
     creationDate:'',
-    roomUuid:"00000000-0000-0000-0000-0000000000",
-    roomAvailabilityId: ''
+    roomAvailabilityId: '',
+    administratorUuid:''
   }
+  //room.roomUuid
 
   constructor( private activeRoute: ActivatedRoute,
+               private roomService: RoomService,
                private router: Router) { }
 
   ngOnInit(): void {
@@ -42,7 +45,18 @@ export class RoomDetailComponent implements OnInit {
   }
 
   getInfo():void{
-    
+    this.roomService.get(this.roomId).subscribe({
+      next:(data)=>{
+        console.log(data);
+        this.room = data;
+      },
+      error:(e)=>{
+        console.log(e);
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })
   }
 
   saveOrUpdate():void{
@@ -55,7 +69,7 @@ export class RoomDetailComponent implements OnInit {
 
   showDeleteConfirmation() : void {
     Swal.fire({
-      title: '¿Desea eliminar el usuario?',
+      title: '¿Desea eliminar la sala?',
       showDenyButton: false,
       showCancelButton: true,
       confirmButtonText: 'Eliminar',
@@ -68,17 +82,92 @@ export class RoomDetailComponent implements OnInit {
   }
 
   delete(): void { 
-    console.log('delete');
+    this.roomService.delete(this.roomId).subscribe({
+      next:(result)=>{
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Sala eliminada correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(result => {
+          this.navigateToList();
+        })
+      },
+      error:(e)=>{
+        console.log(e);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Code:' + e.status + '| Detail:' + e.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })
   }
 
   save(): void {
     console.log('save');
-    this.roomAvailabilityComponent.save();
+    console.log(this.room);
+    this.roomService.create(this.room).subscribe({
+      next:(result)=>{
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Sala registrada correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(result => {
+          this.navigateToList();
+        })
+      },
+      error:(e)=>{
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Se ha producido un error: ' + e.status + '\n| Detalles:' + e.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })
+
+    //this.roomAvailabilityComponent.save();
   }
 
   update(): void {
-    console.log('update');
-    this.roomAvailabilityComponent.update();
+    this.roomService.update(this.room, this.roomId).subscribe({
+      next:(result)=>{
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Sala actualizada correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      },
+      error:(e)=>{
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Error:' + e.status + '| Detalle:' + e.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })
+    
+    //this.roomAvailabilityComponent.update();
   }
 
   navigateToList(): void {
