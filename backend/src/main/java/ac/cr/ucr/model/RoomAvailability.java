@@ -16,6 +16,8 @@ public class RoomAvailability {
     private UUID roomAvailabilityUuid;
 
     @Column(nullable = false)
+    private UUID roomUuid;
+    @Column(nullable = false)
     private int minReservationTime;
 
     @Column(nullable = false)
@@ -47,20 +49,29 @@ public class RoomAvailability {
         this.creationDateTime = LocalDateTime.now();
     }
 
-    public RoomAvailability(int minReservationTime, int maxReservationTime, boolean approvalRequired,
+    public RoomAvailability(UUID roomUUID, int minReservationTime, int maxReservationTime,
                             UUID administratorUuid, LocalDateTime startDateTime, LocalDateTime endDateTime,
                             boolean privateReservationEnabled,
                             List<UUID> availabilityPeriods) {
         this();
+        this.roomUuid = roomUUID;
         this.minReservationTime = minReservationTime;
         this.maxReservationTime = maxReservationTime;
-        this.approvalRequired = approvalRequired;
+        this.approvalRequired = false;
         this.administratorUuid = administratorUuid;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.privateReservationEnabled = privateReservationEnabled;
         this.availabilityPeriods = availabilityPeriods;
         this.creationDateTime = LocalDateTime.now();
+    }
+
+    public UUID getRoomUuid() {
+        return roomUuid;
+    }
+
+    public void setRoomUuid(UUID roomUuid) {
+        this.roomUuid = roomUuid;
     }
 
     public UUID getRoomAvailabilityUuid() {

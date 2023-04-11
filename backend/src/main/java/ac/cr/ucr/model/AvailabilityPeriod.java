@@ -14,6 +14,8 @@ public class AvailabilityPeriod {
     private UUID availabilityPeriodUuid;
 
     @Column(nullable = false)
+    private UUID roomAvailabilityUuid;
+    @Column(nullable = false)
     private int weekday;
 
     @Column(nullable = false)
@@ -36,13 +38,22 @@ public class AvailabilityPeriod {
         this.creationDateTime = LocalDateTime.now();
     }
 
-    public AvailabilityPeriod(int weekday, int startTimeHour, int startTimeMinutes, int endTimeHour, int endTimeMinutes) {
+    public AvailabilityPeriod(UUID roomAvailabilityUuid, int weekday, int startTimeHour, int startTimeMinutes, int endTimeHour, int endTimeMinutes) {
         this();
+        this.roomAvailabilityUuid = roomAvailabilityUuid;
         this.weekday = weekday;
         this.startTimeHour = startTimeHour;
         this.startTimeMinutes = startTimeMinutes;
         this.endTimeHour = endTimeHour;
         this.endTimeMinutes = endTimeMinutes;
+    }
+
+    public UUID getRoomAvailabilityUuid() {
+        return roomAvailabilityUuid;
+    }
+
+    public void setRoomAvailabilityUuid(UUID roomAvailabilityUuid) {
+        this.roomAvailabilityUuid = roomAvailabilityUuid;
     }
 
     public UUID getAvailabilityPeriodUuid() {
