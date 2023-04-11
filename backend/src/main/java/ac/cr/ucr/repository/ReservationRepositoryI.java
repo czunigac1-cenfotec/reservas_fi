@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import ac.cr.ucr.logic.controllerBroker.RoomAvailabilityBroker;
+import ac.cr.ucr.logic.io.InvalidDateTimeException;
+import ac.cr.ucr.logic.io.InvalidEventDurationException;
+import ac.cr.ucr.service.AvailabilityPeriodService;
+import ac.cr.ucr.service.RoomAvailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +20,15 @@ public class ReservationRepositoryI implements ReservationService {
 
     @Autowired
     private ReservationRepository repository;
+
+    @Autowired
+    private RoomAvailabilityService roomAvailabilityService;
+    @Autowired
+    private AvailabilityPeriodService availabilityPeriodService;
+
+    @Autowired
+    private RoomAvailabilityBroker roomAvailabilityBroker;
+
 
     @Override
     public Reservation findReservation(UUID reservationId) {
@@ -29,7 +43,10 @@ public class ReservationRepositoryI implements ReservationService {
 
     @Override
     public Reservation addReservation(Reservation reservation) {
-        return repository.save(reservation);
+        if (roomAvailabilityBroker.isRoomAvailable(reservation)) {
+            return repository.save(reservation);
+        }
+        return null;
     }
 
     @Override
