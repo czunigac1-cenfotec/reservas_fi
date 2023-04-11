@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ApprobalStatusList } from 'src/app/core/dummy-datas/approval_status.data';
 import { RoomList } from 'src/app/core/dummy-datas/room.data';
+import { ReservationService } from 'src/app/core/services/reservation.service';
+import { RoomService } from 'src/app/core/services/room.service';
 
 @Component({
   selector: 'app-reserve-detail',
@@ -28,13 +30,15 @@ export class ReservationDetailComponent implements OnInit {
   }
 
   approvalStatus: ApprobalStatusList[] = [];
-  rooms: RoomList[] = [];
+  rooms: [];
 
   time = {};
   defaultTimepickerCode: any;
 
   constructor(private activeRoute: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private roomService: RoomService,
+              private reservationService: ReservationService) { }
 
   ngOnInit(): void {
     
@@ -60,18 +64,42 @@ export class ReservationDetailComponent implements OnInit {
                              };   
     });
 
+    this.approvalStatus = ApprobalStatusList.status;
+    this.getRoomsList();
+
     if (this.reserveId === '-1') {
       this.isUpdate = false;
     }else{
       this.getReserveInfo();
     }
-
-    this.approvalStatus = ApprobalStatusList.status;
-    this.rooms = RoomList.status;
   }
 
   getReserveInfo():void{
     console.log("get info");  
+  }
+
+  getRoomsList(): void{
+
+    this.roomService.getAll().subscribe({
+      next:(data)=>{
+
+        console.log(data);   
+
+        if (data.length >= 1) {
+          for (const room of data)
+          {
+            console.log(room.code);
+            this.rooms = data;
+          }
+        } 
+      },
+      error:(e)=>{
+        console.log(e);
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })              
   }
 
   navigateToCalendar(): void {

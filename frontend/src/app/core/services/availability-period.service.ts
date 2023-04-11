@@ -3,12 +3,12 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {SERVER_API_URL} from "../../app.constants";
 
-const serviceUrl = SERVER_API_URL + 'userInfo';
+const serviceUrl = SERVER_API_URL + 'availabilityPeriod';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class AvailabilityPeriodService {
 
   constructor(private http: HttpClient) { }
 
@@ -24,11 +24,12 @@ export class UserService {
     return this.http.post(serviceUrl, pData);
   }
 
-  update(pData: any, pUuid:any): Observable<any> {
+  update(pData: any, pUuid: any): Observable<any> {
     return this.http.put(`${serviceUrl}/${pUuid}`, pData);
   }
 
   delete(pUuid: any): Observable<any> {
     return this.http.delete(`${serviceUrl}/${pUuid}`);
   }
+  
 }

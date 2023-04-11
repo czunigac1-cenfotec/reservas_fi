@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
+import { ResourceService } from 'src/app/core/services/resource.service';
 
 @Component({
   selector: 'app-resource-list',
@@ -10,7 +11,8 @@ import { DataTable } from 'simple-datatables';
 export class ResourceListComponent implements OnInit {
 
   constructor(private router: Router,
-    private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private service: ResourceService) { }
 
   resourcesDataTable: any;
 
@@ -36,20 +38,30 @@ export class ResourceListComponent implements OnInit {
 
     var resource: any;
 
-    resource = {
-      code: '100',
-      name: 'Cámara',
-      description: 'Cámara en HD'
-    }
+    this.service.getAll().subscribe({
+      next:(data)=>{
 
-    dataTableRows.push([
-      resource.code,
-      resource.name,
-      resource.description,
-      `<a href="/admin/resource-detail/${resource.code}">Ver Detalles</a>`
-    ]);
+        console.log(data);   
 
-    this.resourcesDataTable.rows().add(dataTableRows);
+        if (data.length >= 1) {
+          for (const resource of data) {
+            dataTableRows.push([
+              resource.name,
+              resource.description,
+              `<a href="/admin/resource-detail/${resource.resourceUuid}">Ver Detalles</a>`
+            ]);
+          }
+
+          this.resourcesDataTable.rows().add(dataTableRows);
+        } 
+      },
+      error:(e)=>{
+        console.log(e);
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })              
   }
 
   new(): void {

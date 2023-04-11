@@ -61,7 +61,7 @@ const routes: Routes = [
     component: ResourceListComponent,
   },
   {
-    path: 'resource-detail',
+    path: 'resource-detail/:resourceId',
     component: ResourceDetailComponent,
   } 
 ]
