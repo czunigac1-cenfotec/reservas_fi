@@ -13,7 +13,9 @@ public interface RoomAvailabilityService {
 
     RoomAvailability addRoomAvailability(RoomAvailability roomAvailability);
 
-    RoomAvailability updateRoomAvailabilityRoom (RoomAvailability roomAvailability, UUID uuid);
+    RoomAvailability updateRoomAvailability (RoomAvailability roomAvailability, UUID uuid);
+
+    RoomAvailability findRoomAvailabilityByRoomUuid(UUID roomUuid);
 
     boolean deleteRoomAvailability(UUID roomAvailabilityId);
 }
