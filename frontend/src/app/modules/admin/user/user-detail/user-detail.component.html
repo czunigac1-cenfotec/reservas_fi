@@ -45,6 +45,16 @@
                     </div>
 
                     <div class="form-group row mb-3">                            
+                        <label for="txtEmail" class="col-sm-3 col-form-label">Correo Electrónico:
+                            <span class="text-danger form-check-inline" *ngIf="txtEmailReq?.errors?.required"> *</span>
+                        </label>
+                        <div class="col-sm-9">
+                        <input type="email" class="form-control" id="txtEmail" autocomplete="off" placeholder="Correo Electrónico" name="txtEmail"
+                                [(ngModel)]="user.email" #txtEmailReq="ngModel" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">                            
                         <label for="txtUnidadAcademica" class="col-sm-3 col-form-label">Unidad Académica:
                             <span class="text-danger form-check-inline" *ngIf="txtUnidadAcademicaReq?.errors?.required"> *</span>
                         </label>
@@ -66,7 +76,7 @@
                         
                         <button class="btn btn-primary mr-2  me-2 float-left" [disabled]="txtIdReq?.errors?.required ||
                                                                          txtMiddleNameReq?.errors?.required || txtLastNameReq?.errors?.required ||
-                                                                         txtUnidadAcademicaReq?.errors?.required || txtPhoneReq?.errors?.required"
+                                                                         txtUnidadAcademicaReq?.errors?.required || txtPhoneReq?.errors?.required || txtEmailReq?.errors?.required"
                                 (click)="saveOrUpdate()">{{ isUpdate ? "Actualizar" : "Crear" }}</button>
                         <button class="btn btn-secondary mr-2 me-2 float-right" [hidden]="!isUpdate" (click)="showDeleteConfirmation()">Eliminar</button>
                         <button class="btn btn-light mr-2  me-2" (click)="navigateToList()">Cancelar</button>
