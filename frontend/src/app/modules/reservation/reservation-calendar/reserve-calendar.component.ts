@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/angular';
 import { Draggable } from '@fullcalendar/interaction'; // for dateClick
 import { INITIAL_EVENTS, createEventId } from './event-utils';
+import { ReservationService } from 'src/app/core/services/reservation.service';
 
 @Component({
   selector: 'app-reserve-calendar',
@@ -13,6 +14,8 @@ import { INITIAL_EVENTS, createEventId } from './event-utils';
 export class ReservationCalendarComponent implements OnInit {
   @ViewChild('externalEvents', {static: true}) externalEvents: ElementRef;
 
+  reservations: any = [];
+
   calendarOptions: CalendarOptions = {
     headerToolbar: {
       left: 'prev,today,next',
@@ -20,7 +23,7 @@ export class ReservationCalendarComponent implements OnInit {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
     initialView: 'timeGridWeek',
-    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    initialEvents: '', // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
     selectable: true,
@@ -43,10 +46,13 @@ export class ReservationCalendarComponent implements OnInit {
   currentEvents: EventApi[] = [];
 
   constructor(private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private reservationService: ReservationService) { }
 
-  ngOnInit(): void {  }
-
+  ngOnInit(): void 
+  { 
+    this.getResevations();
+  }
 
   handleDateSelect(selectInfo: DateSelectArg) {
     console.log('handleDateSelect');
@@ -67,17 +73,17 @@ export class ReservationCalendarComponent implements OnInit {
       });
     }*/
 
-    debugger;
-
-
     this.router.navigate([`/reservation/reservation-detail/-1/${selectInfo.startStr}/${selectInfo.endStr}`])
    // this.router.navigate([`/reservation/reservation-detail/"-1"/${selectInfo.startStr}/${selectInfo.endStr}`]);
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+    
+    this.router.navigate([`/reservation/reservation-detail/${clickInfo.event.id}/${clickInfo.event.startStr}/${clickInfo.event.endStr}`])
+
+    /*if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
       clickInfo.event.remove();
-    }
+    }*/
   }
 
   handleEvents(events: EventApi[]) {
@@ -85,4 +91,39 @@ export class ReservationCalendarComponent implements OnInit {
   }
 
 
+  getResevations(): void {
+
+    this.reservationService.getAll().subscribe({
+      next: (data) => {
+
+        console.log(data);
+
+        if (data.length >= 1) {
+          for (const reservation of data) {
+            console.log(JSON.stringify(reservation));
+            
+            var event = {
+              id: reservation.reservationUuid,
+              start: reservation.startDateTime,
+              end: reservation.endDateTime,
+              title: 'Reserva ' ,
+              backgroundColor: 'rgba(241,0,117,.25)',
+              borderColor: '#f10075'
+            }
+
+            this.reservations.push(event);
+          }
+          debugger;
+
+          this.calendarOptions.events = this.reservations;
+        }
+      },
+      error: (e) => {
+        console.log(e);
+      },
+      complete: () => {
+        console.log("done");
+      }
+    })
+  }
 }
