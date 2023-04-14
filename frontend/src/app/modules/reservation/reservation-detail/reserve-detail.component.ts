@@ -20,7 +20,8 @@ export class ReservationDetailComponent implements OnInit {
   formatter: NgbDateParserFormatter;
 
   reservation = {
-    reservationGroupUuid: "",
+    reservationUuid:"",
+    reservationGroupUuid: "1aff8563-1391-4a79-8919-7ec05ee14b44",
     roomUuid: "",
     startDateTime: { hour: 13, minute: 30 },
     endDateTime: { hour: 13, minute: 30 },
@@ -39,7 +40,7 @@ export class ReservationDetailComponent implements OnInit {
   resources: [];
   selectedResources: any = null;
   selectedRoom: string = '';
-  selectedState:string = '';
+  selectedState: string = '';
   time = {};
   defaultTimepickerCode: any;
 
@@ -92,10 +93,59 @@ export class ReservationDetailComponent implements OnInit {
 
   getReserveInfo(): void {
     console.log("get info");
+
+    this.reservationService.get(this.reserveId).subscribe({
+      next: (data) => {
+        console.log(JSON.stringify(data));
+        
+        this.reservation.startDateTime = {
+          hour: parseInt(data.startDateTime.split("T")[1].split(":")[0]),
+          minute: parseInt(data.startDateTime.split("T")[1].split(":")[1])
+        };
+  
+        this.reservation.beginDate = {
+          "year": parseInt(data.startDateTime.split("T")[0].split("-")[0]),
+          "month": parseInt(data.startDateTime.split("T")[0].split("-")[1]),
+          "day": parseInt(data.startDateTime.split("T")[0].split("-")[2])
+        };
+  
+        this.reservation.endDateTime = {
+          hour: parseInt(data.endDateTime.split("T")[1].split(":")[0]),
+          minute: parseInt(data.endDateTime.split("T")[1].split(":")[1])
+        };
+  
+        this.reservation.endDate = {
+          "year": parseInt(data.endDateTime.split("T")[0].split("-")[0]),
+          "month": parseInt(data.endDateTime.split("T")[0].split("-")[1]),
+          "day": parseInt(data.endDateTime.split("T")[0].split("-")[2])
+        };
+        
+        this.reservation.reservationUuid = data.reservationUuid;
+        this.reservation.reservationGroupUuid = data.reservationGroupUuid;
+        this.reservation.roomUuid = data.roomUuid;
+        //this.reservation.resourceUuids = data.resourceUuids;
+        this.reservation.groupId = data.groupId;
+        this.reservation.motive = data.motive;
+        this.reservation.approvalState = data.approvalState;
+        this.reservation.notes = data.notes;
+        this.reservation.userId = data.userId;
+        this.reservation.creationDate = data.creationDate;
+  
+        this.selectedResources = data.resourceUuids;
+        this.selectedRoom = data.roomUuid;
+        this.selectedState = data.approvalState;
+      
+      },
+      error: (e) => {
+        console.log(e);
+      },
+      complete: () => {
+        console.log("done");
+      }
+    })
   }
 
   getRoomsList(): void {
-
     this.roomService.getAll().subscribe({
       next: (data) => {
 
@@ -262,7 +312,8 @@ export class ReservationDetailComponent implements OnInit {
       roomUuid: this.selectedRoom,
       //TODO: Get it from local storage
       userUuid:"3afd91e5-ebcd-468a-b03e-5b63266d21d7",
-      resourceUuids:this.selectedResources
+      resourceUuids:this.selectedResources,
+      reservationUuid:this.reservation.reservationUuid
     }
 
     return newReservation;
