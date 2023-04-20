@@ -10,7 +10,7 @@
                         </label>
                             <div class="col-sm-9">
                             <input type="text" class="form-control" id="txtName" placeholder="Nombre" name="txtId"
-                            [(ngModel)]="resource.name" #txtNameReq="ngModel" required maxlength="14" minlength="25">
+                            [(ngModel)]="resource.name" #txtNameReq="ngModel" required maxlength="120" minlength="50">
                         </div>
                     </div>
                     
@@ -20,7 +20,7 @@
                         </label>
                         <div class="col-sm-9">
                         <textarea class="form-control" id="txtDescription" autocomplete="off" placeholder="Descripción" name="txtDescription"
-                                [(ngModel)]="resource.description" #txtDescriptionReq="ngModel" required maxlength="50"></textarea>
+                                [(ngModel)]="resource.description" #txtDescriptionReq="ngModel" required maxlength="250"></textarea>
                         </div>
                     </div>
 
