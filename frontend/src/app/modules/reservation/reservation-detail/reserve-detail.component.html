@@ -5,15 +5,12 @@
                 <div class="card-body">
                     <h6 class="card-title">Detalle de reserva</h6>
                     <div class="form-group row mb-3">
-                        <label for="txtReservationGroupId" class="col-sm-3 col-form-label">Grupo:
-                            <span class="text-danger form-check-inline" *ngIf="txtReservationGroupId?.errors?.required">
-                                *</span>
-                        </label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtReservationGroupId" autocomplete="off"
-                                placeholder="Identificador de grupo" name="txtReservationGroupId"
-                                [(ngModel)]=reservation.reservationGroupUuid #txtReservationGroupId="ngModel" required
-                                maxlength="30">
+                        <label for="txtReservationGroupId" class="col-sm-2 col-form-label">Horario Recursivo</label>
+                        <div class="col-sm-10">
+                            <button class="btn btn-outline-primary btn-icon calendar" type="button"
+                                (click)="openScheduleModel(scheduleModal)">
+                                <i data-feather="calendar" appFeatherIcon></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group row mb-3">
@@ -63,7 +60,7 @@
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="txtMotive" autocomplete="off"
                                 placeholder="Motivo" name="txtMotive" [(ngModel)]=reservation.motive
-                                #txtMotive="ngModel" required maxlength="30">
+                                #txtMotive="ngModel" maxlength="30">
                         </div>
                     </div>
                     <div class="form-group row mb-3">
@@ -80,16 +77,15 @@
                         </label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="txtNotes" autocomplete="off" placeholder="Notas"
-                                name="txtNotes" [(ngModel)]=reservation.notes #txtNotesReq="ngModel"
-                                maxlength="120">
+                                name="txtNotes" [(ngModel)]=reservation.notes #txtNotesReq="ngModel" maxlength="120">
                         </div>
                     </div>
                     <div class="form-group row mb-3">
                         <label for="selRoom" class="col-sm-3 col-form-label">Salas:
                         </label>
                         <div class="col-sm-9">
-                            <ng-select [items]="rooms" id="selRoom" name="selRoom" bindLabel="name" bindValue="roomUuid" [(ngModel)]="selectedRoom"
-                                placeholder="type to search">
+                            <ng-select [items]="rooms" id="selRoom" name="selRoom" bindLabel="name" bindValue="roomUuid"
+                                [(ngModel)]="selectedRoom" placeholder="type to search">
                             </ng-select>
                         </div>
                     </div>
@@ -118,12 +114,164 @@
                         </div>-->
 
                     </div>
-                    <button class="btn btn-primary mr-2  me-2 float-left" [disabled]="txtReservationGroupId?.errors?.required || txtMotive?.errors?.required"
-                            (click)="saveOrUpdate()">{{ isUpdate ? "Actualizar" : "Crear" }}</button>
-                    <button class="btn btn-secondary mr-2 me-2 float-right" [hidden]="!isUpdate" (click)="showDeleteConfirmation()">Eliminar</button>
+                    <button class="btn btn-primary mr-2  me-2 float-left" (click)="saveOrUpdate()">{{ isUpdate ?
+                        "Actualizar" : "Crear" }}</button>
+                    <button class="btn btn-secondary mr-2 me-2 float-right" [hidden]="!isUpdate"
+                        (click)="showDeleteConfirmation()">Eliminar</button>
                     <button class="btn btn-light mr-2  me-2" (click)="navigateToCalendar()">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <ng-template #scheduleModal let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">Horario Recursivo</h5>
+            <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row grid-margin">
+                <div class="col-12 stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-12 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="form-group row mb-3">
+                                                    <div class="btn-group btn-group-toggle" ngbRadioGroup
+                                                        name="radioBasic" [(ngModel)]="selectedDay" required>
+                                                        <label ngbButtonLabel class="btn-outline-primary">
+                                                            <input ngbButton type="radio" class="btn-check"
+                                                                [value]=0>Lunes
+                                                        </label>
+                                                        <label ngbButtonLabel class="btn-outline-primary">
+                                                            <input ngbButton type="radio" class="btn-check"
+                                                                [value]=1>Martes
+                                                        </label>
+                                                        <label ngbButtonLabel class="btn-outline-primary">
+                                                            <input ngbButton type="radio" class="btn-check"
+                                                                [value]=2>Miércoles
+                                                        </label>
+                                                        <label ngbButtonLabel class="btn-outline-primary">
+                                                            <input ngbButton type="radio" class="btn-check"
+                                                                [value]=3>Jueves
+                                                        </label>
+                                                        <label ngbButtonLabel class="btn-outline-primary">
+                                                            <input ngbButton type="radio" class="btn-check"
+                                                                [value]=4>Viernes
+                                                        </label>
+
+                                                        <label ngbButtonLabel class="btn-outline-primary">
+                                                            <input ngbButton type="radio" class="btn-check"
+                                                                [value]=5>Sábado
+                                                        </label>
+
+                                                        <label ngbButtonLabel class="btn-outline-primary">
+                                                            <input ngbButton type="radio" class="btn-check"
+                                                                [value]=6>Domingo
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-3">
+                                                    <div class="form-group row mb-3">
+                                                        <div class="col col-sm-6">
+                                                            <label for="selScheduleBeginDate"
+                                                                class="col-sm-12 col-form-label">Fecha de
+                                                                inicio:</label>
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group">
+                                                                    <input class="form-control" placeholder="yyyy-mm-dd"
+                                                                        name="selScheduleBeginDate"
+                                                                        [(ngModel)]=reservation.beginDate ngbDatepicker
+                                                                        #a="ngbDatepicker" />
+                                                                    <button
+                                                                        class="btn btn-outline-secondary bi bi-calendar3"
+                                                                        (click)="a.toggle()" type="button"></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-sm-6">
+                                                            <label for="selScheduleEndDate"
+                                                                class="col-sm-12 col-form-label">Fecha de
+                                                                fin:</label>
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group">
+                                                                    <input class="form-control" placeholder="yyyy-mm-dd"
+                                                                        name="selScheduleEndDate"
+                                                                        [(ngModel)]=reservation.endDate ngbDatepicker
+                                                                        #b="ngbDatepicker" />
+                                                                    <button
+                                                                        class="btn btn-outline-secondary bi bi-calendar3"
+                                                                        (click)="b.toggle()" type="button"></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row mb-3">
+                                                        <div class="col col-sm-6">
+                                                            <label for="selScheduleBeginTime"
+                                                                class="col-sm-12 col-form-label">Hora de
+                                                                inicio:</label>
+                                                            <div class="col-sm-9">
+                                                                <ngb-timepicker id="selScheduleBeginTime"
+                                                                    [(ngModel)]=reservation.startDateTime
+                                                                    name="selBeginTime"></ngb-timepicker>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-sm-6">
+                                                            <label for="selScheduleEndTime"
+                                                                class="col-sm-12 col-form-label">Hora de
+                                                                fin:</label>
+                                                            <div class="col-sm-9">
+                                                                <ngb-timepicker id="selScheduleEndTime"
+                                                                    [(ngModel)]=reservation.endDateTime
+                                                                    name="selEndTime"></ngb-timepicker>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row mb-3">
+                                                        <div class="col col-sm-6">
+                                                            <button type="button" class="btn btn-primary"
+                                                                (click)="addNewSchedule()">Agregar Horario</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+                                    <div>
+                                        <h4 class="mb-3 mb-md-0">Horarios disponibles</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="scheduleDataTable" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Día de la semana</th>
+                                            <th>Hora de inicio</th>
+                                            <th>Hora de fin</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+            <button type="button" class="btn btn-primary" (click)="saveSchedules()">Guardar cambios</button>
+        </div>
+    </ng-template>
+    <!-- Close result -->
 </form>
