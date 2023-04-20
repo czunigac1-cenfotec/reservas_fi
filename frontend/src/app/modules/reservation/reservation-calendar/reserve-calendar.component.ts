@@ -5,6 +5,7 @@ import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullca
 import { Draggable } from '@fullcalendar/interaction'; // for dateClick
 import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { ReservationService } from 'src/app/core/services/reservation.service';
+import { RoomService } from 'src/app/core/services/room.service';
 
 @Component({
   selector: 'app-reserve-calendar',
@@ -47,6 +48,7 @@ export class ReservationCalendarComponent implements OnInit {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
+              private roomService: RoomService,
               private reservationService: ReservationService) { }
 
   ngOnInit(): void 
@@ -90,7 +92,6 @@ export class ReservationCalendarComponent implements OnInit {
     this.currentEvents = events;
   }
 
-
   getResevations(): void {
 
     this.reservationService.getAll().subscribe({
@@ -99,23 +100,23 @@ export class ReservationCalendarComponent implements OnInit {
         console.log(data);
 
         if (data.length >= 1) {
-          for (const reservation of data) {
+
+          for(const reservation of data) {
+            var roomName = '';
             console.log(JSON.stringify(reservation));
-            
+
             var event = {
               id: reservation.reservationUuid,
               start: reservation.startDateTime,
               end: reservation.endDateTime,
-              title: 'Reserva ' ,
+              title: reservation.motive,
               backgroundColor: 'rgba(241,0,117,.25)',
               borderColor: '#f10075'
             }
 
             this.reservations.push(event);
-          }
-          debugger;
 
-          this.calendarOptions.events = this.reservations;
+          }
         }
       },
       error: (e) => {
@@ -123,7 +124,16 @@ export class ReservationCalendarComponent implements OnInit {
       },
       complete: () => {
         console.log("done");
+        this.calendarOptions.events = this.reservations;
       }
     })
+  }
+
+  getRoomInfo(roomId:string):void{
+    
+  }
+
+  insertCalendarEvent(){
+
   }
 }

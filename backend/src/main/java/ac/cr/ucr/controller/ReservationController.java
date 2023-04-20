@@ -63,7 +63,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{uuid}")
-    public boolean deleteReservation(@PathVariable("reservationId") UUID reservationId) {
+    public boolean deleteReservation(@PathVariable("uuid") UUID reservationId) {
         return this.reservationService.deleteReservation(reservationId);
     }
 
