@@ -1,13 +1,11 @@
-package ac.cr.ucr.service;
+package ac.cr.ucr.repository.functional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import ac.cr.ucr.model.Reservation;
 import ac.cr.ucr.model.Room;
 
-public interface RoomService {
+public interface RoomInterface {
     Room findRoom(UUID roomId);
 
     List<Room> findAllRooms();

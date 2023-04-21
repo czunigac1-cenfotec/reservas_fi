@@ -4,31 +4,23 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import ac.cr.ucr.logic.controllerBroker.RoomAvailabilityBroker;
-import ac.cr.ucr.logic.io.InvalidDateTimeException;
-import ac.cr.ucr.logic.io.InvalidEventDurationException;
-import ac.cr.ucr.service.AvailabilityPeriodService;
-import ac.cr.ucr.service.RoomAvailabilityService;
+import ac.cr.ucr.logic.service.RoomAvailabilityService;
+import ac.cr.ucr.repository.functional.AvailabilityPeriodInterface;
+import ac.cr.ucr.repository.functional.RoomAvailabilityInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ac.cr.ucr.model.Reservation;
-import ac.cr.ucr.service.ReservationService;
+import ac.cr.ucr.repository.functional.ReservationInterface;
 
 @Service("reservation")
-public class ReservationRepositoryI implements ReservationService {
+public class ReservationRepositoryI implements ReservationInterface {
 
     @Autowired
     private ReservationRepository repository;
 
     @Autowired
-    private RoomAvailabilityService roomAvailabilityService;
-    @Autowired
-    private AvailabilityPeriodService availabilityPeriodService;
-
-    @Autowired
-    private RoomAvailabilityBroker roomAvailabilityBroker;
-
+    private AvailabilityPeriodInterface availabilityPeriodInterface;
 
     @Override
     public Reservation findReservation(UUID reservationId) {
@@ -43,10 +35,7 @@ public class ReservationRepositoryI implements ReservationService {
 
     @Override
     public Reservation addReservation(Reservation reservation) {
-        if (roomAvailabilityBroker.isRoomAvailable(reservation)) {
-            return repository.save(reservation);
-        }
-        return null;
+        return repository.save(reservation);
     }
 
     @Override
@@ -60,6 +49,11 @@ public class ReservationRepositoryI implements ReservationService {
             return repository.save(updatedReservation);
         }
         return null;
+    }
+
+    @Override
+    public List<Reservation> findByRoomUuid(UUID roomUuid) {
+        return repository.findByRoomUuid(roomUuid);
     }
 
     @Override

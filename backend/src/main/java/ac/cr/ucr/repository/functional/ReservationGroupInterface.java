@@ -1,11 +1,11 @@
-package ac.cr.ucr.service;
+package ac.cr.ucr.repository.functional;
 
 import ac.cr.ucr.model.ReservationGroup;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface ReservationGroupService {
+public interface ReservationGroupInterface {
     ReservationGroup findReservationGroup(UUID reservationGroupId);
 
     List<ReservationGroup> findAllReservationGroups();

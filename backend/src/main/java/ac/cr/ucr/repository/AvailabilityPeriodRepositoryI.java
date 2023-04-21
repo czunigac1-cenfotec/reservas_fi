@@ -1,21 +1,18 @@
 package ac.cr.ucr.repository;
 
-import ac.cr.ucr.model.CustomAttribute;
-import ac.cr.ucr.model.ReservationGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 
 import ac.cr.ucr.model.AvailabilityPeriod;
-import ac.cr.ucr.service.AvailabilityPeriodService;
+import ac.cr.ucr.repository.functional.AvailabilityPeriodInterface;
 
 @Repository
-public class AvailabilityPeriodRepositoryI implements AvailabilityPeriodService {
+public class AvailabilityPeriodRepositoryI implements AvailabilityPeriodInterface {
 
     @Autowired
     private AvailabilityPeriodRepository repository;

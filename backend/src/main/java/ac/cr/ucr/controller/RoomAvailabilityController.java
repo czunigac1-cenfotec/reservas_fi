@@ -1,13 +1,10 @@
 package ac.cr.ucr.controller;
 
 import ac.cr.ucr.controller.customResponse.RoomAvailabilityResponse;
-import ac.cr.ucr.logic.controllerBroker.RoomAvailabilityBroker;
-import ac.cr.ucr.model.AvailabilityPeriod;
-import ac.cr.ucr.model.Reservation;
+import ac.cr.ucr.logic.service.RoomAvailabilityService;
 import ac.cr.ucr.model.RoomAvailability;
-import ac.cr.ucr.model.ScheduledRoomAvailability;
-import ac.cr.ucr.service.AvailabilityPeriodService;
-import ac.cr.ucr.service.RoomAvailabilityService;
+import ac.cr.ucr.repository.functional.AvailabilityPeriodInterface;
+import ac.cr.ucr.repository.functional.RoomAvailabilityInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequestMapping("/roomAvailability")
 @CrossOrigin
@@ -23,13 +19,13 @@ import java.util.stream.Collectors;
 public class RoomAvailabilityController {
 
     @Autowired
-    private RoomAvailabilityService roomAvailabilityService;
+    private RoomAvailabilityInterface roomAvailabilityService;
 
     @Autowired
-    private AvailabilityPeriodService availabilityPeriodService;
+    private AvailabilityPeriodInterface availabilityPeriodInterface;
 
     @Autowired
-    private RoomAvailabilityBroker roomAvailabilityBroker;
+    private RoomAvailabilityService roomAvailabilityBroker;
 
     @GetMapping
     public List<RoomAvailability> getAllRoomAvailability() {
