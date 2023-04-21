@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ac.cr.ucr.model.UserInfo;
-import ac.cr.ucr.service.UserInfoService;
+import ac.cr.ucr.repository.functional.UserInfoInterface;
 
 @RequestMapping("/userInfo")
 @CrossOrigin
 @RestController
 public class UserInfoController {
     @Autowired
-    private UserInfoService userInfoService;
+    private UserInfoInterface userInfoService;
 
     @GetMapping
     public List<UserInfo> getAllUserInfo() {

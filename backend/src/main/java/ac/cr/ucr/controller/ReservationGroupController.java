@@ -1,10 +1,10 @@
 package ac.cr.ucr.controller;
 
 import ac.cr.ucr.controller.customResponse.ReservationGroupResponse;
-import ac.cr.ucr.logic.controllerBroker.ReservationGroupBroker;
+import ac.cr.ucr.logic.service.ReservationGroupService;
 import ac.cr.ucr.model.ReservationGroup;
-import ac.cr.ucr.service.ReservationGroupService;
-import ac.cr.ucr.service.ReservationService;
+import ac.cr.ucr.repository.functional.ReservationGroupInterface;
+import ac.cr.ucr.repository.functional.ReservationInterface;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,23 +20,23 @@ import java.util.UUID;
 public class ReservationGroupController {
 
     @Autowired
-    private ReservationGroupService reservationGroupService;
+    private ReservationGroupInterface reservationGroupInterface;
 
     @Autowired
-    private ReservationService reservationService;
+    private ReservationInterface reservationInterface;
 
     @Autowired
-    private ReservationGroupBroker reservationGroupBroker;
+    private ReservationGroupService reservationGroupBroker;
 
     @GetMapping
     public ResponseEntity<List<ReservationGroup>> getAllReservationGroups() {
-        List<ReservationGroup> reservationGroups = reservationGroupService.findAllReservationGroups();
+        List<ReservationGroup> reservationGroups = reservationGroupInterface.findAllReservationGroups();
         return new ResponseEntity<>(reservationGroups, HttpStatus.OK);
     }
 
     @GetMapping("/{reservationGroupId}")
     public ResponseEntity<ReservationGroup> getReservationGroupById(@PathVariable("reservationGroupId") UUID reservationGroupId) {
-        ReservationGroup reservationGroup = reservationGroupService.findReservationGroup(reservationGroupId);
+        ReservationGroup reservationGroup = reservationGroupInterface.findReservationGroup(reservationGroupId);
         if (reservationGroup != null) {
             return new ResponseEntity<>(reservationGroup, HttpStatus.OK);
         } else {
@@ -53,7 +53,7 @@ public class ReservationGroupController {
     @PutMapping("/{reservationGroupId}")
     public ResponseEntity<ReservationGroup> updateReservationGroup(@PathVariable("reservationGroupId") UUID reservationGroupUuid,
                                                                    @RequestBody ReservationGroup reservationGroup) {
-        ReservationGroup updatedReservationGroup = reservationGroupService.updateReservationGroup(reservationGroup, reservationGroupUuid);
+        ReservationGroup updatedReservationGroup = reservationGroupInterface.updateReservationGroup(reservationGroup, reservationGroupUuid);
         if (updatedReservationGroup != null) {
             return new ResponseEntity<>(updatedReservationGroup, HttpStatus.OK);
         } else {
@@ -63,7 +63,7 @@ public class ReservationGroupController {
 
     @DeleteMapping("/{reservationGroupId}")
     public ResponseEntity<HttpStatus> deleteReservationGroup(@PathVariable("reservationGroupId") UUID reservationGroupId) {
-        boolean result = reservationGroupService.deleteReservationGroup(reservationGroupId);
+        boolean result = reservationGroupInterface.deleteReservationGroup(reservationGroupId);
         if (result) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {

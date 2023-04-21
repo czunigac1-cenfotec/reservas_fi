@@ -1,7 +1,7 @@
 package ac.cr.ucr.controller;
 
 import ac.cr.ucr.model.CustomAttribute;
-import ac.cr.ucr.service.CustomAttributeService;
+import ac.cr.ucr.repository.functional.CustomAttributeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,30 +14,30 @@ import java.util.UUID;
 public class CustomAttributeController {
 
     @Autowired
-    private CustomAttributeService customAttributeService;
+    private CustomAttributeInterface customAttributeInterface;
 
     @GetMapping("/{customAttributeUuid}")
     public CustomAttribute getCustomAttribute(@PathVariable UUID customAttributeUuid) {
-        return customAttributeService.findCustomAttribute(customAttributeUuid);
+        return customAttributeInterface.findCustomAttribute(customAttributeUuid);
     }
 
     @GetMapping
     public List<CustomAttribute> getAllCustomAttributes() {
-        return customAttributeService.findAllCustomAttributes();
+        return customAttributeInterface.findAllCustomAttributes();
     }
 
     @PostMapping
     public CustomAttribute addCustomAttribute(@RequestBody CustomAttribute customAttribute) {
-        return customAttributeService.addCustomAttribute(customAttribute);
+        return customAttributeInterface.addCustomAttribute(customAttribute);
     }
 
     @PutMapping("/{customAttributeUuid}")
     public CustomAttribute updateCustomAttribute(@RequestBody CustomAttribute customAttribute, @PathVariable UUID customAttributeUuid) {
-        return customAttributeService.updateCustomAttribute(customAttribute, customAttributeUuid);
+        return customAttributeInterface.updateCustomAttribute(customAttribute, customAttributeUuid);
     }
 
     @DeleteMapping("/{customAttributeUuid}")
     public boolean deleteCustomAttribute(@PathVariable UUID customAttributeUuid) {
-        return customAttributeService.deleteCustomAttribute(customAttributeUuid);
+        return customAttributeInterface.deleteCustomAttribute(customAttributeUuid);
     }
 }

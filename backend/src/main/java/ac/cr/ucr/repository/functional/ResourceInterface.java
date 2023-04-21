@@ -1,11 +1,11 @@
-package ac.cr.ucr.service;
+package ac.cr.ucr.repository.functional;
 
 import ac.cr.ucr.model.Resource;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface ResourceService {
+public interface ResourceInterface {
     Resource findResource(UUID resourceUuid);
 
     List<Resource> findAllResources();

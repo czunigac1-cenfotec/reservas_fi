@@ -1,11 +1,11 @@
-package ac.cr.ucr.service;
+package ac.cr.ucr.repository.functional;
 
 import ac.cr.ucr.model.RoomAvailability;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface RoomAvailabilityService {
+public interface RoomAvailabilityInterface {
 
     RoomAvailability findRoomAvailability(UUID roomAvailabilityId);
 

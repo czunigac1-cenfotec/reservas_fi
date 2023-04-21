@@ -1,7 +1,7 @@
 package ac.cr.ucr.repository;
 
 import ac.cr.ucr.model.Resource;
-import ac.cr.ucr.service.ResourceService;
+import ac.cr.ucr.repository.functional.ResourceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service("resource")
-public class ResourceRepositoryI implements ResourceService {
+public class ResourceRepositoryI implements ResourceInterface {
 
     @Autowired
     private ResourceRepository repository;
