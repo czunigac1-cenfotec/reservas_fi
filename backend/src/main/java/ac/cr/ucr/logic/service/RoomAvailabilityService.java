@@ -1,16 +1,19 @@
-package ac.cr.ucr.logic.controllerBroker;
+package ac.cr.ucr.logic.service;
 
 import ac.cr.ucr.controller.customResponse.RoomAvailabilityResponse;
-import ac.cr.ucr.logic.io.InvalidDateTimeException;
-import ac.cr.ucr.logic.io.InvalidEventDurationException;
-import ac.cr.ucr.model.*;
-import ac.cr.ucr.service.AvailabilityPeriodService;
-import ac.cr.ucr.service.RoomAvailabilityService;
+import ac.cr.ucr.model.AvailabilityPeriod;
+import ac.cr.ucr.model.Reservation;
+import ac.cr.ucr.model.RoomAvailability;
+import ac.cr.ucr.model.ScheduledAvailabilityPeriod;
+import ac.cr.ucr.model.ScheduledRoomAvailability;
+import ac.cr.ucr.repository.functional.AvailabilityPeriodInterface;
+import ac.cr.ucr.repository.functional.ReservationInterface;
+import ac.cr.ucr.repository.functional.RoomAvailabilityInterface;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -19,28 +22,45 @@ import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@Controller
-public class RoomAvailabilityBroker {
+@Service
+public class RoomAvailabilityService {
+
+    private AvailabilityPeriodInterface availabilityPeriodInterface;
+    private ReservationInterface reservationInterface;
+    private RoomAvailabilityInterface roomAvailabilityInterface;
+
+    public RoomAvailabilityInterface getRoomAvailabilityInterface() {
+        return roomAvailabilityInterface;
+    }
+
+    public RoomAvailabilityService() {
+    }
 
     @Autowired
-    private RoomAvailabilityService roomAvailabilityService;
-    @Autowired
-    private AvailabilityPeriodService availabilityPeriodService;
-
-    public RoomAvailabilityService getRoomAvailabilityService() {
-        return roomAvailabilityService;
+    public RoomAvailabilityService(AvailabilityPeriodInterface availabilityPeriodInterface, ReservationInterface reservationInterface, RoomAvailabilityInterface roomAvailabilityInterface) {
+        this.availabilityPeriodInterface = availabilityPeriodInterface;
+        this.reservationInterface = reservationInterface;
+        this.roomAvailabilityInterface = roomAvailabilityInterface;
     }
 
-    public void setRoomAvailabilityService(RoomAvailabilityService roomAvailabilityService) {
-        this.roomAvailabilityService = roomAvailabilityService;
+    public AvailabilityPeriodInterface getAvailabilityPeriodInterface() {
+        return availabilityPeriodInterface;
     }
 
-    public AvailabilityPeriodService getAvailabilityPeriodService() {
-        return availabilityPeriodService;
+    public void setAvailabilityPeriodInterface(AvailabilityPeriodInterface availabilityPeriodInterface) {
+        this.availabilityPeriodInterface = availabilityPeriodInterface;
     }
 
-    public void setAvailabilityPeriodService(AvailabilityPeriodService availabilityPeriodService) {
-        this.availabilityPeriodService = availabilityPeriodService;
+    public ReservationInterface getReservationInterface() {
+        return reservationInterface;
+    }
+
+    public void setReservationInterface(ReservationInterface reservationInterface) {
+        this.reservationInterface = reservationInterface;
+    }
+
+    public void setRoomAvailabilityInterface(RoomAvailabilityInterface roomAvailabilityInterface) {
+        this.roomAvailabilityInterface = roomAvailabilityInterface;
     }
 
     public RoomAvailabilityResponse createRoomAvailabilityWithAvailabilityPeriods(String json) {
@@ -53,13 +73,20 @@ public class RoomAvailabilityBroker {
 
         roomAvailability.setAvailabilityPeriods(availabilityPeriodsUuids);
 
-        roomAvailability = roomAvailabilityService.updateRoomAvailability(roomAvailability, roomAvailability.getRoomAvailabilityUuid());
+        roomAvailability = roomAvailabilityInterface.updateRoomAvailability(roomAvailability, roomAvailability.getRoomAvailabilityUuid());
 
         return new RoomAvailabilityResponse(roomAvailability, availabilityPeriods);
     }
 
 
     public boolean isRoomAvailable(Reservation reservationToSchedule) {
+        Logger logger = Logger.getLogger(RoomAvailabilityService.class.getName());
+
+        if (checkRoomReservationsForConflicts(reservationToSchedule.getRoomUuid(), reservationToSchedule)) {
+            logger.info("reservation conflict");
+            return false;
+        }
+
         int startDayNumber = reservationToSchedule.getStartDateTime().getDayOfWeek().getValue();
         int endDayNumber = reservationToSchedule.getEndDateTime().getDayOfWeek().getValue();
 
@@ -73,8 +100,7 @@ public class RoomAvailabilityBroker {
 
         int eventDuration = (int) ChronoUnit.MINUTES.between(reservationToSchedule.getStartDateTime(), reservationToSchedule.getEndDateTime());
 
-        RoomAvailability roomAvailability = roomAvailabilityService.findRoomAvailabilityByRoomUuid(reservationToSchedule.getRoomUuid());
-        Logger logger = Logger.getLogger(RoomAvailabilityBroker.class.getName());
+        RoomAvailability roomAvailability = roomAvailabilityInterface.findRoomAvailabilityByRoomUuid(reservationToSchedule.getRoomUuid());
         logger.info("roomAvailability");
         logger.info(roomAvailability.toString());
 
@@ -86,7 +112,7 @@ public class RoomAvailabilityBroker {
 
         // weekday check
         for (UUID availabilityPeriodUuid : roomAvailability.getAvailabilityPeriods()) {
-            AvailabilityPeriod availabilityPeriod = availabilityPeriodService.findAvailabilityPeriod(availabilityPeriodUuid);
+            AvailabilityPeriod availabilityPeriod = availabilityPeriodInterface.findAvailabilityPeriod(availabilityPeriodUuid);
             // event start day number and end day number should always match
             if (startDayNumber == availabilityPeriod.getWeekday() && endDayNumber == availabilityPeriod.getWeekday()) {
                 // event duration check
@@ -135,7 +161,7 @@ public class RoomAvailabilityBroker {
                 scheduledRoomAvailability.isPrivateReservationEnabled(),
                 availabilityPeriodsUuids
         );
-        return roomAvailabilityService.addRoomAvailability(roomAvailability);
+        return roomAvailabilityInterface.addRoomAvailability(roomAvailability);
 
     }
 
@@ -151,9 +177,37 @@ public class RoomAvailabilityBroker {
                     scheduledAvailabilityPeriod.getEndTimeHour(),
                     scheduledAvailabilityPeriod.getEndTimeMinutes()
             );
-            AvailabilityPeriod savedAvailabilityPeriod = availabilityPeriodService.addAvailabilityPeriod(availabilityPeriod);
+            AvailabilityPeriod savedAvailabilityPeriod = availabilityPeriodInterface.addAvailabilityPeriod(availabilityPeriod);
             availabilityPeriods.add(savedAvailabilityPeriod);
         }
         return availabilityPeriods;
     }
+
+
+    public boolean checkRoomReservationsForConflicts(UUID roomUUID, Reservation reservation) {
+        List<Reservation> roomReservations = reservationInterface.findByRoomUuid(roomUUID);
+
+        for (Reservation roomReservation : roomReservations) {
+            // Check if reservation start time is within the range of room reservation
+            if (reservation.getStartDateTime().isAfter(roomReservation.getStartDateTime())
+                    && reservation.getStartDateTime().isBefore(roomReservation.getEndDateTime())) {
+                return true; // Conflict found
+            }
+
+            // Check if reservation end time is within the range of room reservation
+            if (reservation.getEndDateTime().isAfter(roomReservation.getStartDateTime())
+                    && reservation.getEndDateTime().isBefore(roomReservation.getEndDateTime())) {
+                return true; // Conflict found
+            }
+
+            // Check if reservation start time and end time completely overlap room reservation
+            if (reservation.getStartDateTime().isBefore(roomReservation.getStartDateTime())
+                    && reservation.getEndDateTime().isAfter(roomReservation.getEndDateTime())) {
+                return true; // Conflict found
+            }
+        }
+
+        return false; // No conflicts found
+    }
+
 }

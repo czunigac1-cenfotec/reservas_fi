@@ -7,11 +7,11 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ac.cr.ucr.service.UserInfoService;
+import ac.cr.ucr.repository.functional.UserInfoInterface;
 import ac.cr.ucr.model.UserInfo;
 
 @Service("userInfo")
-public class UserInfoRepositoryI implements UserInfoService {
+public class UserInfoRepositoryI implements UserInfoInterface {
 
     @Autowired
     private UserInfoRepository repository;

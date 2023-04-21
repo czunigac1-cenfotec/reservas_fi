@@ -1,11 +1,11 @@
-package ac.cr.ucr.service;
+package ac.cr.ucr.repository.functional;
 
 import java.util.List;
 import java.util.UUID;
 
 import ac.cr.ucr.model.UserInfo;
 
-public interface UserInfoService {
+public interface UserInfoInterface {
     UserInfo findUserInfo(UUID userInfoId);
 
     List<UserInfo> findAllUserInfo();

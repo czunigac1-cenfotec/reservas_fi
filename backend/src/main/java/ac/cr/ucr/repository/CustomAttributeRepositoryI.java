@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ac.cr.ucr.model.CustomAttribute;
-import ac.cr.ucr.service.CustomAttributeService;
+import ac.cr.ucr.repository.functional.CustomAttributeInterface;
 
 @Service("customAttributeService")
-public class CustomAttributeRepositoryI implements CustomAttributeService {
+public class CustomAttributeRepositoryI implements CustomAttributeInterface {
 
     @Autowired
     private CustomAttributeRepository repository;

@@ -8,10 +8,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import ac.cr.ucr.model.Room;
-import ac.cr.ucr.service.RoomService;
+import ac.cr.ucr.repository.functional.RoomInterface;
 
 @Service("room")
-public class RoomRepositoryI implements RoomService {
+public class RoomRepositoryI implements RoomInterface {
 
     @Autowired
     private RoomRepository repository;

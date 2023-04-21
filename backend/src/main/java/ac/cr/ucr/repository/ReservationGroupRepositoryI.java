@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ac.cr.ucr.model.ReservationGroup;
-import ac.cr.ucr.service.ReservationGroupService;
+import ac.cr.ucr.repository.functional.ReservationGroupInterface;
 
 @Service("reservationGroup")
-public class ReservationGroupRepositoryI implements ReservationGroupService {
+public class ReservationGroupRepositoryI implements ReservationGroupInterface {
 
     @Autowired
     private ReservationGroupRepository repository;

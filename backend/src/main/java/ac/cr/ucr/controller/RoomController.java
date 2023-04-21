@@ -1,7 +1,7 @@
 package ac.cr.ucr.controller;
 
 import ac.cr.ucr.model.Room;
-import ac.cr.ucr.service.RoomService;
+import ac.cr.ucr.repository.functional.RoomInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class RoomController {
 
     @Autowired
-    private RoomService roomService;
+    private RoomInterface roomService;
 
     @GetMapping
     public List<Room> getAllRooms() {
