@@ -135,6 +135,14 @@
 						"header": []
 					},
 					"response": []
+				},
+				{
+					"name": "get_room",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		},
@@ -143,6 +151,14 @@
 			"item": [
 				{
 					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get room avaiby roomuuid",
 					"request": {
 						"method": "GET",
 						"header": []
