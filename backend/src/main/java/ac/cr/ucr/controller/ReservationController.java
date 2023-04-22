@@ -1,5 +1,6 @@
 package ac.cr.ucr.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +33,14 @@ public class ReservationController {
     @GetMapping
     public List<Reservation> getAllReservations() {
         return this.reservationInterface.findAllReservations();
+    }
+
+    @GetMapping("/room-uuid/{roomUuid}/start-date/{startDate}/end-date/{endDate}")
+    public List<Reservation> getReservationsByStartDateEndDate(
+            @PathVariable("roomUuid")UUID roomUuid,
+            @PathVariable("startDate")LocalDateTime startDate,
+            @PathVariable("endDate")LocalDateTime endDate) {
+        return this.reservationInterface.findReservationByStartDateEndDate(roomUuid, startDate, endDate);
     }
 
     @GetMapping("/{uuid}")

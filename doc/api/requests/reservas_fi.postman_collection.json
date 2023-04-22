@@ -184,6 +184,14 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get_room",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		},
@@ -219,6 +227,14 @@
 				},
 				{
 					"name": "get room avai",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get room avaiby roomuuid",
 					"request": {
 						"method": "GET",
 						"header": []

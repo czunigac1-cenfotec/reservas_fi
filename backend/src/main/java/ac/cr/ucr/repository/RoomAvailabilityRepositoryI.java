@@ -1,9 +1,12 @@
 package ac.cr.ucr.repository;
 
+import ac.cr.ucr.model.Room;
 import ac.cr.ucr.model.RoomAvailability;
+import ac.cr.ucr.repository.functional.RoomInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +18,9 @@ public class RoomAvailabilityRepositoryI implements RoomAvailabilityInterface {
 
     @Autowired
     private RoomAvailabilityRepository repository;
+
+    @Autowired
+    private RoomInterface roomInterface;
 
     @Override
     public RoomAvailability findRoomAvailability(UUID roomAvailabilityId) {
@@ -29,8 +35,11 @@ public class RoomAvailabilityRepositoryI implements RoomAvailabilityInterface {
 
     @Override
     public RoomAvailability addRoomAvailability(RoomAvailability roomAvailability) {
-        repository.save(roomAvailability);
-        return roomAvailability;
+        RoomAvailability createdRoomAvalability = repository.save(roomAvailability);
+        Room room = roomInterface.findRoom(createdRoomAvalability.getRoomUuid());
+        room.setRoomAvailabilityUuid(createdRoomAvalability.getRoomAvailabilityUuid());
+        roomInterface.updateRoom(room, room.getRoomUuid());
+        return createdRoomAvalability;
     }
 
     @Override
@@ -56,5 +65,9 @@ public class RoomAvailabilityRepositoryI implements RoomAvailabilityInterface {
     public RoomAvailability findRoomAvailabilityByRoomUuid(UUID roomUuid) {
         Optional<RoomAvailability> roomAvailability = repository.findByRoomUuid(roomUuid);
         return roomAvailability.orElse(null);
+    }
+
+    public List<RoomAvailability> findRoomAvailabilityInPeriod(LocalDateTime startDate, LocalDateTime endDate){
+        return repository.findRoomAvailabilityInPeriod(startDate, endDate);
     }
 }
