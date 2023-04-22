@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "939da542-d45f-4398-b934-cb35fe70e667",
+		"name": "reservas_fi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "reservation_group",
+			"item": [
+				{
+					"name": "new_reservation_group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userUuid\": \"b66c689f-717b-43cc-a355-36ce71d58d3f\",\n    \"schedule\": {\n        \"weekdays\": {\n            \"0\": [\n                {\n                    \"startDateTime\": \"2023-04-09T10:00:00\",\n                    \"endDateTime\": \"2023-04-09T11:00:00\",\n                    \"motive\": \"yes\",\n                    \"notes\": \"testing\",\n                    \"roomUuid\": \"98a19fdb-ad65-4c91-b75f-6a48727359de\"\n                },\n                {\n                    \"startDateTime\": \"2023-04-09T13:00:00\",\n                    \"endDateTime\": \"2023-04-09T15:00:00\",\n                    \"motive\": \"yes\",\n                    \"notes\": \"testing\",\n                    \"roomUuid\": \"98a19fdb-ad65-4c91-b75f-6a48727359de\"\n                }\n            ]\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/reservation-groups",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservation-groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_reservation_group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/reservation-groups",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservation-groups"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user_info",
+			"item": [
+				{
+					"name": "new_user_info",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"testing_user\",\n    \"primerApellido\": \"primer\",\n    \"segundoApellido\": \"segundo\",\n    \"identificacion\": \"115850509\",\n    \"unidadAcademica\": \"test\",\n    \"telefono\": \"87412335\",\n    \"email\": \"some@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/userInfo",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/userInfo",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userInfo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reservation",
+			"item": [
+				{
+					"name": "new reservation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userUuid\": \"169decad-775b-4c99-9586-fa695f19b8da\",\n    \"startDateTime\": \"2023-04-10T09:00:00\",\n    \"endDateTime\": \"2023-04-10T11:00:00\",\n    \"motive\": \"yes\",\n    \"notes\": \"testing\",\n    \"roomUuid\": \"9efb37ff-235b-400d-a6e7-0879be9624f1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/reservation",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all reservations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/reservation",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "room",
+			"item": [
+				{
+					"name": "new room",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"TESTING-001\",\n    \"name\": \"Temporary Room\",\n    \"description\": \"Incredible\",\n    \"location\": \"BUILDING-001\",\n    \"capacity\": 30,\n    \"administratorUuid\": \"b66c689f-717b-43cc-a355-36ce71d58d3f\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/room",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_room",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "room_availability",
+			"item": [
+				{
+					"name": "create roomavailability",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"minReservationTime\": 60,\n    \"maxReservationTime\": 120,\n    \"approvalRequired\": true,\n    \"administratorUuid\": \"b66c689f-717b-43cc-a355-36ce71d58d3f\",\n    \"startDateTime\": \"2023-01-01T00:00:00\",\n    \"endDateTime\": \"2024-01-01T00:00:00\",\n    \"privateReservationEnabled\": false,\n    \"roomUuid\": \"36d6eff5-cc18-43e9-afa9-8739a02660cd\",\n    \"availabilityPeriods\": [\n        {\n            \"dayNumber\": 1,\n            \"startTimeHour\": 12,\n            \"startTimeMinutes\": 0,\n            \"endTimeHour\": 14,\n            \"endTimeMinutes\": 0\n        },\n\n             {\n            \"dayNumber\": 1,\n            \"startTimeHour\": 6,\n            \"startTimeMinutes\": 0,\n            \"endTimeHour\": 18,\n            \"endTimeMinutes\": 0\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/roomAvailability",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"roomAvailability"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get room avai",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get room avaiby roomuuid",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "availabilityPeriod",
+			"item": [
+				{
+					"name": "new av Period",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"weekday\": 1,\n    \"startTimeHour\": 6,\n    \"startTimeMinutes\": 0,\n    \"endTimeHour\": 18,\n    \"endTimeMinutes\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/availabilityPeriod",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"availabilityPeriod"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get periods",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get av period id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "resource",
+			"item": [
+				{
+					"name": "addResource",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

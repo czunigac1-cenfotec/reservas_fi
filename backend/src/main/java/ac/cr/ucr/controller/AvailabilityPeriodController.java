@@ -1,7 +1,7 @@
 package ac.cr.ucr.controller;
 
 import ac.cr.ucr.model.AvailabilityPeriod;
-import ac.cr.ucr.service.AvailabilityPeriodService;
+import ac.cr.ucr.repository.functional.AvailabilityPeriodInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,30 +14,30 @@ import java.util.UUID;
 public class AvailabilityPeriodController {
 
     @Autowired
-    private AvailabilityPeriodService availabilityPeriodService;
+    private AvailabilityPeriodInterface availabilityPeriodInterface;
 
     @GetMapping("/{uuid}")
     public AvailabilityPeriod getAvailabilityPeriod(@PathVariable("uuid") UUID availabilityPeriodId) {
-        return this.availabilityPeriodService.findAvailabilityPeriod(availabilityPeriodId);
+        return this.availabilityPeriodInterface.findAvailabilityPeriod(availabilityPeriodId);
     }
 
     @GetMapping
     public List<AvailabilityPeriod> getAllAvailabilityPeriods() {
-        return this.availabilityPeriodService.findAllAvailabilityPeriods();
+        return this.availabilityPeriodInterface.findAllAvailabilityPeriods();
     }
 
     @PostMapping
     public AvailabilityPeriod addAvailabilityPeriod(@RequestBody AvailabilityPeriod availabilityPeriod) {
-        return this.availabilityPeriodService.addAvailabilityPeriod(availabilityPeriod);
+        return this.availabilityPeriodInterface.addAvailabilityPeriod(availabilityPeriod);
     }
 
     @PutMapping("/{uuid}")
     public AvailabilityPeriod updateAvailabilityPeriod(@PathVariable("uuid") UUID availabilityPeriodId, @RequestBody AvailabilityPeriod availabilityPeriod) {
-        return this.availabilityPeriodService.updateAvailabilityPeriod(availabilityPeriod, availabilityPeriodId);
+        return this.availabilityPeriodInterface.updateAvailabilityPeriod(availabilityPeriod, availabilityPeriodId);
     }
 
     @DeleteMapping("/{uuid}")
     public boolean deleteAvailabilityPeriod(@PathVariable("uuid") UUID availabilityPeriodId) {
-        return this.availabilityPeriodService.deleteAvailabilityPeriod(availabilityPeriodId);
+        return this.availabilityPeriodInterface.deleteAvailabilityPeriod(availabilityPeriodId);
     }
 }

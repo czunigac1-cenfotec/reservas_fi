@@ -1,20 +1,25 @@
 package ac.cr.ucr.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import ac.cr.ucr.repository.functional.AvailabilityPeriodInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ac.cr.ucr.model.Reservation;
-import ac.cr.ucr.service.ReservationService;
+import ac.cr.ucr.repository.functional.ReservationInterface;
 
 @Service("reservation")
-public class ReservationRepositoryI implements ReservationService {
+public class ReservationRepositoryI implements ReservationInterface {
 
     @Autowired
     private ReservationRepository repository;
+
+    @Autowired
+    private AvailabilityPeriodInterface availabilityPeriodInterface;
 
     @Override
     public Reservation findReservation(UUID reservationId) {
@@ -26,6 +31,12 @@ public class ReservationRepositoryI implements ReservationService {
     public List<Reservation> findAllReservations() {
         return repository.findAll();
     }
+
+    @Override
+    public List<Reservation> findReservationByStartDateEndDate(UUID roomUuid, LocalDateTime startDate, LocalDateTime endDate) {
+        return repository.findByRoomUuidStartDateEndDate(roomUuid, startDate, endDate);
+    }
+
 
     @Override
     public Reservation addReservation(Reservation reservation) {
@@ -43,6 +54,11 @@ public class ReservationRepositoryI implements ReservationService {
             return repository.save(updatedReservation);
         }
         return null;
+    }
+
+    @Override
+    public List<Reservation> findByRoomUuid(UUID roomUuid) {
+        return repository.findByRoomUuid(roomUuid);
     }
 
     @Override
