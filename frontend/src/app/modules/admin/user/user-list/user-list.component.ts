@@ -43,14 +43,14 @@ export class UserListComponent implements OnInit {
 
         console.log(data);   
 
-        if (data.length > 1) {
+        if (data.length > 0) {
           for (const user of data) {
             dataTableRows.push([
               user.identificacion,
               user.nombre + " " + user.primerApellido + " " + user.segundoApellido,
               user.unidadAcademica,
               String(user.telefono),
-              `<a href="/admin/user-detail/${user.userInfoId}">Ver Detalles</a>`
+              `<a href="/admin/user-detail/${user.userInfoUuid}">Ver Detalles</a>`
             ]);
           }
 
