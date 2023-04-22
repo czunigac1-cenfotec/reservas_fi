@@ -43,6 +43,11 @@ public class UserInfoRepositoryI implements UserInfoInterface {
 
     @Override
     public boolean deleteUserInfo(UUID userInfoId) {
+        Optional<UserInfo> existingUserInfo = repository.findById(userInfoId);
+        if (existingUserInfo.isPresent()) {
+            repository.delete(existingUserInfo.get());
+            return true;
+        }
         return false;
     }
 }
