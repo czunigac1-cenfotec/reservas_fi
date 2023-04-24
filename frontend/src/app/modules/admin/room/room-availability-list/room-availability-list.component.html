@@ -1,0 +1,26 @@
+<div class="row grid-margin">
+    <div class="row">
+        <app-room-availability [roomAvailabilityId]="roomAvailabilityId" #roomAvailability></app-room-availability>
+        <div class="d-flex justify-content-start">
+            <button class="btn btn-outline-primary btn-icon plus" type="button" (click)="saveRoomAvailability()">
+                <i data-feather="plus" appFeatherIcon></i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table id="roomAvailabilityDataTable" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Tiempo Mínimo de Reserva</th>
+                    <th>Tiempo Máximo de Reserva</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Fin</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
