@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { RoomAvailabilityComponent } from '../room-availability/room-availability.component';
 import { RoomService } from 'src/app/core/services/room.service';
+import { Room } from 'src/app/interfaces/room.interface';
 
 @Component({
   selector: 'app-room-detail',
@@ -17,18 +18,18 @@ export class RoomDetailComponent implements OnInit {
   isUpdate: boolean = true; 
   roomAvailabilityId: string = '-1';
 
-  room = {
-    code:'',
-    name:'',
-    description:'',
-    location:'',
-    state:0,
-    capacity:'',
-    creationDate:'',
-    roomAvailabilityId: '',
-    administratorUuid:''
+  room: Room = {
+    roomUuid: '',
+    roomAvailabilityUuid: '',
+    inactive: false,
+    code: '',
+    name: '',
+    description: '',
+    location: '',
+    capacity: 0,
+    creationDateTime: '',
+    administratorUuid: '',
   }
-  //room.roomUuid
 
   constructor( private activeRoute: ActivatedRoute,
                private roomService: RoomService,
@@ -112,8 +113,12 @@ export class RoomDetailComponent implements OnInit {
 
   save(): void {
     console.log('save');
-    console.log(this.room);
-    this.roomService.create(this.room).subscribe({
+
+    const newRoom = { ...this.room };
+    delete newRoom.roomUuid;
+    console.log(newRoom);
+
+    this.roomService.create(newRoom).subscribe({
       next:(result)=>{
         Swal.fire({
           position: 'top-end',

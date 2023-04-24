@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -26,7 +27,8 @@ export class RoomAvailabilityComponent implements OnInit {
   }
 
   constructor( private activeRoute: ActivatedRoute,
-    private router: Router) { }
+               private router: Router,
+               private modalService: NgbModal) { }
 
   ngOnInit(): void {
       this.activeRoute.params.subscribe((params: Params) => this.roomAvailabilityId = params.roomAvailabilityId );
@@ -75,4 +77,5 @@ export class RoomAvailabilityComponent implements OnInit {
   update(): void {
     console.log('Inner method called [update]');
   }
+
 }
