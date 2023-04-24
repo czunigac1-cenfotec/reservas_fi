@@ -1,30 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTable } from 'simple-datatables';
-import { ResourceService } from 'src/app/core/services/resource.service';
-import { RoomService } from 'src/app/core/services/room.service';
-import { Room } from 'src/app/interfaces/room.interface';
+import { AvailabilityPeriodService } from 'src/app/core/services/availability-period.service';
+import { RoomAvailabilityService } from 'src/app/core/services/room-availability.service';
 
 @Component({
-  selector: 'app-room-list',
-  templateUrl: './room-list.component.html',
-  styleUrls: ['./room-list.component.scss']
+  selector: 'app-room-availability-period-list',
+  templateUrl: './room-availability-period-list.component.html',
+  styleUrls: ['./room-availability-period-list.component.scss']
 })
-export class RoomListComponent implements OnInit {
+export class RoomAvailabilityPeriodListComponent implements OnInit {
 
-  constructor(private router: Router,
+  constructor(private activeRoute: ActivatedRoute,
+              private router: Router,
               private route: ActivatedRoute,
-              private service: RoomService) { }
+              private service: AvailabilityPeriodService,
+              private modalService: NgbModal) { }
 
-  roomsDataTable: any;
-  
+  availabilityPeriodDataTable: any;
+
   ngOnInit(): void {
-    this.initTable();
-    this.getList();
+
   }
 
   initTable(): void{
-    this.roomsDataTable = new DataTable('#roomsDataTable', {
+    this.availabilityPeriodDataTable = new DataTable('#roomsDataTable', {
       labels: {
         placeholder: 'Buscar...',
         perPage: '{select} registros por página',
@@ -34,18 +35,23 @@ export class RoomListComponent implements OnInit {
     });
   }
 
+  saveAvailabilityPeriod(){
+
+  }
+
+
   getList(): void{
 
     const dataTableRows: any = [];
 
-    var room: Room;
+    var availabilityPeriod;
 
     this.service.getAll().subscribe({
       next:(data)=>{
 
         console.log(data);   
 
-        if (data.length >= 1) {
+        if (data.length >0) {
           for (const room of data) {
             dataTableRows.push([
               room.code,
@@ -57,7 +63,7 @@ export class RoomListComponent implements OnInit {
             ]);
           }
 
-          this.roomsDataTable.rows().add(dataTableRows);
+          this.availabilityPeriodDataTable.rows().add(dataTableRows);
         } 
       },
       error:(e)=>{
@@ -67,10 +73,6 @@ export class RoomListComponent implements OnInit {
         console.log("done");
       } 
     })              
-  }
-
-  new(): void{
-    this.router.navigate(['/admin/room-detail/-1']);
   }
 
 }
