@@ -1,12 +1,12 @@
 <div class="row grid-margin">
     <div class="row">
         <app-room-availability [roomAvailabilityId]="roomAvailabilityId" #roomAvailability></app-room-availability>
-        <div class="d-flex justify-content-start">
-            <button class="btn btn-outline-primary btn-icon plus" type="button" (click)="saveRoomAvailability()">
-                <i data-feather="plus" appFeatherIcon></i>
-            </button>
-        </div>
     </div>
+    <div class="row">
+        <hr>
+            <button type="button" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="saveRoomAvailability()">Agregar Periodo</button>
+        <hr>
+    </div>  
     <div class="row">
         <div class="table-responsive">
             <table id="roomAvailabilityDataTable" class="table table-hover">
