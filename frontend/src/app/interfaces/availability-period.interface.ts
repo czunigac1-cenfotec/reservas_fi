@@ -4,6 +4,6 @@ export interface AvailabilityPeriod {
     weekday?: number;
     startTimeHour?: number;
     startTimeMinutes?: number;
-    endTimeHour?: string;
-    endTimeMinutes?: string;
+    endTimeHour?: number;
+    endTimeMinutes?: number;
 }

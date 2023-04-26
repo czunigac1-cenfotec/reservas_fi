@@ -1,10 +1,10 @@
 <div class="row grid-margin">
     <div class="row">
-        <app-room-availability-period  #availabilityPeriod></app-room-availability-period>
+        <app-room-availability-period (objectEmitter)="handleObject($event)"></app-room-availability-period>
     </div>
     <div class="row">
         <hr>
-            <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="saveAvailabilityPeriod()">Agregar Periodo</button>
+            <button type="button" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="saveAvailabilityPeriod()">Agregar Periodo</button>
         <hr>
     </div>  
     <div class="row">
