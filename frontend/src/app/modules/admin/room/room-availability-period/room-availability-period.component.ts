@@ -50,7 +50,7 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
     var message = this.validateFields();
 
     if(message != ''){
-
+      //TODO: error message
     }else {
 
       this.availabilityPeriod.endTimeHour = this.availabilityPeriodLocal.endDateTime.hour;
@@ -93,7 +93,7 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
 
   validateFields() :string{
     var message = '';
-    
+
     if(this.availabilityPeriodLocal.beginDate == undefined || this.availabilityPeriodLocal.endDate == undefined){
       message = 'Debe seleccionar un rango de fechas válido';
     }else if(this.availabilityPeriodLocal.endDateTime.hour <= this.availabilityPeriodLocal.startDateTime.hour){
