@@ -29,8 +29,7 @@ export class RoomAvailabilityListComponent implements OnInit,AfterViewInit {
               private modalService: NgbModal) { }
 
   ngAfterViewInit(): void {
-
-    debugger;
+    
     console.log(this.roomAvailability);
 /*
     console.log(this.roomAvailabilityComponent);

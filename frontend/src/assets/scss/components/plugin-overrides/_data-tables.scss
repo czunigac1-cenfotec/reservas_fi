@@ -54,6 +54,7 @@
 .dataTable-table > thead > tr > th {
   padding: $table-cell-padding-y $table-cell-padding-x;
   text-align: left; // RTL fix
+  vertical-align: middle !important;
 }
 
 .dataTable-wrapper.no-footer .dataTable-container {
