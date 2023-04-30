@@ -501,8 +501,6 @@ export class ReservationDetailComponent implements OnInit {
           roomUuid: this.reservation.roomUuid
         }
 
-        debugger;
-
         switch (item.dayInWeek) {
           case "Lunes":
             newData.schedule.weekdays[0].push(newItem);

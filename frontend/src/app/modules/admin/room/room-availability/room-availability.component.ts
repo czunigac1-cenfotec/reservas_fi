@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 export class RoomAvailabilityComponent implements OnInit {
 
   @Input() roomAvailabilityId: string;
+  availabilityPeriodId = "";
   isUpdate: boolean = true; 
 
   roomAvailability = {
@@ -31,6 +32,7 @@ export class RoomAvailabilityComponent implements OnInit {
                private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    
       this.activeRoute.params.subscribe((params: Params) => this.roomAvailabilityId = params.roomAvailabilityId );
 
       if (this.roomAvailabilityId === '-1') {
