@@ -20,6 +20,10 @@ export class RoomAvailabilityService {
     return this.http.get(`${serviceUrl}/${pUuid}`);
   }
 
+  getAvailabilityPeriods(pUuid: any): Observable<any> {
+    return this.http.get(`${serviceUrl}/room-uuid/${pUuid}`);
+  }
+
   create(pData: any): Observable<any> {
     return this.http.post(serviceUrl, pData);
   }

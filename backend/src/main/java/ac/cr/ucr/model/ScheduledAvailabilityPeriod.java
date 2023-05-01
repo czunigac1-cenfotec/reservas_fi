@@ -1,6 +1,6 @@
 package ac.cr.ucr.model;
 
-public class ScheduledAvailabilityPeriod {
+public class  ScheduledAvailabilityPeriod {
 
     private int dayNumber;
 

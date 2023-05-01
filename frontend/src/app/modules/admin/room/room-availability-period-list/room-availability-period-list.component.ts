@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTable } from 'simple-datatables';
@@ -16,43 +16,44 @@ import Swal from 'sweetalert2';
 })
 export class RoomAvailabilityPeriodListComponent implements OnInit {
 
+  @Input() roomAvailabilityId: any;
+  @Input() availabilityPeriodId: any;
+  @Input() roomAvailability: any;
 
-@Input() roomAvailabilityId: any;
-@Input() availabilityPeriodId: any;
 
-receivedObject:any;
-availabilityPeriodList: Array<AvailabilityPeriod> = [];
-tableData: any[] = [];
-dataTableRows: any = [];
+  dataTableRows: any = [];
 
-handleObject(object: object) {
-  this.receivedObject = object;
-  console.log(JSON.stringify(this.receivedObject));
+  /**
+  * ChildView callback
+  *
+  * @param {object} availabilityPeriod - AvailabilityPeriod Object
+  */
+  savePeriod(availabilityPeriod: object): void {
 
-  this.saveInService(object);
-
-}
+    if(availabilityPeriod!=null){
+      console.log(JSON.stringify(availabilityPeriod));
+      this.saveInService(availabilityPeriod);
+    }
+    
+  }
 
   @ViewChild(RoomAvailabilityPeriodComponent) roomAvailabilityPeriodComponent: RoomAvailabilityPeriodComponent
 
-  constructor(private activeRoute: ActivatedRoute,
-              private router: Router,
-              private route: ActivatedRoute,
-              private service: AvailabilityPeriodService,
-              private modalService: NgbModal,
-              private elementRef: ElementRef) { }
+  constructor(private service: AvailabilityPeriodService,
+    private availabilityService: RoomAvailabilityService,
+    private elementRef: ElementRef) { }
 
   availabilityPeriodDataTable: any;
 
   ngOnInit(): void {
     this.initTable();
     //temporal
-    this.roomAvailabilityId = "f344f3a8-e942-4c40-bb66-c2cb408f13f2";
-    this.availabilityPeriodId = "254e3d4e-e9b3-4c9c-bd29-9a26fee4f362";
+    this.roomAvailabilityId = "2edf11f8-ad0a-4f83-b5a0-c957a00ae082";
+    this.availabilityPeriodId = "1102953b-da1f-43c4-b537-7e90feac86de";
     this.getList();
   }
 
-  initTable(): void{
+  initTable(): void {
     this.availabilityPeriodDataTable = new DataTable('#availabilityPeriodDataTable', {
       labels: {
         placeholder: 'Buscar...',
@@ -63,73 +64,166 @@ handleObject(object: object) {
     });
   }
 
-  saveAvailabilityPeriod(){
-    this.roomAvailabilityPeriodComponent.addAvailabilityPeriod(); 
+  saveAvailabilityPeriod() {
+    this.roomAvailabilityPeriodComponent.addAvailabilityPeriod();
   }
 
-  saveInService(availabilityPeriod: AvailabilityPeriod){
-    this.service.create(availabilityPeriod).subscribe({
-      next:(data)=>{
-        console.log(data);   
+  saveInService(availabilityPeriod: AvailabilityPeriod) {
+
+    var serviceResponse: any;
+    const newAvailabilityPeriod = { ...availabilityPeriod };
+    delete newAvailabilityPeriod.availabilityPeriodUuid;
+
+    this.service.create(newAvailabilityPeriod).subscribe({
+      next: (data) => {
+        console.log(data);
+        serviceResponse = data;
       },
-      error:(e)=>{
+      error: (e) => {
         console.log(e);
       },
-      complete:()=>{
+      complete: () => {
         console.log("done");
-      } 
-    })          
+        this.updateRoomAvailability(serviceResponse.availabilityPeriodUuid, false);
+        this.reloadAfterChange();
+        this.getList();
+      }
+    })
   }
 
-  getList(): void{
+  getList(): void {
 
-  
-    this.service.get(this.availabilityPeriodId).subscribe({
-      next:(data)=>{
+    this.availabilityService.getAvailabilityPeriods(this.availabilityPeriodId).subscribe({
+      next: (data) => {
 
-        console.log(data);   
+        console.log(data);
 
-        if(Array.isArray(data)){
-          if (data!=undefined) {
-            for (const availabilityPeriod of data) {
-              this.dataTableRows.push(this.addRow(availabilityPeriod));
+        if (data != null) {
+          if (data.hasOwnProperty('availabilityPeriods')) {
+
+            for (const availabilityPeriod of data.availabilityPeriods.sort((a: { weekday: number; }, b: { weekday: number; }) => a.weekday - b.weekday)) {
+              this.dataTableRows.push(this.getRow(availabilityPeriod));
             }
+
+          } else {
+            this.dataTableRows.push(this.getRow(data));
           }
-        }else{
-          this.dataTableRows.push(this.addRow(data));
+
+          if (data.availabilityPeriods.length > 0) {
+            this.availabilityPeriodDataTable.rows().add(this.dataTableRows);
+          }
         }
-        this.availabilityPeriodDataTable.rows().add(this.dataTableRows);
       },
-      error:(e)=>{
+      error: (e) => {
         console.log(e);
       },
-      complete:()=>{
+      complete: () => {
         console.log("done");
         this.addRowEvents();
-      } 
-    })          
+      }
+    })
   }
 
-  doSomething(){
-    console.log("doSomething");
-  }
+  updateRoomAvailability(availabilityPeriodUuid: any, isDelete: boolean) {
 
-  delete(periodId:string): void {
+    console.log('update');
 
-  console.log("delete "+periodId );
-   /* this.service.delete(periodId).subscribe({
-      next:(result)=>{
+    var availabilityPeriods: any = [];
+    var roomAvailabilityLocal: any;
+
+    if (!isDelete) {
+      availabilityPeriods.push(availabilityPeriodUuid);
+    }
+
+    for (let availabilityPeriod of this.dataTableRows) {
+      if (isDelete) {
+
+        if (availabilityPeriod[4] != availabilityPeriodUuid) {
+          availabilityPeriods.push(availabilityPeriod[4]);
+        }
+      } else {
+        availabilityPeriods.push(availabilityPeriod[4]);
+      }
+    }
+
+    //TODO:Uncomment
+    /*var roomAvailabilityLocal:any = 
+    {
+        roomAvailabilityUuid:this.roomAvailability.roomAvailabilityUuid,
+        roomUuid: this.roomAvailability.roomUuid,
+        administratorUuid: this.roomAvailability.administratorUuid,
+        minReservationTime: this.roomAvailability.minReservationTime,
+        maxReservationTime: this.roomAvailability.maxReservationTime,
+        approvalRequired: this.roomAvailability.approvalRequired,
+        privateReservationEnabled: this.roomAvailability.privateReservationEnabled,
+        startDateTime: this.roomAvailability.startDateTime,
+        endDateTime: this.roomAvailability.endDateTime,
+        availabilityPeriods: availabilityPeriods
+    }*/
+
+    //TEMPORAL
+    var roomAvailabilityLocal: any =
+    {
+      roomAvailabilityUuid: "2edf11f8-ad0a-4f83-b5a0-c957a00ae082",
+      roomUuid: "1102953b-da1f-43c4-b537-7e90feac86de",
+      administratorUuid: "9cff8d97-1a50-49fe-b173-93797d29c03b",
+      minReservationTime: 10,
+      maxReservationTime: 30,
+      approvalRequired: false,
+      privateReservationEnabled: false,
+      startDateTime: "2023-04-30T10:30:00",
+      endDateTime: "2023-04-30T17:30:00",
+      availabilityPeriods: availabilityPeriods
+    }
+
+    this.availabilityService.update(roomAvailabilityLocal, this.roomAvailabilityId).subscribe({
+      next: () => {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Usuario eliminado correctamente',
+          title: 'Disponibilidad actualizada correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
+
+        if (isDelete) {
+          this.deleteInService(availabilityPeriodUuid);
+        }
+      },
+      error: (e: any) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Error:' + e.status + '| Detalle:' + e.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      },
+      complete: () => {
+        console.log("done");
+      }
+    })
+  }
+
+  delete(periodId: string): void {
+    this.updateRoomAvailability(periodId, true);
+  }
+
+  deleteInService(periodId: string) {
+    console.log("delete " + periodId);
+    this.service.delete(periodId).subscribe({
+      next: (result) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Disponibilidad eliminada correctamente',
           showConfirmButton: false,
           timer: 1500
         }).then(result => {
-          this.getList();
+          console.log(result);
         })
       },
-      error:(e)=>{
+      error: (e) => {
         console.log(e);
         Swal.fire({
           position: 'top-end',
@@ -139,23 +233,21 @@ handleObject(object: object) {
           timer: 1500
         })
       },
-      complete:()=>{
+      complete: () => {
         console.log("done");
-      } 
-    })*/
+        this.reloadAfterChange();
+        this.getList();
+      }
+    })
   }
-  
-  addRow(availabilityPeriod: any){
 
-    //weekday
-    //horaini
-    //horafin
+  getRow(availabilityPeriod: any) {
 
     var period = {
-      id:availabilityPeriod.availabilityPeriodUuid,
+      id: availabilityPeriod.availabilityPeriodUuid,
       weekday: Utility.getWeekDayName(availabilityPeriod.weekday),
-      startTime: Utility.getTime(availabilityPeriod.startTimeHour,availabilityPeriod.startTimeMinutes),
-      endTime: Utility.getTime(availabilityPeriod.endTimeHour,availabilityPeriod.endTimeMinutes)
+      startTime: Utility.getTime(availabilityPeriod.startTimeHour, availabilityPeriod.startTimeMinutes),
+      endTime: Utility.getTime(availabilityPeriod.endTimeHour, availabilityPeriod.endTimeMinutes)
     }
 
     const button = `<button class="btn btn-danger btn-icon" id="btn${period.id}">  <i class="mdi mdi-delete"></i></button>`;
@@ -170,11 +262,28 @@ handleObject(object: object) {
 
   }
 
-  addRowEvents(){
+  addRowEvents() {
     for (const item of this.dataTableRows) {
       this.elementRef.nativeElement.querySelector('#btn' + item[4]).addEventListener('click', () => {
         this.delete(item[4]);
       });
     }
+  }
+
+  reloadAfterChange() {
+    this.dataTableRows = [];
+
+    const rowCount = this.availabilityPeriodDataTable.activeRows.length - 1;
+    var rows: any = [];
+
+    for (let i = 0; i <= rowCount; i++) {
+      rows.push(i);
+    }
+
+    if (rows.length > 0) {
+      this.availabilityPeriodDataTable.rows().remove(rows);
+    }
+
+    this.roomAvailabilityPeriodComponent.clearForm();
   }
 }
