@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { isValidDate } from '@fullcalendar/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { AvailabilityPeriod } from 'src/app/interfaces/availability-period.interface';
 
@@ -10,7 +9,8 @@ import { AvailabilityPeriod } from 'src/app/interfaces/availability-period.inter
 })
 export class RoomAvailabilityPeriodComponent implements OnInit {
 
-  @Output() objectEmitter = new EventEmitter<any>();
+  @Input() roomAvailabilityId: any;
+  @Output() availabilityPeriodEmitter = new EventEmitter<any>();
 
   constructor(private calendar: NgbCalendar, 
               public formatter: NgbDateParserFormatter) { }
@@ -58,8 +58,9 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
       this.availabilityPeriod.endTimeMinutes = this.availabilityPeriodLocal.endDateTime.minute;
       this.availabilityPeriod.startTimeMinutes= this.availabilityPeriodLocal.startDateTime.minute;
       this.availabilityPeriod.weekday = this.selectedDay;
+      this.availabilityPeriod.roomAvailabilityUuid = this.roomAvailabilityId;
 
-      this.objectEmitter.emit(this.availabilityPeriod);
+      this.availabilityPeriodEmitter.emit(this.availabilityPeriod);
     }
   }
 
@@ -103,4 +104,20 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
     return message;
   }
 
+  clearForm(){
+    
+      this.availabilityPeriod.availabilityPeriodUuid = '';
+      this.availabilityPeriod.roomAvailabilityUuid = '';
+      this.availabilityPeriod.weekday = 0;
+      this.availabilityPeriod.startTimeHour = 0;
+      this.availabilityPeriod.startTimeMinutes = 0;
+      this.availabilityPeriod.endTimeHour = 0;
+      this.availabilityPeriod.endTimeMinutes = 0;
+      
+      this.availabilityPeriodLocal.beginDate = '';
+      this.availabilityPeriodLocal.endDate = '';
+      this.availabilityPeriodLocal.startDateTime = { hour: 7, minute: 0, second: 0 };
+      this.availabilityPeriodLocal.endDateTime = { hour: 20, minute: 0, second: 0 };
+      
+  }
 }
