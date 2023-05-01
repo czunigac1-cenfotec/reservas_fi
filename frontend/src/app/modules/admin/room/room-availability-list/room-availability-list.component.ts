@@ -64,7 +64,8 @@ export class RoomAvailabilityListComponent implements OnInit,AfterViewInit {
       next:(data)=>{
 
         console.log(data);   
-
+//TODO ACTUALIZAR
+        /*
         if (data.length >0) {
           for (const room of data) {
             dataTableRows.push([
@@ -75,10 +76,11 @@ export class RoomAvailabilityListComponent implements OnInit,AfterViewInit {
               String(room.capacity),
               `<a href="/admin/room-detail/${room.roomUuid}">Ver Detalles</a>`
             ]);
-          }
 
-          this.roomAvailabilityDataTable.rows().add(dataTableRows);
-        } 
+            this.roomAvailabilityDataTable.rows().add(dataTableRows);
+
+          }
+        } */
       },
       error:(e)=>{
         console.log(e);

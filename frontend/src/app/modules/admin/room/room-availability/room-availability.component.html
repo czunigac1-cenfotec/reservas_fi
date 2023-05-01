@@ -62,7 +62,7 @@
                         <ngb-accordion [closeOthers]="true" activeIds="availabilityPeriod" [class.collapsed]="true">
                             <ngb-panel id="availabilityPeriod" title="Periodo de Disponibilidad">
                               <ng-template ngbPanelContent>
-                                <app-room-availability-period-list [roomAvailabilityId]="roomAvailabilityId" [availabilityPeriodId]="availabilityPeriodId"></app-room-availability-period-list>
+                                <app-room-availability-period-list [roomAvailabilityId]="roomAvailabilityId" [availabilityPeriodId]="availabilityPeriodId" [roomAvailability]="roomAvailability"></app-room-availability-period-list>
                               </ng-template>
                             </ngb-panel>
                           </ngb-accordion>

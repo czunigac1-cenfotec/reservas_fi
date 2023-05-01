@@ -1,6 +1,6 @@
 package ac.cr.ucr.controller.customRequest;
 
-public class ScheduledAvailabilityPeriod {
+public class  ScheduledAvailabilityPeriod {
 
     private int dayNumber;
 
