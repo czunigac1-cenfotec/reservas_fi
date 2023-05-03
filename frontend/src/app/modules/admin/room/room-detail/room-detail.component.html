@@ -70,7 +70,7 @@
                         <ngb-accordion [closeOthers]="true" activeIds="roomAvailability" [class.collapsed]="true">
                             <ngb-panel id="roomAvailability" title="Disponibilidad de Sala">
                               <ng-template ngbPanelContent>
-                                <app-room-availability-list [roomAvailabilityId]="roomAvailabilityId"></app-room-availability-list>
+                                <app-room-availability (roomAvailabilityEmitter)="saveRoomAvailability($event)" [roomAvailabilityId]="roomAvailabilityId" [roomId]="roomId"></app-room-availability>
                               </ng-template>
                             </ngb-panel>
                           </ngb-accordion>

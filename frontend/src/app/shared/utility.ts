@@ -78,4 +78,40 @@ export class Utility {
     
         return time;
     }
+
+    static getCurrentDateTime(hour:string,minutes:string): string {
+
+      var dateTime = "";
+
+      const currentDate: Date = new Date();
+      const year: number = currentDate.getFullYear();
+      const month: number = currentDate.getMonth() + 1;
+      const day: number = currentDate.getDate();
+
+      var time = { "hour": hour, "minute": minutes, "second": 0 }
+      var date = { "year": year, "month": month, "day": day }
+
+
+      dateTime = this.getFormattedDate(date) + "T" + this.getFormattedTime(time)
+
+      return dateTime;
+    }
+
+    static getFormattedDate(date: any): string {
+      let year = date.year;
+      let month = date.month <= 9 ? '0' + date.month : date.month;
+      let day = date.day <= 9 ? '0' + date.day : date.day;
+      let formattedDate = year + "-" + month + "-" + day;
+  
+      return formattedDate;
+    }
+  
+    static getFormattedTime(time: any): string {
+      let hour = time.hour <= 9 ? '0' + time.hour : time.hour;
+      let minute = time.minute <= 9 ? '0' + time.minute : time.minute;
+      let formattedDate = hour + ":" + minute + ":00";
+  
+      return formattedDate;
+    }
+
   }
