@@ -1,6 +1,4 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTable } from 'simple-datatables';
 import { AvailabilityPeriodService } from 'src/app/core/services/availability-period.service';
 import { RoomAvailabilityService } from 'src/app/core/services/room-availability.service';
@@ -16,10 +14,11 @@ import Swal from 'sweetalert2';
 })
 export class RoomAvailabilityPeriodListComponent implements OnInit {
 
-  @Input() roomAvailabilityId: any;
-  @Input() availabilityPeriodId: any;
-  @Input() roomAvailability: any;
+  @ViewChild(RoomAvailabilityPeriodComponent) roomAvailabilityPeriodComponent: RoomAvailabilityPeriodComponent
 
+  @Input() roomAvailabilityId: any;
+  @Input() roomId: any;
+  @Input() roomAvailability: any;
 
   dataTableRows: any = [];
 
@@ -37,8 +36,6 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
     
   }
 
-  @ViewChild(RoomAvailabilityPeriodComponent) roomAvailabilityPeriodComponent: RoomAvailabilityPeriodComponent
-
   constructor(private service: AvailabilityPeriodService,
     private availabilityService: RoomAvailabilityService,
     private elementRef: ElementRef) { }
@@ -47,9 +44,6 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
 
   ngOnInit(): void {
     this.initTable();
-    //temporal
-    this.roomAvailabilityId = "2edf11f8-ad0a-4f83-b5a0-c957a00ae082";
-    this.availabilityPeriodId = "1102953b-da1f-43c4-b537-7e90feac86de";
     this.getList();
   }
 
@@ -93,7 +87,7 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
 
   getList(): void {
 
-    this.availabilityService.getAvailabilityPeriods(this.availabilityPeriodId).subscribe({
+    this.availabilityService.getAvailabilityPeriods(this.roomId).subscribe({
       next: (data) => {
 
         console.log(data);
@@ -146,34 +140,19 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
       }
     }
 
-    //TODO:Uncomment
-    /*var roomAvailabilityLocal:any = 
+    var roomAvailabilityLocal:any = 
     {
-        roomAvailabilityUuid:this.roomAvailability.roomAvailabilityUuid,
-        roomUuid: this.roomAvailability.roomUuid,
-        administratorUuid: this.roomAvailability.administratorUuid,
+        roomAvailabilityUuid:this.roomAvailabilityId,
+        roomUuid: this.roomId,
+        //TODO:Get admin UUID from user security
+        administratorUuid: "9cff8d97-1a50-49fe-b173-93797d29c03b",
         minReservationTime: this.roomAvailability.minReservationTime,
         maxReservationTime: this.roomAvailability.maxReservationTime,
         approvalRequired: this.roomAvailability.approvalRequired,
         privateReservationEnabled: this.roomAvailability.privateReservationEnabled,
-        startDateTime: this.roomAvailability.startDateTime,
-        endDateTime: this.roomAvailability.endDateTime,
+        startDateTime: Utility.getCurrentDateTime(this.roomAvailability.startDateTime.hour,this.roomAvailability.startDateTime.minute),
+        endDateTime: Utility.getCurrentDateTime(this.roomAvailability.endDateTime.hour,this.roomAvailability.endDateTime.minute),
         availabilityPeriods: availabilityPeriods
-    }*/
-
-    //TEMPORAL
-    var roomAvailabilityLocal: any =
-    {
-      roomAvailabilityUuid: "2edf11f8-ad0a-4f83-b5a0-c957a00ae082",
-      roomUuid: "1102953b-da1f-43c4-b537-7e90feac86de",
-      administratorUuid: "9cff8d97-1a50-49fe-b173-93797d29c03b",
-      minReservationTime: 10,
-      maxReservationTime: 30,
-      approvalRequired: false,
-      privateReservationEnabled: false,
-      startDateTime: "2023-04-30T10:30:00",
-      endDateTime: "2023-04-30T17:30:00",
-      availabilityPeriods: availabilityPeriods
     }
 
     this.availabilityService.update(roomAvailabilityLocal, this.roomAvailabilityId).subscribe({
