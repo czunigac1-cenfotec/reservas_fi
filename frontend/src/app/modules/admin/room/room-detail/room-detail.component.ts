@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { RoomAvailabilityComponent } from '../room-availability/room-availability.component';
 import { RoomService } from 'src/app/core/services/room.service';
 import { Room } from 'src/app/interfaces/room.interface';
+import { RoomAvailability } from 'src/app/interfaces/room-availability.interface';
 
 @Component({
   selector: 'app-room-detail',
@@ -11,6 +12,22 @@ import { Room } from 'src/app/interfaces/room.interface';
   styleUrls: ['./room-detail.component.scss']
 })
 export class RoomDetailComponent implements OnInit {
+
+  /**
+  * ChildView callback
+  *
+  * @param {object} roomAvailability - roomAvailability Object
+  */
+ 
+  saveRoomAvailability(roomAvailability: any): void {
+    if(roomAvailability!=null){
+      console.log(JSON.stringify(roomAvailability));
+      var item = roomAvailability.roomAvailability;
+      this.roomAvailabilityId = item.roomAvailabilityUuid == undefined ? "" : item.roomAvailabilityUuid;
+      this.room.roomAvailabilityUuid = this.roomAvailabilityId;
+      //this.update();
+    }
+  }
 
   @ViewChild(RoomAvailabilityComponent) roomAvailabilityComponent: RoomAvailabilityComponent
 
@@ -50,6 +67,15 @@ export class RoomDetailComponent implements OnInit {
       next:(data)=>{
         console.log(data);
         this.room = data;
+        this.roomId = data.roomUuid;
+        this.roomAvailabilityId = data.roomAvailabilityUuid == null ? "-1" : data.roomAvailabilityUuid;
+      
+        if(this.roomAvailabilityId != "-1")
+        {
+          this.roomAvailabilityComponent.roomAvailabilityId = this.roomAvailabilityId;
+          this.roomAvailabilityComponent.loadData();
+          this.roomAvailabilityComponent.accordionDisabled = false;
+        }
       },
       error:(e)=>{
         console.log(e);
@@ -120,6 +146,8 @@ export class RoomDetailComponent implements OnInit {
 
     this.roomService.create(newRoom).subscribe({
       next:(result)=>{
+        
+        this.roomId = result.roomUuid;
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -127,7 +155,7 @@ export class RoomDetailComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         }).then(result => {
-          this.navigateToList();
+          console.log(result);
         })
       },
       error:(e)=>{
@@ -141,10 +169,9 @@ export class RoomDetailComponent implements OnInit {
       },
       complete:()=>{
         console.log("done");
+        this.roomAvailabilityComponent.saveOrUpdate(this.roomId);
       } 
     })
-
-    //this.roomAvailabilityComponent.save();
   }
 
   update(): void {
@@ -169,10 +196,28 @@ export class RoomDetailComponent implements OnInit {
       },
       complete:()=>{
         console.log("done");
+        this.roomAvailabilityComponent.saveOrUpdate(this.roomId);
       } 
     })
-    
-    //this.roomAvailabilityComponent.update();
+  }
+
+  updateRoomAvailabilityId(roomAvailabilityId:string): void {
+
+    const newRoom = { ...this.room };
+    newRoom.roomAvailabilityUuid = roomAvailabilityId;
+    console.log(newRoom);
+
+    this.roomService.update(newRoom, this.roomId).subscribe({
+      next:(result)=>{
+        console.log(result);
+      },
+      error:(e)=>{
+        console.log(e);
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })
   }
 
   navigateToList(): void {

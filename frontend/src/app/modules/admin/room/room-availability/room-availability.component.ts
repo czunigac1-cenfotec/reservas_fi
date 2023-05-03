@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { RoomAvailabilityService } from 'src/app/core/services/room-availability.service';
+import { RoomAvailability } from 'src/app/interfaces/room-availability.interface';
+import { Utility } from 'src/app/shared/utility';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,44 +10,64 @@ import Swal from 'sweetalert2';
   styleUrls: ['./room-availability.component.scss']
 })
 export class RoomAvailabilityComponent implements OnInit {
-
+  
+  @Output() roomAvailabilityEmitter = new EventEmitter<any>();
   @Input() roomAvailabilityId: string;
-  availabilityPeriodId = "";
-  isUpdate: boolean = true; 
+  @Input() roomId: string;
 
-  roomAvailability = {
-    roomAvailabilityPeriod:'',
-    minReservationTime:0,
-    maxReservationTime:0,
-    startDate:'',
-    endDate:'',
-    approvalRequired:false,
-    private:false,
-    administrator:'',
-    creationDate:'',
-    roomUuid:"00000000-0000-0000-0000-0000000000"
+  isUpdate: boolean = true; 
+  accordionDisabled = true;
+
+  roomAvailability: RoomAvailability ={
+    roomAvailabilityUuid: '',
+    administratorUuid: '',
+    roomUuid: '',
+    minReservationTime: 0,
+    maxReservationTime: 0,
+    approvalRequired: false,
+    startDateTime: { hour: 7, minute: 0, second: 0 },
+    endDateTime: { hour: 20, minute: 0, second: 0 },
+    privateReservationEnabled: false,
+    availabilityPeriods: []
   }
 
-  constructor( private activeRoute: ActivatedRoute,
-               private router: Router,
-               private modalService: NgbModal) { }
-
-  ngOnInit(): void {
+  constructor( private service: RoomAvailabilityService) { }
     
-      this.activeRoute.params.subscribe((params: Params) => this.roomAvailabilityId = params.roomAvailabilityId );
+  ngOnInit(): void {
+    this.loadData();   
+  }
 
-      if (this.roomAvailabilityId === '-1') {
-        this.isUpdate = false;
-      }else{
-        this.getInfo();
-      }
+  loadData(){
+    if (this.roomAvailabilityId === '-1') {
+      this.isUpdate = false;
+    }else{
+      this.getInfo();
+    }
   }
 
   getInfo():void{
-    
+    this.service.get(this.roomAvailabilityId).subscribe({
+      next:(data)=>{
+        console.log(data);
+        this.roomAvailability = data;
+      },
+      error:(e)=>{
+        console.log(e);
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })
   }
 
-  saveOrUpdate():void{
+  saveOrUpdate(roomUuid:string):void{
+
+    debugger;
+    if(roomUuid!=''){
+      this.roomId = roomUuid;
+      this.isUpdate = true;
+    }
+
     if(this.isUpdate){
       this.update();
     }else{
@@ -54,30 +75,67 @@ export class RoomAvailabilityComponent implements OnInit {
     }
   }
 
-  showDeleteConfirmation() : void {
-    Swal.fire({
-      title: '¿Desea eliminar el usuario?',
-      showDenyButton: false,
-      showCancelButton: true,
-      confirmButtonText: 'Eliminar',
-      denyButtonText:'',
-    }).then((result: { isConfirmed: any; }) => {
-      if (result.isConfirmed) {
-        this.delete();
-      }
-    })
-  }
-
   delete(): void {
-   
+    this.service.delete(this.roomAvailabilityId).subscribe({
+      next:(result)=>{
+        console.log(result);
+      },
+      error:(e)=>{
+        console.log(e);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Code:' + e.status + '| Detail:' + e.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })
   }
 
   save(): void {
     console.log('Inner method called [save]');
+
+    const newRoomAvailability = { ...this.roomAvailability };
+    delete newRoomAvailability.roomAvailabilityUuid;
+    
+    newRoomAvailability.roomUuid = this.roomId;
+    newRoomAvailability.startDateTime = Utility.getCurrentDateTime(this.roomAvailability.startDateTime.hour,this.roomAvailability.startDateTime.minute);
+    newRoomAvailability.endDateTime = Utility.getCurrentDateTime(this.roomAvailability.endDateTime.hour,this.roomAvailability.endDateTime.minute);
+    //TODO:Get admin UUID from user security
+    newRoomAvailability.administratorUuid = "9cff8d97-1a50-49fe-b173-93797d29c03b";
+
+    this.service.create(newRoomAvailability).subscribe({
+      next:(data: any)=>{
+        this.roomAvailabilityId = data.roomAvailability.roomAvailabilityUuid; 
+        this.roomAvailabilityEmitter.emit(data);
+      },
+      error:(e)=>{
+        console.log(e);
+      },
+      complete:()=>{
+        console.log("done");
+        this.accordionDisabled = false;
+      } 
+    })
   }
 
   update(): void {
     console.log('Inner method called [update]');
-  }
 
+    this.service.update(this.roomAvailability,this.roomAvailabilityId).subscribe({
+      next:(data: any)=>{
+        console.log(data);
+      },
+      error:(e)=>{
+        console.log(e);
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })
+  }
 }

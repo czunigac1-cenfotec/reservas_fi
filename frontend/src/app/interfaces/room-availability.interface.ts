@@ -3,11 +3,10 @@ export interface RoomAvailability {
     administratorUuid?: string;
     roomUuid?: string;
     minReservationTime: number;
-    nammaxReservationTime: number;
+    maxReservationTime: number;
     approvalRequired: boolean;
-    startDateTime?: string;
-    endDateTime?: string;
-    creationDateTime?: string;
+    startDateTime?: any;
+    endDateTime?: any;
     privateReservationEnabled: boolean;
-    availabilityPeriods: [];
+    availabilityPeriods: any;
 }
