@@ -49,7 +49,14 @@ export class RoomAvailabilityComponent implements OnInit {
     this.service.get(this.roomAvailabilityId).subscribe({
       next:(data)=>{
         console.log(data);
+
+        var startDateTime = Utility.getComponentFormattedTime(data.startDateTime);
+        var endDateTime = Utility.getComponentFormattedTime(data.endDateTime);
+
         this.roomAvailability = data;
+        this.roomAvailability.startDateTime = { hour: startDateTime.hour, minute: startDateTime.minute, second: 0 };
+        this.roomAvailability.endDateTime = { hour: endDateTime.hour, minute: endDateTime.minute, second: 0 };
+
       },
       error:(e)=>{
         console.log(e);
@@ -62,7 +69,6 @@ export class RoomAvailabilityComponent implements OnInit {
 
   saveOrUpdate(roomUuid:string):void{
 
-    debugger;
     if(roomUuid!=''){
       this.roomId = roomUuid;
       this.isUpdate = true;
@@ -126,7 +132,12 @@ export class RoomAvailabilityComponent implements OnInit {
   update(): void {
     console.log('Inner method called [update]');
 
-    this.service.update(this.roomAvailability,this.roomAvailabilityId).subscribe({
+    const newRoomAvailability = { ...this.roomAvailability };
+    
+    newRoomAvailability.startDateTime = Utility.getCurrentDateTime(this.roomAvailability.startDateTime.hour,this.roomAvailability.startDateTime.minute);
+    newRoomAvailability.endDateTime = Utility.getCurrentDateTime(this.roomAvailability.endDateTime.hour,this.roomAvailability.endDateTime.minute);
+
+    this.service.update(newRoomAvailability,this.roomAvailabilityId).subscribe({
       next:(data: any)=>{
         console.log(data);
       },
