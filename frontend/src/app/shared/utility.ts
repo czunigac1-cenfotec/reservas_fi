@@ -114,4 +114,25 @@ export class Utility {
       return formattedDate;
     }
 
+    static getComponentFormattedDate(date: any) : any{
+
+      var formattedDate = {
+        "year": parseInt(date.split("T")[0].split("-")[0]),
+        "month": parseInt(date.split("T")[0].split("-")[1]),
+        "day": parseInt(date.split("T")[0].split("-")[2])
+      }
+
+      return formattedDate;
+    }
+
+    static getComponentFormattedTime(time: any) : any{
+
+      var formattedTime = {
+        hour: parseInt(time.split("T")[1].split(":")[0]),
+        minute: parseInt(time.split("T")[1].split(":")[1])
+      }
+
+      return formattedTime;
+    }
+    
   }
