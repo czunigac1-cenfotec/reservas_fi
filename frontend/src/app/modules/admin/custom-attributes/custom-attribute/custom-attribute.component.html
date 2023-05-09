@@ -1,0 +1,30 @@
+<form novalidate name="frmCustomAttribute">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group row mb-3">                            
+                        <label for="txtTitle" class="col-sm-4 col-form-label">Título:
+                            <span class="text-danger form-check-inline" *ngIf="txtTitleReq?.errors?.required"> *</span>
+                        </label>
+                            <div class="col-sm-8">
+                            <input type="text" class="form-control" id="txtTitle" placeholder="Título" name="txtTitle"
+                            [(ngModel)]="customAttribute.title" #txtTitleReq="ngModel" required maxlength="50" minlength="1">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row mb-4">                            
+                        <label for="txtDescription" class="col-sm-4 col-form-label">Descripción:
+                            <span class="text-danger form-check-inline" *ngIf="txtDescriptionReq?.errors?.required"> *</span>
+                        </label>
+                        <div class="col-sm-8">
+                        <textarea class="form-control" id="txtDescription" autocomplete="off" placeholder="Descripción" name="txtDescription"
+                                [(ngModel)]="customAttribute.description" #txtDescriptionReq="ngModel" required maxlength="250"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

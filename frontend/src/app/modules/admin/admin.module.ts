@@ -28,6 +28,8 @@ import { ResourceListComponent } from './resource/resource-list/resource-list.co
 import { ResourceDetailComponent } from './resource/resource-detail/resource-detail.component';
 import { RoomAvailabilityListComponent } from './room/room-availability-list/room-availability-list.component';
 import { RoomAvailabilityPeriodListComponent } from './room/room-availability-period-list/room-availability-period-list.component';
+import { CustomAttributesListComponent } from './custom-attributes/custom-attributes-list/custom-attributes-list.component';
+import { CustomAttributeComponent } from './custom-attributes/custom-attribute/custom-attribute.component';
 
 const routes: Routes = [
   {
@@ -77,7 +79,7 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [UserListComponent,UserDetailComponent, RoomListComponent, RoomDetailComponent, 
-                RoomAvailabilityComponent, RoomAvailabilityPeriodComponent, ResourceListComponent, ResourceDetailComponent, RoomAvailabilityListComponent, RoomAvailabilityPeriodListComponent,],
+                RoomAvailabilityComponent, RoomAvailabilityPeriodComponent, ResourceListComponent, ResourceDetailComponent, RoomAvailabilityListComponent, RoomAvailabilityPeriodListComponent, CustomAttributesListComponent, CustomAttributeComponent,],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

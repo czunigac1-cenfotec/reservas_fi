@@ -59,10 +59,19 @@
                         </div>
                     </div>
                     <div class="form-group row mb-3" >   
-                        <ngb-accordion [closeOthers]="true" activeIds="availabilityPeriod" [class.collapsed]="true">
-                            <ngb-panel id="availabilityPeriod" title="Periodo de Disponibilidad" [disabled]="accordionDisabled">
+                        <ngb-accordion [closeOthers]="true" [class.collapsed]="true">
+                            <ngb-panel id="availabilityPeriod" title="Periodo de Disponibilidad" [disabled]="availabilityPeriodDisabled">
                               <ng-template ngbPanelContent>
                                 <app-room-availability-period-list [roomAvailabilityId]="roomAvailabilityId" [roomId]="roomId" [roomAvailability]="roomAvailability"></app-room-availability-period-list>
+                              </ng-template>
+                            </ngb-panel>
+                          </ngb-accordion>
+                    </div>
+                    <div class="form-group row mb-3" >   
+                        <ngb-accordion [closeOthers]="true" [class.collapsed]="true">
+                            <ngb-panel id="customAttributes" title="Atributos Personalizados" [disabled]="customAttributesDisabled">
+                              <ng-template ngbPanelContent>
+                                <app-custom-attributes-list [roomAvailabilityId]="roomAvailabilityId"></app-custom-attributes-list>
                               </ng-template>
                             </ngb-panel>
                           </ngb-accordion>

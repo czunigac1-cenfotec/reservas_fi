@@ -15,7 +15,6 @@ import Swal from 'sweetalert2';
 export class RoomAvailabilityPeriodListComponent implements OnInit {
 
   @ViewChild(RoomAvailabilityPeriodComponent) roomAvailabilityPeriodComponent: RoomAvailabilityPeriodComponent
-
   @Input() roomAvailabilityId: any;
   @Input() roomId: any;
   @Input() roomAvailability: any;
