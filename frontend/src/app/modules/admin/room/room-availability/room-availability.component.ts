@@ -3,7 +3,6 @@ import { RoomAvailabilityService } from 'src/app/core/services/room-availability
 import { RoomAvailability } from 'src/app/interfaces/room-availability.interface';
 import { Utility } from 'src/app/shared/utility';
 import Swal from 'sweetalert2';
-import { NgxMaskModule } from 'ngx-mask';
 
 @Component({
   selector: 'app-room-availability',
@@ -17,7 +16,8 @@ export class RoomAvailabilityComponent implements OnInit {
   @Input() roomId: string;
 
   isUpdate: boolean = true; 
-  accordionDisabled = true;
+  availabilityPeriodDisabled = true;
+  customAttributesDisabled = true;
 
   roomAvailability: RoomAvailability ={
     roomAvailabilityUuid: '',
@@ -68,11 +68,14 @@ export class RoomAvailabilityComponent implements OnInit {
     })
   }
 
-  saveOrUpdate(roomUuid:string):void{
+  saveOrUpdate(roomUuid:string, roomAvailabilityId:string):void{
 
-    if(roomUuid!=''){
+    if(roomAvailabilityId!='-1'){
       this.roomId = roomUuid;
+      this.roomAvailabilityId = roomAvailabilityId;
       this.isUpdate = true;
+    }else{
+      this.isUpdate = false;
     }
 
     if(this.isUpdate){
@@ -126,7 +129,8 @@ export class RoomAvailabilityComponent implements OnInit {
         },
         complete:()=>{
           console.log("done");
-          this.accordionDisabled = false;
+          this.availabilityPeriodDisabled = false;
+          this.customAttributesDisabled = false;
         } 
       })
     }else{
