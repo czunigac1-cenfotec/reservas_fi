@@ -104,6 +104,7 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
           }
 
           if (data.availabilityPeriods.length > 0) {
+            this.roomAvailabilityPeriodComponent.updateDataTable(this.dataTableRows);
             this.availabilityPeriodDataTable.rows().add(this.dataTableRows);
           }
         }

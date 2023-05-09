@@ -19,7 +19,8 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
   hoveredDate: NgbDate | null = null;
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
-  defaultTime: NgbTimeStruct = { hour: 7, minute: 0, second: 0 };
+
+  dataTableRows: any = [];
 
   availabilityPeriod: AvailabilityPeriod =
   {
@@ -60,6 +61,8 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
       this.availabilityPeriod.weekday = this.selectedDay;
       this.availabilityPeriod.roomAvailabilityUuid = this.roomAvailabilityId;
 
+      this.validate();
+
       this.availabilityPeriodEmitter.emit(this.availabilityPeriod);
     }
   }
@@ -73,6 +76,10 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
       this.toDate = null;
       this.fromDate = date;
     }
+  }
+
+  updateDataTable(dataTableRows: any){
+    this.dataTableRows = dataTableRows;
   }
 
   isHovered(date: NgbDate) {
@@ -106,18 +113,25 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
 
   clearForm(){
     
-      this.availabilityPeriod.availabilityPeriodUuid = '';
-      this.availabilityPeriod.roomAvailabilityUuid = '';
       this.availabilityPeriod.weekday = 0;
-      this.availabilityPeriod.startTimeHour = 0;
+      this.availabilityPeriod.startTimeHour = 7;
       this.availabilityPeriod.startTimeMinutes = 0;
-      this.availabilityPeriod.endTimeHour = 0;
+      this.availabilityPeriod.endTimeHour = 20;
       this.availabilityPeriod.endTimeMinutes = 0;
       
       this.availabilityPeriodLocal.beginDate = '';
       this.availabilityPeriodLocal.endDate = '';
       this.availabilityPeriodLocal.startDateTime = { hour: 7, minute: 0, second: 0 };
       this.availabilityPeriodLocal.endDateTime = { hour: 20, minute: 0, second: 0 };
-      
+
+  }
+
+  validate():boolean{
+    var vItemAlreadyAdded = false;
+
+    debugger;
+    console.log(this.dataTableRows);
+    
+    return vItemAlreadyAdded;
   }
 }
