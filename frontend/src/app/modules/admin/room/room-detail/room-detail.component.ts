@@ -4,7 +4,6 @@ import Swal from 'sweetalert2';
 import { RoomAvailabilityComponent } from '../room-availability/room-availability.component';
 import { RoomService } from 'src/app/core/services/room.service';
 import { Room } from 'src/app/interfaces/room.interface';
-import { RoomAvailability } from 'src/app/interfaces/room-availability.interface';
 
 @Component({
   selector: 'app-room-detail',
@@ -68,13 +67,15 @@ export class RoomDetailComponent implements OnInit {
         console.log(data);
         this.room = data;
         this.roomId = data.roomUuid;
+  
         this.roomAvailabilityId = data.roomAvailabilityUuid == null ? "-1" : data.roomAvailabilityUuid;
       
         if(this.roomAvailabilityId != "-1")
         {
           this.roomAvailabilityComponent.roomAvailabilityId = this.roomAvailabilityId;
           this.roomAvailabilityComponent.loadData();
-          this.roomAvailabilityComponent.accordionDisabled = false;
+          this.roomAvailabilityComponent.availabilityPeriodDisabled = false;
+          this.roomAvailabilityComponent.customAttributesDisabled = false;
         }
       },
       error:(e)=>{
@@ -169,7 +170,8 @@ export class RoomDetailComponent implements OnInit {
       },
       complete:()=>{
         console.log("done");
-        this.roomAvailabilityComponent.saveOrUpdate(this.roomId);
+        this.roomAvailabilityComponent.saveOrUpdate(this.roomId,this.roomAvailabilityId);
+        this.getInfo();
       } 
     })
   }
@@ -196,7 +198,7 @@ export class RoomDetailComponent implements OnInit {
       },
       complete:()=>{
         console.log("done");
-        this.roomAvailabilityComponent.saveOrUpdate(this.roomId);
+        this.roomAvailabilityComponent.saveOrUpdate(this.roomId,this.roomAvailabilityId);
       } 
     })
   }

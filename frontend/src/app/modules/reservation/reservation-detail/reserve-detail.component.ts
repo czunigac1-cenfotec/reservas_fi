@@ -24,7 +24,7 @@ export class ReservationDetailComponent implements OnInit {
 
   reservation = {
     reservationUuid: "",
-    reservationGroupUuid: "1aff8563-1391-4a79-8919-7ec05ee14b44",
+    reservationGroupUuid: "",
     roomUuid: "",
     startDateTime: { hour: 13, minute: 30 },
     endDateTime: { hour: 13, minute: 30 },
@@ -215,7 +215,7 @@ export class ReservationDetailComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Recurso registrado correctamente',
+          title: 'Reserva registrada correctamente',
           showConfirmButton: false,
           timer: 1500
         }).then(result => {
@@ -245,7 +245,7 @@ export class ReservationDetailComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Recurso actualizado correctamente',
+          title: 'Reserva actualizada correctamente',
           showConfirmButton: false,
           timer: 1500
         })
@@ -267,7 +267,7 @@ export class ReservationDetailComponent implements OnInit {
 
   showDeleteConfirmation(): void {
     Swal.fire({
-      title: '¿Desea eliminar el recurso?',
+      title: '¿Desea eliminar la reserva?',
       showDenyButton: false,
       showCancelButton: true,
       confirmButtonText: 'Eliminar',
@@ -285,7 +285,7 @@ export class ReservationDetailComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Recurso eliminado correctamente',
+          title: 'Reserva eliminada correctamente',
           showConfirmButton: false,
           timer: 1500
         }).then(result => {
