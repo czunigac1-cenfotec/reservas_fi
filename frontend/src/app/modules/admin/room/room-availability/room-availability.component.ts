@@ -3,6 +3,7 @@ import { RoomAvailabilityService } from 'src/app/core/services/room-availability
 import { RoomAvailability } from 'src/app/interfaces/room-availability.interface';
 import { Utility } from 'src/app/shared/utility';
 import Swal from 'sweetalert2';
+import { NgxMaskModule } from 'ngx-mask';
 
 @Component({
   selector: 'app-room-availability',
@@ -105,48 +106,82 @@ export class RoomAvailabilityComponent implements OnInit {
   save(): void {
     console.log('Inner method called [save]');
 
-    const newRoomAvailability = { ...this.roomAvailability };
-    delete newRoomAvailability.roomAvailabilityUuid;
-    
-    newRoomAvailability.roomUuid = this.roomId;
-    newRoomAvailability.startDateTime = Utility.getCurrentDateTime(this.roomAvailability.startDateTime.hour,this.roomAvailability.startDateTime.minute);
-    newRoomAvailability.endDateTime = Utility.getCurrentDateTime(this.roomAvailability.endDateTime.hour,this.roomAvailability.endDateTime.minute);
-    //TODO:Get admin UUID from user security
-    newRoomAvailability.administratorUuid = "9cff8d97-1a50-49fe-b173-93797d29c03b";
+    if(this.validateTimeRange()){
+      const newRoomAvailability = { ...this.roomAvailability };
+      delete newRoomAvailability.roomAvailabilityUuid;
+      
+      newRoomAvailability.roomUuid = this.roomId;
+      newRoomAvailability.startDateTime = Utility.getCurrentDateTime(this.roomAvailability.startDateTime.hour,this.roomAvailability.startDateTime.minute);
+      newRoomAvailability.endDateTime = Utility.getCurrentDateTime(this.roomAvailability.endDateTime.hour,this.roomAvailability.endDateTime.minute);
+      //TODO:Get admin UUID from user security
+      newRoomAvailability.administratorUuid = "9cff8d97-1a50-49fe-b173-93797d29c03b";
 
-    this.service.create(newRoomAvailability).subscribe({
-      next:(data: any)=>{
-        this.roomAvailabilityId = data.roomAvailability.roomAvailabilityUuid; 
-        this.roomAvailabilityEmitter.emit(data);
-      },
-      error:(e)=>{
-        console.log(e);
-      },
-      complete:()=>{
-        console.log("done");
-        this.accordionDisabled = false;
-      } 
-    })
+      this.service.create(newRoomAvailability).subscribe({
+        next:(data: any)=>{
+          this.roomAvailabilityId = data.roomAvailability.roomAvailabilityUuid; 
+          this.roomAvailabilityEmitter.emit(data);
+        },
+        error:(e)=>{
+          console.log(e);
+        },
+        complete:()=>{
+          console.log("done");
+          this.accordionDisabled = false;
+        } 
+      })
+    }else{
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Validar rangos de horario de disponibilidad',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
   }
 
   update(): void {
     console.log('Inner method called [update]');
 
-    const newRoomAvailability = { ...this.roomAvailability };
-    
-    newRoomAvailability.startDateTime = Utility.getCurrentDateTime(this.roomAvailability.startDateTime.hour,this.roomAvailability.startDateTime.minute);
-    newRoomAvailability.endDateTime = Utility.getCurrentDateTime(this.roomAvailability.endDateTime.hour,this.roomAvailability.endDateTime.minute);
 
-    this.service.update(newRoomAvailability,this.roomAvailabilityId).subscribe({
-      next:(data: any)=>{
-        console.log(data);
-      },
-      error:(e)=>{
-        console.log(e);
-      },
-      complete:()=>{
-        console.log("done");
-      } 
-    })
+    if(this.validateTimeRange()){
+
+      const newRoomAvailability = { ...this.roomAvailability };
+      
+      newRoomAvailability.startDateTime = Utility.getCurrentDateTime(this.roomAvailability.startDateTime.hour,this.roomAvailability.startDateTime.minute);
+      newRoomAvailability.endDateTime = Utility.getCurrentDateTime(this.roomAvailability.endDateTime.hour,this.roomAvailability.endDateTime.minute);
+
+      this.service.update(newRoomAvailability,this.roomAvailabilityId).subscribe({
+        next:(data: any)=>{
+          console.log(data);
+        },
+        error:(e)=>{
+          console.log(e);
+        },
+        complete:()=>{
+          console.log("done");
+        } 
+      })
+    }else{
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Validar rangos de horario de disponibilidad',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+  }
+
+  validateTimeRange(): boolean{
+    var isValid = true;
+
+    var beginDateTime = new Date().setHours(this.roomAvailability.startDateTime.hour, this.roomAvailability.startDateTime.minute);
+    var endDateTime = new Date().setHours(this.roomAvailability.endDateTime.hour, this.roomAvailability.endDateTime.minute);
+
+    if (beginDateTime >= endDateTime) {
+      isValid = false;
+    }
+    return isValid;
   }
 }
