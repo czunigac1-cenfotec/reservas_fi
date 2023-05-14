@@ -129,7 +129,6 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
   validate():boolean{
     var vItemAlreadyAdded = false;
 
-    debugger;
     console.log(this.dataTableRows);
     
     return vItemAlreadyAdded;
