@@ -40,6 +40,7 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
     private elementRef: ElementRef) { }
 
   availabilityPeriodDataTable: any;
+  isDelete = false;
 
   ngOnInit(): void {
     this.initTable();
@@ -78,8 +79,6 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
       complete: () => {
         console.log("done");
         this.updateRoomAvailability(serviceResponse.availabilityPeriodUuid, false);
-        this.reloadAfterChange();
-        this.getList();
       }
     })
   }
@@ -89,6 +88,7 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
     this.availabilityService.getAvailabilityPeriods(this.roomId).subscribe({
       next: (data) => {
 
+        debugger;
         console.log(data);
 
         if (data != null) {
@@ -124,6 +124,7 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
 
     var availabilityPeriods: any = [];
     var roomAvailabilityLocal: any;
+    this.isDelete = isDelete;
 
     if (!isDelete) {
       availabilityPeriods.push(availabilityPeriodUuid);
@@ -180,6 +181,12 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
       },
       complete: () => {
         console.log("done");
+        if(!isDelete){
+          this.reloadAfterChange();
+          this.getList();
+        }else{
+          isDelete = false;
+        }
       }
     })
   }
