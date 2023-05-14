@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { email } from 'ngx-custom-validators/src/app/email/validator';
 import { UserService } from 'src/app/core/services/user.service';
+import { Roles } from 'src/app/enum/roles.enum';
 import { User } from 'src/app/interfaces/user.interface';
 import Swal from 'sweetalert2';
 
@@ -28,6 +29,12 @@ export class UserDetailComponent implements OnInit {
     telefono:'',
     email : ''
   };
+
+  unidadAcademicaOptions = [
+    { label: 'Profesor', value: Roles.PROFESOR.toString() },
+    { label: 'Registro', value: Roles.REGISTRO.toString() },
+    { label: 'Administrador', value: Roles.ADMINISTRADOR.toString() }
+  ];
 
   constructor( private activeRoute: ActivatedRoute,
                private userService: UserService,
