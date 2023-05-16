@@ -88,7 +88,6 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
     this.availabilityService.getAvailabilityPeriods(this.roomId).subscribe({
       next: (data) => {
 
-        debugger;
         console.log(data);
 
         if (data != null) {
