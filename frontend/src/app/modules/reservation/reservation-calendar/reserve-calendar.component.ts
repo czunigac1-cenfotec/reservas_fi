@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/angular';
+import { CalendarOptions, DateSelectArg, EventClickArg, EventApi, FullCalendarComponent } from '@fullcalendar/angular';
 import { Draggable } from '@fullcalendar/interaction'; // for dateClick
 import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { ReservationService } from 'src/app/core/services/reservation.service';
 import { RoomService } from 'src/app/core/services/room.service';
-import { AvailabilityPeriodService } from 'src/app/core/services/availability-period.service';
 import { RoomAvailabilityService } from 'src/app/core/services/room-availability.service';
 
 @Component({
@@ -15,12 +14,12 @@ import { RoomAvailabilityService } from 'src/app/core/services/room-availability
   styleUrls: ['./reserve-calendar.component.scss']
 })
 export class ReservationCalendarComponent implements OnInit {
-  @ViewChild('externalEvents', { static: true }) externalEvents: ElementRef;
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
   reservations: any = [];
   selectedRoom: string = '';
   rooms: [];
-  showCalendar: boolean = false;
+  showCalendar: boolean = true;
 
   calendarOptions: CalendarOptions = {
     headerToolbar: {
@@ -120,7 +119,7 @@ export class ReservationCalendarComponent implements OnInit {
                 borderColor: '#f10075'
               }
 
-              this.reservations.push(event);
+              //this.reservations.push(event);
 
             }
           }
@@ -141,27 +140,11 @@ export class ReservationCalendarComponent implements OnInit {
     this.roomAvailabilityService.getAvailabilityPeriods(this.selectedRoom).subscribe({
       next: (data) => {
 
-        debugger;
         console.log(data);
 
-        if (data.length >= 1) {
+        if (data.availabilityPeriods.length > 0) {
 
-          for (const reservation of data) {
-            var roomName = '';
-            console.log(JSON.stringify(reservation));
-
-            var event = {
-              id: reservation.reservationUuid,
-              start: reservation.startDateTime,
-              end: reservation.endDateTime,
-              title: reservation.motive,
-              backgroundColor: 'rgba(241,0,117,.25)',
-              borderColor: '#f10075'
-            }
-
-            this.reservations.push(event);
-
-          }
+          this.getEventListFromAvailability(data.availabilityPeriods);
         }
       },
       error: (e) => {
@@ -182,7 +165,7 @@ export class ReservationCalendarComponent implements OnInit {
         console.log(data);
 
         if (data !== null) {
-          if (data.length >= 1) {
+          if (data.availabilityPeriods.length >= 1) {
 
             for (const reservation of data) {
               var roomName = '';
@@ -197,8 +180,6 @@ export class ReservationCalendarComponent implements OnInit {
                 borderColor: '#f10075'
               }
 
-              this.reservations.push(event);
-
             }
           }
         }
@@ -208,6 +189,7 @@ export class ReservationCalendarComponent implements OnInit {
       },
       complete: () => {
         console.log("done");
+        debugger;
         this.calendarOptions.events = this.reservations;
       }
     })
@@ -249,10 +231,51 @@ export class ReservationCalendarComponent implements OnInit {
 
     if (this.selectedRoom !== null) {
       this.showCalendar = true;
+
       this.getResevationsByRoom();
       this.getAvailabilityByRoom();
     } else {
       this.showCalendar = false;
     }
+  }
+
+  getEventListFromAvailability(availabilityPeriods:any) {
+
+    let calendarApi = this.calendarComponent.getApi();
+    let startDate  = calendarApi.view.activeStart.toISOString();
+    let endDate = calendarApi.view.activeEnd.toISOString();
+
+    availabilityPeriods.forEach((period: any) => {
+      
+      const periodStartDate = new Date(startDate);
+       periodStartDate.setDate(periodStartDate.getDate() + period.weekday);
+       periodStartDate.setHours(period.startTimeHour);
+       periodStartDate.setMinutes(period.startTimeMinutes);
+
+      const periodEndDate = new Date(startDate);
+      periodEndDate.setDate(periodEndDate.getDate() + period.weekday);
+      periodEndDate.setHours(period.endTimeHour);
+      periodEndDate.setMinutes(period.endTimeMinutes);
+
+      var event = {
+        id: period.availabilityPeriodUuid,
+        start: periodStartDate,
+        end: periodEndDate,
+        title: 'Event',
+        backgroundColor: 'rgba(241,0,117,.25)',
+        borderColor: '#f10075'
+      }
+
+      calendarApi.addEvent({
+        id: period.availabilityPeriodUuid,
+        start: periodStartDate,
+        end: periodEndDate,
+        title: 'Event',
+        backgroundColor: 'rgba(241,0,117,.25)',
+        borderColor: '#f10075'
+      });
+    });
+
+    //this.calendarOptions.events = this.reservations;
   }
 }
