@@ -19,6 +19,10 @@ export class ReservationService {
   get(pUuid: any): Observable<any> {
     return this.http.get(`${serviceUrl}/${pUuid}`);
   }
+  
+  getReservationsByStartDateEndDate(pRoomUuid: any, pStartDate:any, pEndDate:any ): Observable<any> {
+    return this.http.get(`${serviceUrl}/room-uuid/${pRoomUuid}/start-date/${pStartDate}/end-date/${pEndDate}`);
+  }
 
   create(pData: any): Observable<any> {
     return this.http.post(serviceUrl, pData);
