@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import ac.cr.ucr.logic.service.RoomAvailabilityService;
+import ac.cr.ucr.logic.service.RoomAvailabilityLogicService;
+import ac.cr.ucr.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ac.cr.ucr.model.Reservation;
-import ac.cr.ucr.repository.functional.ReservationInterface;
 
 @RequestMapping("/reservation")
 @CrossOrigin
@@ -25,14 +25,14 @@ import ac.cr.ucr.repository.functional.ReservationInterface;
 public class ReservationController {
 
     @Autowired
-    private ReservationInterface reservationInterface;
+    private ReservationService reservationService;
 
     @Autowired
-    private RoomAvailabilityService roomAvailabilityService;
+    private RoomAvailabilityLogicService roomAvailabilityService;
 
     @GetMapping
     public List<Reservation> getAllReservations() {
-        return this.reservationInterface.findAllReservations();
+        return this.reservationService.findAllReservations();
     }
 
     @GetMapping("/room-uuid/{roomUuid}/start-date/{startDate}/end-date/{endDate}")
@@ -40,18 +40,18 @@ public class ReservationController {
             @PathVariable("roomUuid")UUID roomUuid,
             @PathVariable("startDate")LocalDateTime startDate,
             @PathVariable("endDate")LocalDateTime endDate) {
-        return this.reservationInterface.findReservationByStartDateEndDate(roomUuid, startDate, endDate);
+        return this.reservationService.findReservationByStartDateEndDate(roomUuid, startDate, endDate);
     }
 
     @GetMapping("/{uuid}")
     public Reservation getReservation(@PathVariable("uuid") UUID reservationId) {
-        return this.reservationInterface.findReservation(reservationId);
+        return this.reservationService.findReservation(reservationId);
     }
 
     @PostMapping
     public Reservation addReservation(@RequestBody Reservation reservation) {
         if (roomAvailabilityService.isRoomAvailable(reservation)) {
-            return this.reservationInterface.addReservation(reservation);
+            return this.reservationService.addReservation(reservation);
         }
         return null;
     }
@@ -59,17 +59,17 @@ public class ReservationController {
     @PutMapping("/{uuid}")
     public Reservation updateReservation(@PathVariable("uuid") UUID reservationId,
                                          @RequestBody Reservation reservation) {
-        return this.reservationInterface.updateReservation(reservation, reservationId);
+        return this.reservationService.updateReservation(reservation, reservationId);
     }
 
     @DeleteMapping("/{uuid}")
     public boolean deleteReservation(@PathVariable("reservationId") UUID reservationId) {
-        return this.reservationInterface.deleteReservation(reservationId);
+        return this.reservationService.deleteReservation(reservationId);
     }
 
     public Reservation createReservation(Reservation newReservation) {
         if (roomAvailabilityService.isRoomAvailable(newReservation)) {
-            return this.reservationInterface.addReservation(newReservation);
+            return this.reservationService.addReservation(newReservation);
         }
         return null;
     }

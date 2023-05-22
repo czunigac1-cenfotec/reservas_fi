@@ -1,8 +1,10 @@
 package ac.cr.ucr.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -29,8 +31,12 @@ public class UserInfo implements Serializable {
 
     private String telefono;
 
+    @Column(nullable = false)
+    private LocalDateTime creationDateTime;
+
     public UserInfo() {
         this.userInfoUuid = UUID.randomUUID();
+        this.creationDateTime = LocalDateTime.now();
     }
 
     public UserInfo(
@@ -41,8 +47,8 @@ public class UserInfo implements Serializable {
             String identificacion,
             String unidadAcademica,
             String telefono) {
+        this();
         this.email = email;
-        this.userInfoUuid = UUID.randomUUID();
         this.nombre = nombre;
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;

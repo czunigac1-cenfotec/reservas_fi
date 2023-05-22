@@ -1,10 +1,10 @@
-package ac.cr.ucr.model;
+package ac.cr.ucr.controller.customRequest;
 
 import java.util.List;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class ScheduledRoomAvailability {
+public class ScheduledRoomAvailabilityRequest {
     private int minReservationTime;
 
     private int maxReservationTime;
@@ -22,10 +22,10 @@ public class ScheduledRoomAvailability {
 
     private UUID roomUuid;
 
-    public ScheduledRoomAvailability() {
+    public ScheduledRoomAvailabilityRequest() {
     }
 
-    public ScheduledRoomAvailability(int minReservationTime, int maxReservationTime, boolean approvalRequired, boolean privateReservationEnabled, UUID administratorUuid, LocalDateTime startDateTime, LocalDateTime endDateTime, List<ScheduledAvailabilityPeriod> availabilityPeriods, UUID roomUuid) {
+    public ScheduledRoomAvailabilityRequest(int minReservationTime, int maxReservationTime, boolean approvalRequired, boolean privateReservationEnabled, UUID administratorUuid, LocalDateTime startDateTime, LocalDateTime endDateTime, List<ScheduledAvailabilityPeriod> availabilityPeriods, UUID roomUuid) {
         this.minReservationTime = minReservationTime;
         this.maxReservationTime = maxReservationTime;
         this.approvalRequired = approvalRequired;

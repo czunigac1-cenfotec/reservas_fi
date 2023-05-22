@@ -1,38 +1,34 @@
-package ac.cr.ucr.repository;
+package ac.cr.ucr.service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import ac.cr.ucr.model.AvailabilityPeriod;
+import ac.cr.ucr.repository.CustomAttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import ac.cr.ucr.model.CustomAttribute;
-import ac.cr.ucr.repository.functional.CustomAttributeInterface;
+import org.springframework.stereotype.Service;
 
-@Service("customAttributeService")
-public class CustomAttributeRepositoryI implements CustomAttributeInterface {
+@Service
+public class CustomAttributeService {
 
     @Autowired
     private CustomAttributeRepository repository;
 
-    @Override
     public CustomAttribute findCustomAttribute(UUID customAttributeUuid) {
         return repository.findById(customAttributeUuid).get();
     }
-
-    @Override
     public List<CustomAttribute> findAllCustomAttributes() {
         return repository.findAll();
     }
 
-    @Override
     public CustomAttribute addCustomAttribute(CustomAttribute customAttribute) {
         CustomAttribute newCustomAttribute = customAttribute;
         return repository.save(newCustomAttribute);
     }
 
-    @Override
     public CustomAttribute updateCustomAttribute(CustomAttribute customAttribute, UUID customAttributeUuid) {
         Optional<CustomAttribute> existingCustomAttribute = repository.findById(customAttributeUuid);
         if (existingCustomAttribute.isPresent()) {
@@ -41,8 +37,12 @@ public class CustomAttributeRepositoryI implements CustomAttributeInterface {
         return null;
     }
 
-    @Override
     public boolean deleteCustomAttribute(UUID customAttributeUuid) {
+        Optional<CustomAttribute> existingCustomAttribute = repository.findById(customAttributeUuid);
+        if (existingCustomAttribute.isPresent()) {
+            repository.delete(existingCustomAttribute.get());
+            return true;
+        }
         return false;
     }
 }

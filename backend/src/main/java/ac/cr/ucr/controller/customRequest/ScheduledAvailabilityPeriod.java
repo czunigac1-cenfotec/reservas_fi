@@ -1,4 +1,4 @@
-package ac.cr.ucr.model;
+package ac.cr.ucr.controller.customRequest;
 
 public class ScheduledAvailabilityPeriod {
 

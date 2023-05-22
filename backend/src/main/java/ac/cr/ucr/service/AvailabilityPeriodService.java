@@ -1,7 +1,8 @@
-package ac.cr.ucr.repository;
+package ac.cr.ucr.service;
 
+import ac.cr.ucr.model.RoomAvailability;
+import ac.cr.ucr.repository.AvailabilityPeriodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,15 +10,14 @@ import java.util.UUID;
 
 
 import ac.cr.ucr.model.AvailabilityPeriod;
-import ac.cr.ucr.repository.functional.AvailabilityPeriodInterface;
+import org.springframework.stereotype.Service;
 
-@Repository
-public class AvailabilityPeriodRepositoryI implements AvailabilityPeriodInterface {
+@Service
+public class AvailabilityPeriodService {
 
     @Autowired
     private AvailabilityPeriodRepository repository;
 
-    @Override
     public AvailabilityPeriod findAvailabilityPeriod(UUID availabilityPeriodUuid) {
         Optional<AvailabilityPeriod> availabilityPeriod = repository.findById(availabilityPeriodUuid);
         if (availabilityPeriod.isPresent()) {
@@ -26,19 +26,16 @@ public class AvailabilityPeriodRepositoryI implements AvailabilityPeriodInterfac
         return null;
     }
 
-    @Override
     public List<AvailabilityPeriod> findAllAvailabilityPeriods() {
         return repository.findAll();
     }
 
 
-    @Override
     public AvailabilityPeriod addAvailabilityPeriod(AvailabilityPeriod availabilityPeriod) {
         AvailabilityPeriod newAvailabilityPeriod = availabilityPeriod;
         return repository.save(newAvailabilityPeriod);
     }
 
-    @Override
     public AvailabilityPeriod updateAvailabilityPeriod(AvailabilityPeriod availabilityPeriod, UUID uuid) {
         Optional<AvailabilityPeriod> existingAvailabilityPeriod = repository.findById(uuid);
         if (existingAvailabilityPeriod.isPresent()) {
@@ -46,9 +43,12 @@ public class AvailabilityPeriodRepositoryI implements AvailabilityPeriodInterfac
         }
         return null;
     }
-
-    @Override
     public boolean deleteAvailabilityPeriod(UUID availabilityPeriodId) {
+        Optional<AvailabilityPeriod> existingAvailabilityPeriod = repository.findById(availabilityPeriodId);
+        if (existingAvailabilityPeriod.isPresent()) {
+            repository.delete(existingAvailabilityPeriod.get());
+            return true;
+        }
         return false;
     }
 }
