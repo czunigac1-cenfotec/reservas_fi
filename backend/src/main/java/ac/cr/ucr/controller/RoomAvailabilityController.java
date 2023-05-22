@@ -1,12 +1,12 @@
 package ac.cr.ucr.controller;
 
+import ac.cr.ucr.controller.customRequest.ScheduledRoomAvailabilityRequest;
 import ac.cr.ucr.controller.customResponse.RoomAvailabilityResponse;
-import ac.cr.ucr.logic.service.RoomAvailabilityService;
+import ac.cr.ucr.logic.service.RoomAvailabilityLogicService;
 import ac.cr.ucr.model.AvailabilityPeriod;
 import ac.cr.ucr.model.RoomAvailability;
-import ac.cr.ucr.repository.RoomAvailabilityRepository;
-import ac.cr.ucr.repository.functional.AvailabilityPeriodInterface;
-import ac.cr.ucr.repository.functional.RoomAvailabilityInterface;
+import ac.cr.ucr.service.AvailabilityPeriodService;
+import ac.cr.ucr.service.RoomAvailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,31 +22,31 @@ import java.util.UUID;
 public class RoomAvailabilityController {
 
     @Autowired
-    private RoomAvailabilityInterface roomAvailabilityInterface;
-
-    @Autowired
-    private AvailabilityPeriodInterface availabilityPeriodInterface;
-
-    @Autowired
     private RoomAvailabilityService roomAvailabilityService;
+
+    @Autowired
+    private AvailabilityPeriodService availabilityPeriodService;
+
+    @Autowired
+    private RoomAvailabilityLogicService roomAvailabilityLogicService;
 
     @GetMapping
     public List<RoomAvailability> getAllRoomAvailability() {
-        return this.roomAvailabilityInterface.findAllRoomAvailability();
+        return this.roomAvailabilityService.findAllRoomAvailability();
     }
 
     @GetMapping("/{uuid}")
     public RoomAvailability getRoomAvailability(@PathVariable("uuid") UUID roomAvailabilityId) {
-        return this.roomAvailabilityInterface.findRoomAvailability(roomAvailabilityId);
+        return this.roomAvailabilityService.findRoomAvailability(roomAvailabilityId);
     }
 
     @GetMapping("/room-uuid/{roomUuid}")
     public ResponseEntity<RoomAvailabilityResponse>  getRoomAvailabilityByRoomUuid(@PathVariable("roomUuid") UUID roomUuid) {
-        RoomAvailability roomAvailability = roomAvailabilityInterface.findRoomAvailabilityByRoomUuid(roomUuid);
+        RoomAvailability roomAvailability = roomAvailabilityService.findRoomAvailabilityByRoomUuid(roomUuid);
         List<AvailabilityPeriod> availabilityPeriods = new ArrayList<AvailabilityPeriod>();
         for (UUID availabilityPeriodUuid:
              roomAvailability.getAvailabilityPeriods()) {
-            availabilityPeriods.add(availabilityPeriodInterface.findAvailabilityPeriod(availabilityPeriodUuid));
+            availabilityPeriods.add(availabilityPeriodService.findAvailabilityPeriod(availabilityPeriodUuid));
         }
         RoomAvailabilityResponse response = new RoomAvailabilityResponse(
                 roomAvailability,
@@ -56,20 +56,20 @@ public class RoomAvailabilityController {
     }
 
     @PostMapping
-    public ResponseEntity<RoomAvailabilityResponse> addRoomAvailability(@RequestBody String scheduledRoomAvailabilityJson) {
-        RoomAvailabilityResponse response = roomAvailabilityService.createRoomAvailabilityWithAvailabilityPeriods(scheduledRoomAvailabilityJson);
+    public ResponseEntity<RoomAvailabilityResponse> addRoomAvailability(@RequestBody ScheduledRoomAvailabilityRequest scheduledRoomAvailability) {
+        RoomAvailabilityResponse response = roomAvailabilityLogicService.createRoomAvailabilityWithAvailabilityPeriods(scheduledRoomAvailability);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
 
     }
 
     @PutMapping("/{uuid}")
     public RoomAvailability updateRoomAvailability(@PathVariable("uuid") UUID roomAvailabilityId, @RequestBody RoomAvailability roomAvailability) {
-        return this.roomAvailabilityInterface.updateRoomAvailability(roomAvailability, roomAvailabilityId);
+        return this.roomAvailabilityService.updateRoomAvailability(roomAvailability, roomAvailabilityId);
     }
 
     @DeleteMapping("/{uuid}")
     public boolean deleteRoomAvailability(@PathVariable("uuid") UUID roomAvailabilityId) {
-        return this.roomAvailabilityInterface.deleteRoomAvailability(roomAvailabilityId);
+        return this.roomAvailabilityService.deleteRoomAvailability(roomAvailabilityId);
     }
 
 }

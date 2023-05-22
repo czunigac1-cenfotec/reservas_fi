@@ -1,22 +1,22 @@
-package ac.cr.ucr.repository;
+package ac.cr.ucr.service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import ac.cr.ucr.model.CustomAttribute;
+import ac.cr.ucr.repository.ReservationGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import ac.cr.ucr.model.ReservationGroup;
-import ac.cr.ucr.repository.functional.ReservationGroupInterface;
+import org.springframework.stereotype.Service;
 
-@Service("reservationGroup")
-public class ReservationGroupRepositoryI implements ReservationGroupInterface {
+@Service
+public class ReservationGroupService{
 
     @Autowired
     private ReservationGroupRepository repository;
 
-    @Override
     public ReservationGroup findReservationGroup(UUID reservationGroupUuid) {
         Optional<ReservationGroup> reservationGroup = repository.findById(reservationGroupUuid);
         if (reservationGroup.isPresent()) {
@@ -25,18 +25,15 @@ public class ReservationGroupRepositoryI implements ReservationGroupInterface {
         return null;
     }
 
-    @Override
     public List<ReservationGroup> findAllReservationGroups() {
         return repository.findAll();
     }
 
-    @Override
     public ReservationGroup addReservationGroup(ReservationGroup reservationGroup) {
         ReservationGroup newReservationGroup = reservationGroup;
         return repository.save(newReservationGroup);
     }
 
-    @Override
     public ReservationGroup updateReservationGroup(ReservationGroup reservationGroup, UUID uuid) {
         Optional<ReservationGroup> existingReservationGroup = repository.findById(uuid);
         if (existingReservationGroup.isPresent()) {
@@ -45,13 +42,12 @@ public class ReservationGroupRepositoryI implements ReservationGroupInterface {
         return null;
     }
 
-    @Override
     public boolean deleteReservationGroup(UUID reservationGroupUuid) {
-        try {
-            repository.deleteById(reservationGroupUuid);
+        Optional<ReservationGroup> existingReservationGroup = repository.findById(reservationGroupUuid);
+        if (existingReservationGroup.isPresent()) {
+            repository.delete(existingReservationGroup.get());
             return true;
-        } catch (Exception ex) {
-            return false;
         }
+        return false;
     }
 }

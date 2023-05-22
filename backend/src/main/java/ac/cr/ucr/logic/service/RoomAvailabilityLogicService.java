@@ -1,17 +1,13 @@
 package ac.cr.ucr.logic.service;
 
+import ac.cr.ucr.controller.customRequest.ScheduledAvailabilityPeriod;
+import ac.cr.ucr.controller.customRequest.ScheduledRoomAvailabilityRequest;
 import ac.cr.ucr.controller.customResponse.RoomAvailabilityResponse;
-import ac.cr.ucr.model.AvailabilityPeriod;
-import ac.cr.ucr.model.Reservation;
-import ac.cr.ucr.model.RoomAvailability;
-import ac.cr.ucr.model.ScheduledAvailabilityPeriod;
-import ac.cr.ucr.model.ScheduledRoomAvailability;
-import ac.cr.ucr.repository.functional.AvailabilityPeriodInterface;
-import ac.cr.ucr.repository.functional.ReservationInterface;
-import ac.cr.ucr.repository.functional.RoomAvailabilityInterface;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import ac.cr.ucr.model.*;
+import ac.cr.ucr.service.AvailabilityPeriodService;
+import ac.cr.ucr.service.ReservationService;
+import ac.cr.ucr.service.RoomAvailabilityService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,49 +18,47 @@ import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+
 @Service
-public class RoomAvailabilityService {
-
-    private AvailabilityPeriodInterface availabilityPeriodInterface;
-    private ReservationInterface reservationInterface;
-    private RoomAvailabilityInterface roomAvailabilityInterface;
-
-    public RoomAvailabilityInterface getRoomAvailabilityInterface() {
-        return roomAvailabilityInterface;
-    }
-
-    public RoomAvailabilityService() {
-    }
+public class RoomAvailabilityLogicService {
 
     @Autowired
-    public RoomAvailabilityService(AvailabilityPeriodInterface availabilityPeriodInterface, ReservationInterface reservationInterface, RoomAvailabilityInterface roomAvailabilityInterface) {
-        this.availabilityPeriodInterface = availabilityPeriodInterface;
-        this.reservationInterface = reservationInterface;
-        this.roomAvailabilityInterface = roomAvailabilityInterface;
+    private AvailabilityPeriodService availabilityPeriodService;
+    @Autowired
+
+    private ReservationService reservationService;
+    @Autowired
+    private RoomAvailabilityService roomAvailabilityService;
+
+    public RoomAvailabilityService getRoomAvailabilityService() {
+        return roomAvailabilityService;
     }
 
-    public AvailabilityPeriodInterface getAvailabilityPeriodInterface() {
-        return availabilityPeriodInterface;
+    public RoomAvailabilityLogicService() {
     }
 
-    public void setAvailabilityPeriodInterface(AvailabilityPeriodInterface availabilityPeriodInterface) {
-        this.availabilityPeriodInterface = availabilityPeriodInterface;
+
+    public AvailabilityPeriodService getAvailabilityPeriodService() {
+        return availabilityPeriodService;
     }
 
-    public ReservationInterface getReservationInterface() {
-        return reservationInterface;
+    public void setAvailabilityPeriodService(AvailabilityPeriodService availabilityPeriodService) {
+        this.availabilityPeriodService = availabilityPeriodService;
     }
 
-    public void setReservationInterface(ReservationInterface reservationInterface) {
-        this.reservationInterface = reservationInterface;
+    public ReservationService getReservationService() {
+        return reservationService;
     }
 
-    public void setRoomAvailabilityInterface(RoomAvailabilityInterface roomAvailabilityInterface) {
-        this.roomAvailabilityInterface = roomAvailabilityInterface;
+    public void setReservationService(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
-    public RoomAvailabilityResponse createRoomAvailabilityWithAvailabilityPeriods(String json) {
-        ScheduledRoomAvailability scheduledRoomAvailability = this.interpretScheduledRoomAvailability(json);
+    public void setRoomAvailabilityService(RoomAvailabilityService roomAvailabilityService) {
+        this.roomAvailabilityService = roomAvailabilityService;
+    }
+
+    public RoomAvailabilityResponse createRoomAvailabilityWithAvailabilityPeriods(ScheduledRoomAvailabilityRequest scheduledRoomAvailability) {
         RoomAvailability roomAvailability = this.createRoomAvailabilityFromSchedule(scheduledRoomAvailability);
         List<AvailabilityPeriod> availabilityPeriods = this.createAvailabilityPeriods(scheduledRoomAvailability, roomAvailability.getRoomAvailabilityUuid());
         List<UUID> availabilityPeriodsUuids = availabilityPeriods.stream()
@@ -73,14 +67,14 @@ public class RoomAvailabilityService {
 
         roomAvailability.setAvailabilityPeriods(availabilityPeriodsUuids);
 
-        roomAvailability = roomAvailabilityInterface.updateRoomAvailability(roomAvailability, roomAvailability.getRoomAvailabilityUuid());
+        roomAvailability = roomAvailabilityService.updateRoomAvailability(roomAvailability, roomAvailability.getRoomAvailabilityUuid());
 
         return new RoomAvailabilityResponse(roomAvailability, availabilityPeriods);
     }
 
 
     public boolean isRoomAvailable(Reservation reservationToSchedule) {
-        Logger logger = Logger.getLogger(RoomAvailabilityService.class.getName());
+        Logger logger = Logger.getLogger(RoomAvailabilityLogicService.class.getName());
 
         if (checkRoomReservationsForConflicts(reservationToSchedule.getRoomUuid(), reservationToSchedule)) {
             logger.info("reservation conflict");
@@ -100,7 +94,7 @@ public class RoomAvailabilityService {
 
         int eventDuration = (int) ChronoUnit.MINUTES.between(reservationToSchedule.getStartDateTime(), reservationToSchedule.getEndDateTime());
 
-        RoomAvailability roomAvailability = roomAvailabilityInterface.findRoomAvailabilityByRoomUuid(reservationToSchedule.getRoomUuid());
+        RoomAvailability roomAvailability = roomAvailabilityService.findRoomAvailabilityByRoomUuid(reservationToSchedule.getRoomUuid());
         logger.info("roomAvailability");
         logger.info(roomAvailability.toString());
 
@@ -112,7 +106,7 @@ public class RoomAvailabilityService {
 
         // weekday check
         for (UUID availabilityPeriodUuid : roomAvailability.getAvailabilityPeriods()) {
-            AvailabilityPeriod availabilityPeriod = availabilityPeriodInterface.findAvailabilityPeriod(availabilityPeriodUuid);
+            AvailabilityPeriod availabilityPeriod = availabilityPeriodService.findAvailabilityPeriod(availabilityPeriodUuid);
             // event start day number and end day number should always match
             if (startDayNumber == availabilityPeriod.getWeekday() && endDayNumber == availabilityPeriod.getWeekday()) {
                 // event duration check
@@ -137,19 +131,7 @@ public class RoomAvailabilityService {
         return false;
     }
 
-
-    public ScheduledRoomAvailability interpretScheduledRoomAvailability(String scheduleJson) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-            ScheduledRoomAvailability scheduledRoomAvailability = objectMapper.readValue(scheduleJson, ScheduledRoomAvailability.class);
-            return scheduledRoomAvailability;
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public RoomAvailability createRoomAvailabilityFromSchedule(ScheduledRoomAvailability scheduledRoomAvailability) {
+    public RoomAvailability createRoomAvailabilityFromSchedule(ScheduledRoomAvailabilityRequest scheduledRoomAvailability) {
         List<UUID> availabilityPeriodsUuids = new ArrayList<>();
         RoomAvailability roomAvailability = new RoomAvailability(
                 scheduledRoomAvailability.getRoomUuid(),
@@ -161,11 +143,11 @@ public class RoomAvailabilityService {
                 scheduledRoomAvailability.isPrivateReservationEnabled(),
                 availabilityPeriodsUuids
         );
-        return roomAvailabilityInterface.addRoomAvailability(roomAvailability);
+        return roomAvailabilityService.addRoomAvailability(roomAvailability);
 
     }
 
-    public List<AvailabilityPeriod> createAvailabilityPeriods(ScheduledRoomAvailability scheduledRoomAvailability, UUID roomAvailabilityUuid) {
+    public List<AvailabilityPeriod> createAvailabilityPeriods(ScheduledRoomAvailabilityRequest scheduledRoomAvailability, UUID roomAvailabilityUuid) {
         List<AvailabilityPeriod> availabilityPeriods = new ArrayList<>();
         for (ScheduledAvailabilityPeriod scheduledAvailabilityPeriod :
                 scheduledRoomAvailability.getAvailabilityPeriods()) {
@@ -177,7 +159,7 @@ public class RoomAvailabilityService {
                     scheduledAvailabilityPeriod.getEndTimeHour(),
                     scheduledAvailabilityPeriod.getEndTimeMinutes()
             );
-            AvailabilityPeriod savedAvailabilityPeriod = availabilityPeriodInterface.addAvailabilityPeriod(availabilityPeriod);
+            AvailabilityPeriod savedAvailabilityPeriod = availabilityPeriodService.addAvailabilityPeriod(availabilityPeriod);
             availabilityPeriods.add(savedAvailabilityPeriod);
         }
         return availabilityPeriods;
@@ -185,7 +167,7 @@ public class RoomAvailabilityService {
 
 
     public boolean checkRoomReservationsForConflicts(UUID roomUUID, Reservation reservation) {
-        List<Reservation> roomReservations = reservationInterface.findByRoomUuid(roomUUID);
+        List<Reservation> roomReservations = reservationService.findByRoomUuid(roomUUID);
 
         for (Reservation roomReservation : roomReservations) {
             // Check if reservation start time is within the range of room reservation

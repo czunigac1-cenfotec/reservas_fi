@@ -45,7 +45,8 @@ public class Reservation {
         this.creationDateTime = LocalDateTime.now();
     }
 
-    public Reservation(UUID reservationGroupUuid, LocalDateTime startDateTime, LocalDateTime endDateTime, UUID userUuid, UUID roomUuid) {
+    public Reservation(UUID reservationGroupUuid, LocalDateTime startDateTime, LocalDateTime endDateTime, UUID userUuid, UUID roomUuid,
+                       String notes, String motive) {
         this();
         this.reservationGroupUuid = reservationGroupUuid;
         this.startDateTime = startDateTime;
@@ -53,6 +54,8 @@ public class Reservation {
         this.approvalState = false;
         this.userUuid = userUuid;
         this.roomUuid = roomUuid;
+        this.notes = notes;
+        this.motive = motive;
     }
 
     public UUID getReservationUuid() {

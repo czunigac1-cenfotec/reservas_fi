@@ -1,17 +1,17 @@
-package ac.cr.ucr.model;
+package ac.cr.ucr.controller.customRequest;
 
 import java.util.List;
 import java.util.UUID;
 
-public class Schedule {
+public class ScheduleRequest {
     private List<Day> weekdays;
 
     private UUID userUuid;
 
-    public Schedule() {
+    public ScheduleRequest() {
     }
 
-    public Schedule(List<Day> weekdays, UUID userUuid) {
+    public ScheduleRequest(List<Day> weekdays, UUID userUuid) {
         this.weekdays = weekdays;
         this.userUuid = userUuid;
     }

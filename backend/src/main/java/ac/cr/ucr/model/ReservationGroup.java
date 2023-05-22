@@ -29,6 +29,7 @@ public class ReservationGroup {
 
     public ReservationGroup(UUID userUuid, List<UUID> reservationUuids) {
         this();
+        this.reservationGroupUuid = UUID.randomUUID();
         this.userUuid = userUuid;
         this.approvalState = false;
         this.reservationUuids = reservationUuids;

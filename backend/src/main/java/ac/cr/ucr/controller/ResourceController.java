@@ -1,7 +1,7 @@
 package ac.cr.ucr.controller;
 
 import ac.cr.ucr.model.Resource;
-import ac.cr.ucr.repository.functional.ResourceInterface;
+import ac.cr.ucr.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import java.util.UUID;
 public class ResourceController {
 
     @Autowired
-    private ResourceInterface resourceInterface;
+    private ResourceService resourceService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Resource> getResourceById(@PathVariable("id") UUID id) {
-        Resource resource = resourceInterface.findResource(id);
+        Resource resource = resourceService.findResource(id);
         if (resource == null) {
             return ResponseEntity.notFound().build();
         }
@@ -28,7 +28,7 @@ public class ResourceController {
 
     @GetMapping
     public ResponseEntity<List<Resource>> getAllResources() {
-        List<Resource> resources = resourceInterface.findAllResources();
+        List<Resource> resources = resourceService.findAllResources();
         if (resources.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -37,7 +37,7 @@ public class ResourceController {
 
     @PostMapping
     public ResponseEntity<Resource> addResource(@RequestBody Resource resource) {
-        Resource newResource = resourceInterface.addResource(resource);
+        Resource newResource = resourceService.addResource(resource);
         if (newResource == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -46,7 +46,7 @@ public class ResourceController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Resource> updateResource(@PathVariable("id") UUID id, @RequestBody Resource resource) {
-        Resource updatedResource = resourceInterface.updateResource(resource, id);
+        Resource updatedResource = resourceService.updateResource(resource, id);
         if (updatedResource == null) {
             return ResponseEntity.notFound().build();
         }
@@ -55,7 +55,7 @@ public class ResourceController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteResource(@PathVariable("id") UUID id) {
-        boolean success = resourceInterface.deleteResource(id);
+        boolean success = resourceService.deleteResource(id);
         if (!success) {
             return ResponseEntity.notFound().build();
         }

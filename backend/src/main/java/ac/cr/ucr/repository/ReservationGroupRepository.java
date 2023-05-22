@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import ac.cr.ucr.model.ReservationGroup;
 
-@Repository("reservationGroupRepository")
+@Repository
 public interface ReservationGroupRepository extends JpaRepository<ReservationGroup, UUID> {
 
 }
