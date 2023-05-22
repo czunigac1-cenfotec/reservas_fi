@@ -98,7 +98,11 @@ export class ReservationCalendarComponent implements OnInit {
 
   getResevationsByRoom(): void {
 
-    this.reservationService.get(this.selectedRoom).subscribe({
+    let calendarApi = this.calendarComponent.getApi();
+    let startDate  = calendarApi.view.activeStart.toISOString().replace('Z','');
+    let endDate = calendarApi.view.activeEnd.toISOString().replace('Z','');
+
+    this.reservationService.getReservationsByStartDateEndDate(this.selectedRoom,startDate,endDate).subscribe({
       next: (data) => {
 
         if (data !== null) {
@@ -162,6 +166,7 @@ export class ReservationCalendarComponent implements OnInit {
     this.reservationService.getAll().subscribe({
       next: (data) => {
 
+        debugger;
         console.log(data);
 
         if (data !== null) {
@@ -171,15 +176,16 @@ export class ReservationCalendarComponent implements OnInit {
               var roomName = '';
               console.log(JSON.stringify(reservation));
 
-              var event = {
+              let calendarApi = this.calendarComponent.getApi();
+
+              calendarApi.addEvent({
                 id: reservation.reservationUuid,
                 start: reservation.startDateTime,
                 end: reservation.endDateTime,
                 title: reservation.motive,
                 backgroundColor: 'rgba(241,0,117,.25)',
-                borderColor: '#f10075'
-              }
-
+                borderColor: '#00cc44'
+              });
             }
           }
         }
@@ -190,7 +196,6 @@ export class ReservationCalendarComponent implements OnInit {
       complete: () => {
         console.log("done");
         debugger;
-        this.calendarOptions.events = this.reservations;
       }
     })
   }
@@ -257,22 +262,13 @@ export class ReservationCalendarComponent implements OnInit {
       periodEndDate.setHours(period.endTimeHour);
       periodEndDate.setMinutes(period.endTimeMinutes);
 
-      var event = {
-        id: period.availabilityPeriodUuid,
-        start: periodStartDate,
-        end: periodEndDate,
-        title: 'Event',
-        backgroundColor: 'rgba(241,0,117,.25)',
-        borderColor: '#f10075'
-      }
-
       calendarApi.addEvent({
-        id: period.availabilityPeriodUuid,
+        id: "-1",
         start: periodStartDate,
         end: periodEndDate,
-        title: 'Event',
-        backgroundColor: 'rgba(241,0,117,.25)',
-        borderColor: '#f10075'
+        title: 'Disponible',
+        backgroundColor: 'rgba(0,204,68,.25)',
+        borderColor: '#00cc44'
       });
     });
 

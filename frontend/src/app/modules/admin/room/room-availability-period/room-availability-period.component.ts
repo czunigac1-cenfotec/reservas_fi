@@ -67,6 +67,7 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
         this.availabilityPeriod.startTimeHour = this.availabilityPeriodLocal.startDateTime.hour;
         this.availabilityPeriod.endTimeMinutes = this.availabilityPeriodLocal.endDateTime.minute;
         this.availabilityPeriod.startTimeMinutes = this.availabilityPeriodLocal.startDateTime.minute;
+        debugger;
         this.availabilityPeriod.weekday = this.selectedDay;
         this.availabilityPeriod.roomAvailabilityUuid = this.roomAvailabilityId;
 
@@ -152,11 +153,14 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
       var startTime = element[1];
       var endtime = element[2];
 
-      if (dayName == Utility.getWeekDayName(this.availabilityPeriod.weekday) &&
-        startTime == Utility.getTime(this.availabilityPeriod.startTimeHour?.toString(), this.availabilityPeriod.startTimeMinutes?.toString()) &&
-        endtime == Utility.getTime(this.availabilityPeriod.endTimeHour?.toString(), this.availabilityPeriod.endTimeMinutes?.toString())) {
+      if(this.availabilityPeriod){
 
-        vItemAlreadyAdded = true;
+        if(dayName == Utility.getWeekDayName(this.availabilityPeriod.weekday) &&
+          startTime == Utility.getTime(this.availabilityPeriod.startTimeHour?.toString(), this.availabilityPeriod.startTimeMinutes?.toString()) &&
+          endtime == Utility.getTime(this.availabilityPeriod.endTimeHour?.toString(), this.availabilityPeriod.endTimeMinutes?.toString())) {
+
+          vItemAlreadyAdded = true;
+        }
       }
     }
 
