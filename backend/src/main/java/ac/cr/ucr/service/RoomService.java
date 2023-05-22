@@ -1,38 +1,35 @@
-package ac.cr.ucr.repository;
+package ac.cr.ucr.service;
 
+import ac.cr.ucr.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import ac.cr.ucr.model.Room;
-import ac.cr.ucr.repository.functional.RoomInterface;
+import org.springframework.stereotype.Service;
 
-@Service("room")
-public class RoomRepositoryI implements RoomInterface {
+@Service
+public class RoomService {
 
     @Autowired
     private RoomRepository repository;
 
-    @Override
     public Room findRoom(UUID roomId) {
         Optional<Room> room = repository.findById(roomId);
         return room.orElse(null);
     }
 
-    @Override
     public List<Room> findAllRooms() {
         return repository.findAll();
     }
 
-    @Override
     public Room addRoom(Room room) {
         return repository.save(room);
     }
 
-    @Override
     public Room updateRoom(Room room, UUID roomId) {
         Optional<Room> existingRoom = repository.findById(roomId);
         if (existingRoom.isPresent()) {
@@ -42,7 +39,6 @@ public class RoomRepositoryI implements RoomInterface {
         return null;
     }
 
-    @Override
     public boolean deleteRoom(UUID roomId) {
         Optional<Room> existingRoom = repository.findById(roomId);
         if (existingRoom.isPresent()) {

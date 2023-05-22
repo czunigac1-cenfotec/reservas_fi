@@ -1,7 +1,6 @@
-package ac.cr.ucr.model;
+package ac.cr.ucr.controller.customRequest;
 
 import java.util.List;
-import java.util.UUID;
 
 public class Day {
     private String dayName;

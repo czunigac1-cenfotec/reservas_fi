@@ -1,4 +1,4 @@
-package ac.cr.ucr.model;
+package ac.cr.ucr.controller.customRequest;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

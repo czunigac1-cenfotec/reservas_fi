@@ -9,7 +9,7 @@ import ac.cr.ucr.model.UserInfo;
 
 
 
-@Repository("userInfoRepository")
+@Repository
 public interface UserInfoRepository extends JpaRepository<UserInfo, UUID> {
 
 }
