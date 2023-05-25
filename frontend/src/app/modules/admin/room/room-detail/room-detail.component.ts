@@ -149,6 +149,8 @@ export class RoomDetailComponent implements OnInit {
       next:(result)=>{
         
         this.roomId = result.roomUuid;
+        this.isUpdate = true; 
+
         Swal.fire({
           position: 'top-end',
           icon: 'success',

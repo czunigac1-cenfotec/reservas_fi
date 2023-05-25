@@ -7,6 +7,7 @@ import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { ReservationService } from 'src/app/core/services/reservation.service';
 import { RoomService } from 'src/app/core/services/room.service';
 import { RoomAvailabilityService } from 'src/app/core/services/room-availability.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reserve-calendar',
@@ -78,15 +79,20 @@ export class ReservationCalendarComponent implements OnInit {
         borderColor: '#00cccc'
       });
     }*/
+    if(this.validateRoomSelected()){
+      this.router.navigate([`/reservation/reservation-detail/-1/${selectInfo.startStr}/${selectInfo.endStr}`])
 
-    this.router.navigate([`/reservation/reservation-detail/-1/${selectInfo.startStr}/${selectInfo.endStr}`])
+    }
+
     // this.router.navigate([`/reservation/reservation-detail/"-1"/${selectInfo.startStr}/${selectInfo.endStr}`]);
   }
 
   handleEventClick(clickInfo: EventClickArg) {
 
-    this.router.navigate([`/reservation/reservation-detail/${clickInfo.event.id}/${clickInfo.event.startStr}/${clickInfo.event.endStr}`])
+    if(this.validateRoomSelected()){
+      this.router.navigate([`/reservation/reservation-detail/${clickInfo.event.id}/${clickInfo.event.startStr}/${clickInfo.event.endStr}`])
 
+    }
     /*if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
       clickInfo.event.remove();
     }*/
@@ -166,7 +172,6 @@ export class ReservationCalendarComponent implements OnInit {
     this.reservationService.getAll().subscribe({
       next: (data) => {
 
-        debugger;
         console.log(data);
 
         if (data !== null) {
@@ -195,7 +200,6 @@ export class ReservationCalendarComponent implements OnInit {
       },
       complete: () => {
         console.log("done");
-        debugger;
       }
     })
   }
@@ -273,5 +277,25 @@ export class ReservationCalendarComponent implements OnInit {
     });
 
     //this.calendarOptions.events = this.reservations;
+  }
+
+  validateRoomSelected(): boolean{
+
+    var isRoomSelected = false;
+
+    if(this.selectedRoom !== null && this.selectedRoom !== "" ){
+      isRoomSelected = true;
+    }else{
+     
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Debe seleccionar un salón para continuar',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+
+    return isRoomSelected;
   }
 }

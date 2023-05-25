@@ -22,6 +22,7 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
 
+  
   dataTableRows: any = [];
 
   availabilityPeriod: AvailabilityPeriod =
@@ -50,6 +51,13 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
 
   addAvailabilityPeriod() {
 
+    this.availabilityPeriod.endTimeHour = this.availabilityPeriodLocal.endDateTime.hour;
+    this.availabilityPeriod.startTimeHour = this.availabilityPeriodLocal.startDateTime.hour;
+    this.availabilityPeriod.endTimeMinutes = this.availabilityPeriodLocal.endDateTime.minute;
+    this.availabilityPeriod.startTimeMinutes = this.availabilityPeriodLocal.startDateTime.minute;
+    this.availabilityPeriod.weekday = this.selectedDay;
+    this.availabilityPeriod.roomAvailabilityUuid = this.roomAvailabilityId;
+
     if (!this.alreadyAdded()) {
       var message = this.validateFields();
 
@@ -62,15 +70,6 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
           timer: 1500
         })
       } else {
-
-        this.availabilityPeriod.endTimeHour = this.availabilityPeriodLocal.endDateTime.hour;
-        this.availabilityPeriod.startTimeHour = this.availabilityPeriodLocal.startDateTime.hour;
-        this.availabilityPeriod.endTimeMinutes = this.availabilityPeriodLocal.endDateTime.minute;
-        this.availabilityPeriod.startTimeMinutes = this.availabilityPeriodLocal.startDateTime.minute;
-        debugger;
-        this.availabilityPeriod.weekday = this.selectedDay;
-        this.availabilityPeriod.roomAvailabilityUuid = this.roomAvailabilityId;
-
         this.availabilityPeriodEmitter.emit(this.availabilityPeriod);
       }
     } else {
@@ -145,13 +144,14 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
   alreadyAdded(): boolean {
     var vItemAlreadyAdded = false;
 
-    debugger;
     for (let index = 0; index < this.dataTableRows.length; index++) {
       const element = this.dataTableRows[index];
 
       var dayName = element[0];
       var startTime = element[1];
       var endtime = element[2];
+
+      debugger;
 
       if(this.availabilityPeriod){
 

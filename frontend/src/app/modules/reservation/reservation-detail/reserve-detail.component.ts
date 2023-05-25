@@ -7,6 +7,8 @@ import { ResourceService } from 'src/app/core/services/resource.service';
 import { RoomService } from 'src/app/core/services/room.service';
 import { DataTable } from 'simple-datatables';
 import Swal from 'sweetalert2';
+import { utils } from 'sortablejs';
+import { Utility } from 'src/app/shared/utility';
 
 @Component({
   selector: 'app-reserve-detail',
@@ -395,7 +397,7 @@ export class ReservationDetailComponent implements OnInit {
       this.initTable();
     }
 
-    var dayOfWeekLetters = this.getDayInLetters(this.selectedDay);
+    var dayOfWeekLetters = Utility.getWeekDayName(this.selectedDay);
 
     var schedule = {
       startDateTime: this.getFormattedDate(this.reservation.beginDate) + "T" +
@@ -438,37 +440,6 @@ export class ReservationDetailComponent implements OnInit {
         console.log("done");
       }
     })
-  }
-
-  getDayInLetters(code: any): any {
-
-    var dayInLetters = '';
-
-    switch (code) {
-      case 0:
-        dayInLetters = 'Lunes';
-        break;
-      case 1:
-        dayInLetters = 'Martes';
-        break;
-      case 2:
-        dayInLetters = 'Miércoles';
-        break;
-      case 3:
-        dayInLetters = 'Jueves';
-        break;
-      case 4:
-        dayInLetters = 'Viernes';
-        break;
-      case 5:
-        dayInLetters = 'Sábado';
-        break;
-      case 6:
-        dayInLetters = 'Domingo';
-        break;
-    }
-
-    return dayInLetters;
   }
 
   getDaysSelected(): any {
