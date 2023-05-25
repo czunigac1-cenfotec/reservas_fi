@@ -150,10 +150,10 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
         maxReservationTime: this.roomAvailability.maxReservationTime,
         approvalRequired: this.roomAvailability.approvalRequired,
         privateReservationEnabled: this.roomAvailability.privateReservationEnabled,
-        startDateTime: Utility.getCurrentDateTime(this.roomAvailability.startDateTime.hour,this.roomAvailability.startDateTime.minute),
-        endDateTime: Utility.getCurrentDateTime(this.roomAvailability.endDateTime.hour,this.roomAvailability.endDateTime.minute),
+        startDateTime: Utility.getStringFormattedDate(this.roomAvailability.startDateTime),
+        endDateTime: Utility.getStringFormattedDate(this.roomAvailability.endDateTime),
         availabilityPeriods: availabilityPeriods
-    }
+    }    
 
     this.availabilityService.update(roomAvailabilityLocal, this.roomAvailabilityId).subscribe({
       next: () => {

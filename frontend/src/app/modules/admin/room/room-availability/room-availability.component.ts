@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { NgbCalendar, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { RoomAvailabilityService } from 'src/app/core/services/room-availability.service';
 import { RoomAvailability } from 'src/app/interfaces/room-availability.interface';
 import { Utility } from 'src/app/shared/utility';
@@ -19,6 +20,10 @@ export class RoomAvailabilityComponent implements OnInit {
   availabilityPeriodDisabled = true;
   customAttributesDisabled = true;
 
+  hoveredDate: NgbDate | null = null;
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
+  
   roomAvailability: RoomAvailability ={
     roomAvailabilityUuid: '',
     administratorUuid: '',
@@ -26,16 +31,20 @@ export class RoomAvailabilityComponent implements OnInit {
     minReservationTime: 0,
     maxReservationTime: 0,
     approvalRequired: false,
-    startDateTime: { hour: 7, minute: 0, second: 0 },
-    endDateTime: { hour: 20, minute: 0, second: 0 },
+    startDateTime: '',
+    endDateTime: '',
     privateReservationEnabled: false,
     availabilityPeriods: []
   }
 
-  constructor( private service: RoomAvailabilityService) { }
+  constructor( private service: RoomAvailabilityService,
+               public formatter: NgbDateParserFormatter,
+               private calendar: NgbCalendar) { }
     
   ngOnInit(): void {
     this.loadData();   
+    this.roomAvailability.startDateTime = this.formatter.format(this.calendar.getToday());
+    this.roomAvailability.endDateTime = this.formatter.format(this.calendar.getNext(this.calendar.getToday(), 'd', 1));
   }
 
   loadData(){
@@ -51,12 +60,9 @@ export class RoomAvailabilityComponent implements OnInit {
       next:(data)=>{
         console.log(data);
 
-        var startDateTime = Utility.getComponentFormattedTime(data.startDateTime);
-        var endDateTime = Utility.getComponentFormattedTime(data.endDateTime);
-
         this.roomAvailability = data;
-        this.roomAvailability.startDateTime = { hour: startDateTime.hour, minute: startDateTime.minute, second: 0 };
-        this.roomAvailability.endDateTime = { hour: endDateTime.hour, minute: endDateTime.minute, second: 0 };
+        this.roomAvailability.startDateTime = Utility.getOnlyDateString(data.startDateTime);
+        this.roomAvailability.endDateTime = Utility.getOnlyDateString(data.endDateTime);
 
       },
       error:(e)=>{
@@ -114,9 +120,10 @@ export class RoomAvailabilityComponent implements OnInit {
       delete newRoomAvailability.roomAvailabilityUuid;
       
       newRoomAvailability.roomUuid = this.roomId;
-      newRoomAvailability.startDateTime = Utility.getCurrentDateTime(this.roomAvailability.startDateTime.hour,this.roomAvailability.startDateTime.minute);
-      newRoomAvailability.endDateTime = Utility.getCurrentDateTime(this.roomAvailability.endDateTime.hour,this.roomAvailability.endDateTime.minute);
+      newRoomAvailability.startDateTime = Utility.getStringFormattedDate(this.roomAvailability.startDateTime);
+      newRoomAvailability.endDateTime = Utility.getStringFormattedDate(this.roomAvailability.endDateTime);
       //TODO:Get admin UUID from user security
+      
       newRoomAvailability.administratorUuid = "9cff8d97-1a50-49fe-b173-93797d29c03b";
 
       this.service.create(newRoomAvailability).subscribe({
@@ -152,8 +159,8 @@ export class RoomAvailabilityComponent implements OnInit {
 
       const newRoomAvailability = { ...this.roomAvailability };
       
-      newRoomAvailability.startDateTime = Utility.getCurrentDateTime(this.roomAvailability.startDateTime.hour,this.roomAvailability.startDateTime.minute);
-      newRoomAvailability.endDateTime = Utility.getCurrentDateTime(this.roomAvailability.endDateTime.hour,this.roomAvailability.endDateTime.minute);
+      newRoomAvailability.startDateTime = Utility.getStringFormattedDate(this.roomAvailability.startDateTime);
+      newRoomAvailability.endDateTime = Utility.getStringFormattedDate(this.roomAvailability.endDateTime);
 
       this.service.update(newRoomAvailability,this.roomAvailabilityId).subscribe({
         next:(data: any)=>{
@@ -179,13 +186,43 @@ export class RoomAvailabilityComponent implements OnInit {
 
   validateTimeRange(): boolean{
     var isValid = true;
-
-    var beginDateTime = new Date().setHours(this.roomAvailability.startDateTime.hour, this.roomAvailability.startDateTime.minute);
-    var endDateTime = new Date().setHours(this.roomAvailability.endDateTime.hour, this.roomAvailability.endDateTime.minute);
+    var beginDateTime = new Date(this.roomAvailability.startDateTime);
+    var endDateTime = new Date(this.roomAvailability.endDateTime);
 
     if (beginDateTime >= endDateTime) {
       isValid = false;
     }
     return isValid;
   }
+
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+      this.roomAvailability.startDateTime = Utility.getDate(date.year,date.month,date.day);
+    } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
+      this.toDate = date;
+      this.roomAvailability.endDateTime = Utility.getDate(date.year,date.month,date.day);
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+  }
+
+  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  }
+
 }

@@ -120,6 +120,11 @@ public class RoomAvailabilityLogicService {
                 int endRestrictionHourMinute = Integer.parseInt(availabilityPeriod.getEndTimeHour() + "" + availabilityPeriod.getEndTimeMinutes());
 
                 // weekday event level start and end hour:minute combination check
+                logger.info("#1" + startRestrictionHourMinute);
+                logger.info("#2" + startEventHourMinute);
+                logger.info("#3" + endEventHourMinute);
+                logger.info("#4" + endRestrictionHourMinute);
+
                 if (startRestrictionHourMinute <= startEventHourMinute && endEventHourMinute <= endRestrictionHourMinute) {
                     return true;
                 }

@@ -8,55 +8,54 @@ export class Utility {
 
     switch (weekDayName) {
       case "Lunes":
-        weekdayNameNumber = 0;
-        break;
-      case "Martes":
         weekdayNameNumber = 1;
         break;
-      case "Miércoles":
+      case "Martes":
         weekdayNameNumber = 2;
         break;
-      case "Jueves":
+      case "Miércoles":
         weekdayNameNumber = 3;
         break;
-      case "Viernes":
+      case "Jueves":
         weekdayNameNumber = 4;
         break;
-      case "Sábado":
+      case "Viernes":
         weekdayNameNumber = 5;
         break;
-      case "Domingo":
+      case "Sábado":
         weekdayNameNumber = 6;
+        break;
+      case "Domingo":
+        weekdayNameNumber = 0;
         break;
     }
 
     return weekdayNameNumber;
   }
 
-
   static getWeekDayName(weekDayNumber: number | undefined | null) {
     var weekDayName = '';
 
     switch (weekDayNumber) {
-      case 0:
+      case 1:
         weekDayName = 'Lunes';
         break;
-      case 1:
+      case 2:
         weekDayName = 'Martes';
         break;
-      case 2:
+      case 3:
         weekDayName = 'Miércoles';
         break;
-      case 3:
+      case 4:
         weekDayName = 'Jueves';
         break;
-      case 4:
+      case 5:
         weekDayName = 'Viernes';
         break;
-      case 5:
+      case 6:
         weekDayName = 'Sábado';
         break;
-      case 6:
+      case 0:
         weekDayName = 'Domingo';
         break;
     }
@@ -81,6 +80,33 @@ export class Utility {
     var time = `${hour}:${minutes}`;
 
     return time;
+  }
+
+
+  static getDate(year: number | undefined | null, month: number | undefined | null, day: number | undefined | null) {
+
+    let monthStr: any;
+    let dayStr:any;
+
+    if (month != undefined &&
+        month != null &&
+        month.toString().length === 1) {
+        monthStr = "0" + month;
+    }else{
+      monthStr = month?.toString();
+    }
+
+    if (day != undefined &&
+        day != null &&
+        day.toString().length === 1) {
+        dayStr = "0" + day;
+    }else{
+      dayStr = day?.toString();
+    }
+
+    var date = `${year?.toString()}-${monthStr?.toString()}-${dayStr?.toString()}`;
+
+    return date;
   }
 
   static getCurrentDateTime(hour: string | undefined | null, minutes: string | undefined | null): string {
@@ -137,6 +163,19 @@ export class Utility {
     }
 
     return formattedTime;
+  }
+
+  static getStringFormattedDate(date:string): any{
+    
+    var formattedDate = `${date}T00:00:00`;
+    return formattedDate;
+  }
+
+
+  static getOnlyDateString(date:string): any{
+    
+    var formattedDate = date.split("T")[0];
+    return formattedDate;
   }
 
 }
