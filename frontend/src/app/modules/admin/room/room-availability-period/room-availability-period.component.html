@@ -1,88 +1,31 @@
 <div class="form-group row mb-3">
     <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="selectedDay" required>
         <label ngbButtonLabel class="btn-outline-primary">
-            <input ngbButton type="radio" class="btn-check" [value]=0>Lunes
+            <input ngbButton type="radio" class="btn-check" [value]=1>Lunes
         </label>
         <label ngbButtonLabel class="btn-outline-primary">
-            <input ngbButton type="radio" class="btn-check" [value]=1>Martes
+            <input ngbButton type="radio" class="btn-check" [value]=2>Martes
         </label>
         <label ngbButtonLabel class="btn-outline-primary">
-            <input ngbButton type="radio" class="btn-check" [value]=2>Miércoles
+            <input ngbButton type="radio" class="btn-check" [value]=3>Miércoles
         </label>
         <label ngbButtonLabel class="btn-outline-primary">
-            <input ngbButton type="radio" class="btn-check" [value]=3>Jueves
+            <input ngbButton type="radio" class="btn-check" [value]=4>Jueves
         </label>
         <label ngbButtonLabel class="btn-outline-primary">
-            <input ngbButton type="radio" class="btn-check" [value]=4>Viernes
-        </label>
-
-        <label ngbButtonLabel class="btn-outline-primary">
-            <input ngbButton type="radio" class="btn-check" [value]=5>Sábado
+            <input ngbButton type="radio" class="btn-check" [value]=5>Viernes
         </label>
 
         <label ngbButtonLabel class="btn-outline-primary">
-            <input ngbButton type="radio" class="btn-check" [value]=6>Domingo
+            <input ngbButton type="radio" class="btn-check" [value]=6>Sábado
+        </label>
+
+        <label ngbButtonLabel class="btn-outline-primary">
+            <input ngbButton type="radio" class="btn-check" [value]=0>Domingo
         </label>
     </div>
-</div>
-<div class="mb-3">
-    <label for="selScheduleBeginDate" class="col-sm-12 col-form-label">Rango de disponibilidad:</label>
 </div>
 <div class="form-group row mb-3">
-    <div class="form-group row mb-3">
-        <form class="d-flex range-selection">
-            <div class="form-group hidden">
-              <div class="input-group">
-                <input name="datepicker"
-                      class="form-control"
-                      ngbDatepicker
-                      #datepicker="ngbDatepicker"
-                      [autoClose]="'outside'"
-                      (dateSelect)="onDateSelection($event)"
-                      [displayMonths]="2"
-                      [dayTemplate]="t"
-                      outsideDays="hidden"
-                      [startDate]="fromDate!">
-                <ng-template #t let-date let-focused="focused">
-                  <span class="custom-day"
-                        [class.focused]="focused"
-                        [class.range]="isRange(date)"
-                        [class.faded]="isHovered(date) || isInside(date)"
-                        (mouseenter)="hoveredDate = date"
-                        (mouseleave)="hoveredDate = null">
-                    {{ date.day }}
-                  </span>
-                </ng-template>
-              </div>
-            </div>
-            <div class="mb-3">
-              <div class="input-group" (click)="datepicker.toggle()">
-                <input #dpFromDate
-                      class="form-control" placeholder="yyyy-mm-dd"
-                      name="selScheduleBeginDate"
-                      [(ngModel)]=availabilityPeriodLocal.beginDate
-                      [value]="formatter.format(fromDate)"
-                      (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
-                <button class="input-group-text" type="button">
-                  <i class="feather icon-calendar icon-md text-muted"></i>
-                </button>
-              </div>
-            </div>
-            <div class="ms-2">
-              <div class="input-group" (click)="datepicker.toggle()">
-                <input #dpToDate
-                      class="form-control" placeholder="yyyy-mm-dd"
-                      name="selScheduleEndDate"
-                      [(ngModel)]=availabilityPeriodLocal.endDate
-                      [value]="formatter.format(toDate)"
-                      (input)="toDate = validateInput(toDate, dpToDate.value)">
-                <button class="input-group-text" type="button">
-                  <i class="feather icon-calendar icon-md text-muted"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-    </div>
     <div class="form-group row mb-3">
         <div class="col col-sm-6">
             <label for="selScheduleBeginTime" class="col-sm-12 col-form-label">Hora de

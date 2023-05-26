@@ -46,7 +46,7 @@ const routes: Routes = [
     component: ReservationCalendarComponent,
   },
   {
-    path: 'reservation-detail/:reserveId/:startStr/:endStr',
+    path: 'reservation-detail/:reserveId/:roomUuid/:startStr/:endStr',
     component: ReservationDetailComponent,
   },
 ]
