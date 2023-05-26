@@ -80,7 +80,7 @@ export class ReservationCalendarComponent implements OnInit {
       });
     }*/
     if(this.validateRoomSelected()){
-      this.router.navigate([`/reservation/reservation-detail/-1/${selectInfo.startStr}/${selectInfo.endStr}`])
+      this.router.navigate([`/reservation/reservation-detail/-1/${this.selectedRoom}/${selectInfo.startStr}/${selectInfo.endStr}`])
 
     }
 
@@ -90,7 +90,7 @@ export class ReservationCalendarComponent implements OnInit {
   handleEventClick(clickInfo: EventClickArg) {
 
     if(this.validateRoomSelected()){
-      this.router.navigate([`/reservation/reservation-detail/${clickInfo.event.id}/${clickInfo.event.startStr}/${clickInfo.event.endStr}`])
+      this.router.navigate([`/reservation/reservation-detail/${clickInfo.event.id}/${this.selectedRoom}/${clickInfo.event.startStr}/${clickInfo.event.endStr}`])
 
     }
     /*if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {

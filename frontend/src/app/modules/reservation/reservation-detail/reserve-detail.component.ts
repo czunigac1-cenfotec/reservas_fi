@@ -7,8 +7,8 @@ import { ResourceService } from 'src/app/core/services/resource.service';
 import { RoomService } from 'src/app/core/services/room.service';
 import { DataTable } from 'simple-datatables';
 import Swal from 'sweetalert2';
-import { utils } from 'sortablejs';
 import { Utility } from 'src/app/shared/utility';
+import { ReservationGroupsService } from 'src/app/core/services/reservation-groups.service';
 
 @Component({
   selector: 'app-reserve-detail',
@@ -21,6 +21,8 @@ export class ReservationDetailComponent implements OnInit {
   isUpdate: boolean = true;
   scheduleModalCloseResult: string = '';
   scheduleDataTable: any;
+  isScheduledReservation = true;
+  roomUuid:string;
 
   formatter: NgbDateParserFormatter;
 
@@ -47,15 +49,17 @@ export class ReservationDetailComponent implements OnInit {
   selectedResources: any = null;
   selectedRoom: string = '';
   selectedState: string = '';
-  selectedDay = 0;
+  selectedDay = 1;
   time = {};
   defaultTimepickerCode: any;
+  reservationGroupId = '';
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,
     private roomService: RoomService,
     private resourceService: ResourceService,
     private reservationService: ReservationService,
+    private reservationGroupService: ReservationGroupsService,
     private modalService: NgbModal) { }
 
 
@@ -64,7 +68,8 @@ export class ReservationDetailComponent implements OnInit {
     this.activeRoute.params.subscribe((params: Params) => {
 
       this.reserveId = params.reserveId;
-
+      this.roomUuid = params.roomUuid;
+      
       this.reservation.startDateTime = {
         hour: parseInt(params.startStr.split("T")[1].split(":")[0]),
         minute: parseInt(params.startStr.split("T")[1].split(":")[1])
@@ -239,6 +244,42 @@ export class ReservationDetailComponent implements OnInit {
     })
   }
 
+  saveResevationGroup(schedule: string): void {
+    console.log('save group');
+    console.log(schedule);
+    this.reservationGroupService.create(schedule).subscribe({
+      next: (result) => {
+
+        if(result[0]!= null){
+          this.reservationGroupId = result[0].reservations[0].reservationGroupUuid;
+        }
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Reserva registrada correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(result => {
+          this.navigateToCalendar();
+        })
+      },
+      error: (e) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Se ha producido un error: ' + e.status + '\n| Detalles:' + e.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      },
+      complete: () => {
+        console.log("done");
+        this.isScheduledReservation = true;
+      }
+    })
+  }
+
   update(): void {
     console.log('update');
 
@@ -385,7 +426,7 @@ export class ReservationDetailComponent implements OnInit {
   }
 
   saveSchedules(): void {
-    this.getDaysSelected();
+    this.saveSelectedDays();
     this.modalService.dismissAll();
   }
 
@@ -421,7 +462,7 @@ export class ReservationDetailComponent implements OnInit {
 
   getReservationGroup(): void {
 
-    this.resourceService.getAll().subscribe({
+    this.reservationGroupService.getAll().subscribe({
       next: (data) => {
 
         console.log(data);
@@ -442,7 +483,7 @@ export class ReservationDetailComponent implements OnInit {
     })
   }
 
-  getDaysSelected(): any {
+  saveSelectedDays(): any {
 
     var newData = {
       //TODO:Get User
@@ -462,7 +503,6 @@ export class ReservationDetailComponent implements OnInit {
 
     if (this.schedules.length > 0) {
       this.schedules.forEach(item => {
-
 
         var newItem = {
           startDateTime: item.startDateTime,
@@ -507,6 +547,7 @@ export class ReservationDetailComponent implements OnInit {
     }
 
     console.log(JSON.stringify(newData));
+    this.saveResevationGroup(JSON.stringify(newData));
 
   }
 }

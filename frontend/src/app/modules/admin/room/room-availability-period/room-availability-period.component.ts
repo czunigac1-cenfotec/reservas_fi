@@ -17,7 +17,7 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
   constructor(private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter) { }
 
-  selectedDay = 0;
+  selectedDay = 1;
   hoveredDate: NgbDate | null = null;
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
@@ -151,15 +151,18 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
       var startTime = element[1];
       var endtime = element[2];
 
-      debugger;
-
       if(this.availabilityPeriod){
 
-        if(dayName == Utility.getWeekDayName(this.availabilityPeriod.weekday) &&
-          startTime == Utility.getTime(this.availabilityPeriod.startTimeHour?.toString(), this.availabilityPeriod.startTimeMinutes?.toString()) &&
-          endtime == Utility.getTime(this.availabilityPeriod.endTimeHour?.toString(), this.availabilityPeriod.endTimeMinutes?.toString())) {
+        if(dayName == Utility.getWeekDayName(this.availabilityPeriod.weekday)){
 
-          vItemAlreadyAdded = true;
+          debugger; 
+          var newItemStartHour = startTime.split(":")[0];
+          var newItemEndHour = endtime.split(":")[0];
+
+          if ((Number(newItemStartHour) >= Number(this.availabilityPeriod.startTimeHour) && Number(newItemStartHour) <= Number(this.availabilityPeriod.endTimeHour)) ||
+              (Number(newItemEndHour) >= Number(this.availabilityPeriod.startTimeHour) && Number(newItemEndHour) <= Number(this.availabilityPeriod.endTimeHour))) {
+            vItemAlreadyAdded = true;
+          }
         }
       }
     }

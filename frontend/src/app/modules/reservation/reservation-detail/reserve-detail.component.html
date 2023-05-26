@@ -1,12 +1,12 @@
-<form novalidate name="frmNewUser">
+<form novalidate name="frmResevationDetail">
     <div class="row">
         <div class="col-md-8 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Detalle de reserva</h6>
                     <div class="form-group row mb-3">
-                        <label for="txtReservationGroupId" class="col-sm-2 col-form-label">Horario Recursivo</label>
-                        <div class="col-sm-10">
+                        <label for="txtReservationGroupId" class="col-sm-3 col-form-label">Horario Recurrente</label>
+                        <div class="col-sm-9">
                             <button class="btn btn-outline-primary btn-icon calendar" type="button"
                                 (click)="openScheduleModel(scheduleModal)">
                                 <i data-feather="calendar" appFeatherIcon></i>
@@ -16,12 +16,12 @@
                     <div class="form-group row mb-3">
                         <div class="col col-sm-6">
                             <label for="selBeginDate" class="col-sm-12 col-form-label">Fecha de inicio:</label>
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" >
                                 <div class="input-group">
                                     <input class="form-control" placeholder="yyyy-mm-dd" name="selBeginDate"
-                                        [(ngModel)]=reservation.beginDate ngbDatepicker #d="ngbDatepicker" />
+                                        [(ngModel)]=reservation.beginDate ngbDatepicker #d="ngbDatepicker" [disabled]="isScheduledReservation"/>
                                     <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()"
-                                        type="button"></button>
+                                        type="button" [disabled]="isScheduledReservation"></button>
                                 </div>
                             </div>
                         </div>
@@ -30,9 +30,9 @@
                             <div class="col-sm-12">
                                 <div class="input-group">
                                     <input class="form-control" placeholder="yyyy-mm-dd" name="selEndDate"
-                                        [(ngModel)]=reservation.endDate ngbDatepicker #c="ngbDatepicker" />
+                                        [(ngModel)]=reservation.endDate ngbDatepicker #c="ngbDatepicker" [disabled]="isScheduledReservation"/>
                                     <button class="btn btn-outline-secondary bi bi-calendar3" (click)="c.toggle()"
-                                        type="button"></button>
+                                        type="button" [disabled]="isScheduledReservation"></button>
                                 </div>
                             </div>
                         </div>
@@ -42,14 +42,14 @@
                             <label for="selBeginTime" class="col-sm-12 col-form-label">Hora de inicio:</label>
                             <div class="col-sm-9">
                                 <ngb-timepicker id="selBeginTime" [(ngModel)]=reservation.startDateTime
-                                    name="selBeginTime"></ngb-timepicker>
+                                    name="selBeginTime" [disabled]="isScheduledReservation"></ngb-timepicker>
                             </div>
                         </div>
                         <div class="col col-sm-6">
                             <label for="selEndTime" class="col-sm-12 col-form-label">Hora de fin:</label>
                             <div class="col-sm-9">
                                 <ngb-timepicker id="selEndTime" [(ngModel)]=reservation.endDateTime
-                                    name="selEndTime"></ngb-timepicker>
+                                    name="selEndTime" [disabled]="isScheduledReservation"></ngb-timepicker>
                             </div>
                         </div>
                     </div>
@@ -78,15 +78,6 @@
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="txtNotes" autocomplete="off" placeholder="Notas"
                                 name="txtNotes" [(ngModel)]=reservation.notes #txtNotesReq="ngModel" maxlength="120">
-                        </div>
-                    </div>
-                    <div class="form-group row mb-3">
-                        <label for="selRoom" class="col-sm-3 col-form-label">Salas:
-                        </label>
-                        <div class="col-sm-9">
-                            <ng-select [items]="rooms" id="selRoom" name="selRoom" bindLabel="name" bindValue="roomUuid"
-                                [(ngModel)]="selectedRoom" placeholder="type to search">
-                            </ng-select>
                         </div>
                     </div>
                     <div class="form-group row mb-3">
@@ -144,33 +135,33 @@
                                                         name="radioBasic" [(ngModel)]="selectedDay" required>
                                                         <label ngbButtonLabel class="btn-outline-primary">
                                                             <input ngbButton type="radio" class="btn-check"
-                                                                [value]=0>Lunes
+                                                                [value]=1>Lunes
                                                         </label>
                                                         <label ngbButtonLabel class="btn-outline-primary">
                                                             <input ngbButton type="radio" class="btn-check"
-                                                                [value]=1>Martes
+                                                                [value]=2>Martes
                                                         </label>
                                                         <label ngbButtonLabel class="btn-outline-primary">
                                                             <input ngbButton type="radio" class="btn-check"
-                                                                [value]=2>Miércoles
+                                                                [value]=3>Miércoles
                                                         </label>
                                                         <label ngbButtonLabel class="btn-outline-primary">
                                                             <input ngbButton type="radio" class="btn-check"
-                                                                [value]=3>Jueves
+                                                                [value]=4>Jueves
                                                         </label>
                                                         <label ngbButtonLabel class="btn-outline-primary">
                                                             <input ngbButton type="radio" class="btn-check"
-                                                                [value]=4>Viernes
-                                                        </label>
-
-                                                        <label ngbButtonLabel class="btn-outline-primary">
-                                                            <input ngbButton type="radio" class="btn-check"
-                                                                [value]=5>Sábado
+                                                                [value]=5>Viernes
                                                         </label>
 
                                                         <label ngbButtonLabel class="btn-outline-primary">
                                                             <input ngbButton type="radio" class="btn-check"
-                                                                [value]=6>Domingo
+                                                                [value]=6>Sábado
+                                                        </label>
+
+                                                        <label ngbButtonLabel class="btn-outline-primary">
+                                                            <input ngbButton type="radio" class="btn-check"
+                                                                [value]=7>Domingo
                                                         </label>
                                                     </div>
                                                 </div>
@@ -246,7 +237,7 @@
                             <div class="row">
                                 <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
                                     <div>
-                                        <h4 class="mb-3 mb-md-0">Horarios disponibles</h4>
+                                        <h4 class="mb-3 mb-md-0">Horarios seleccionados</h4>
                                     </div>
                                 </div>
                             </div>
