@@ -17,10 +17,6 @@ const routes: Routes = [
         loadChildren: () => import('./modules/reservation/reservation.module').then(m => m.ReservationModule)
       },
       {
-        path: 'dashboard',
-        loadChildren: () => import('./core/components/dashboard/dashboard.module').then(m => m.DashboardModule)
-      },
-      {
         path: 'admin',
         loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
       },

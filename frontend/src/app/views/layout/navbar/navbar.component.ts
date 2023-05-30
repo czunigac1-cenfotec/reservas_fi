@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
+  userInfo:any;
+
   constructor(
     @Inject(DOCUMENT) private document: Document, 
     private renderer: Renderer2,
@@ -16,6 +18,7 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getUserInfo();
   }
 
   /**
@@ -32,10 +35,17 @@ export class NavbarComponent implements OnInit {
   onLogout(e: Event) {
     e.preventDefault();
     localStorage.removeItem('isLoggedin');
-
+    localStorage.removeItem('userInfo');
     if (!localStorage.getItem('isLoggedin')) {
       this.router.navigate(['/auth/login']);
     }
   }
 
+  getUserInfo(){
+    var user = localStorage.getItem('userInfo');
+
+    if (user !== null) {
+      this.userInfo = JSON.parse(user);
+    } 
+  }
 }
