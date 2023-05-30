@@ -6,11 +6,6 @@ export const MENU: MenuItem[] = [
     isTitle: true
   },
   {
-    label: 'Dashboard',
-    icon: 'home',
-    link: '/dashboard'
-  },
-  {
     label: 'Administrador',
     icon: 'user-check',
     subItems: [
@@ -35,10 +30,6 @@ export const MENU: MenuItem[] = [
       {
         label: 'Nueva Reservación',
         link: './reservation/reservation-calendar',
-      },
-      {
-        label: 'POC',
-        link: './reservation/home',
       },
     ]
   },
