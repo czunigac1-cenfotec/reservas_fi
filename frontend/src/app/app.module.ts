@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-
+import {NgxWebstorageModule} from 'ngx-webstorage';
 import {NgxMaskModule} from 'ngx-mask';
 
 @NgModule({
@@ -31,6 +31,7 @@ import {NgxMaskModule} from 'ngx-mask';
     HttpClientModule,
     FormsModule,
     NgxMaskModule.forRoot(),
+    NgxWebstorageModule.forRoot(),
   ],
   providers: [
     AuthGuard,
