@@ -9,7 +9,6 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    debugger;
     console.log('token:'+this.$localStorage.retrieve('authenticationtoken'));
     if (this.$localStorage.retrieve('authenticationtoken') || this.$sessionStorage.retrieve('authenticationtoken')) {
       // logged in so return true

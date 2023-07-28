@@ -11,6 +11,7 @@ import {LocalStorageService, SessionStorageService} from "ngx-webstorage";
   providedIn: 'root'
 })
 export class RoleGuardService implements CanActivate {
+  private userInfo:any;
   private token: string;
   private tokenPayload:{
     auth: ""
@@ -28,18 +29,19 @@ export class RoleGuardService implements CanActivate {
     // on the data property
 
     debugger;
+    this.getUserInfo();
     const expectedRole = route.data.expectedRole;
     this.token = this.$localStorage.retrieve('authenticationtoken')
 
-    if(this.token === null){
+    /*if(this.token === null){
       this.token = this.$sessionStorage.retrieve('authenticationtoken');
     }
     // decode the token to get its payload
     this.tokenPayload = decode(this.token);
 
-    console.log(this.tokenPayload);
+    console.log(this.tokenPayload);*/
 debugger;
-    for (let auth of this.tokenPayload.auth.toString().split(',')){
+    for (let auth of this.userInfo.unidadAcademica.toString().split(',')){
       if (expectedRole != null){
         for (let expRole of expectedRole.split(',')){
           if(auth===expRole){
@@ -54,5 +56,18 @@ debugger;
       return false;
     }
     return true;
+  }
+
+  getUserInfo(){
+    debugger;
+    try {
+      this.userInfo  = this.$localStorage.retrieve('userInfo')
+
+      if (this.userInfo === null) {
+        this.userInfo = this.$sessionStorage.retrieve('userInfo')
+      }
+    }catch(exception){
+      console.error(exception);
+    }
   }
 }

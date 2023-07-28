@@ -124,12 +124,9 @@ export class LoginComponent implements OnInit {
     })
   }
 
-
   private resolveURLByRole(){
 
     var userRole = this.userRole;
-    debugger;
-
     switch ( userRole ){
         case Roles.ADMINISTRADOR.toString(): {
             this.url = '/admin/user-list';
