@@ -154,8 +154,7 @@ export class RoomAvailabilityPeriodComponent implements OnInit {
       if(this.availabilityPeriod){
 
         if(dayName == Utility.getWeekDayName(this.availabilityPeriod.weekday)){
-
-          debugger; 
+          
           var newItemStartHour = startTime.split(":")[0];
           var newItemEndHour = endtime.split(":")[0];
 

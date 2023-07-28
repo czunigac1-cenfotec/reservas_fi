@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, Renderer2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +15,9 @@ export class NavbarComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: Document, 
     private renderer: Renderer2,
-    private router: Router
+    private router: Router,
+    private $localStorage: LocalStorageService,
+    private $sessionStorage: SessionStorageService,
   ) { }
 
   ngOnInit(): void {
@@ -42,10 +45,15 @@ export class NavbarComponent implements OnInit {
   }
 
   getUserInfo(){
-    var user = localStorage.getItem('userInfo');
+    debugger;
+    try {
+      this.userInfo  = this.$localStorage.retrieve('userInfo')
 
-    if (user !== null) {
-      this.userInfo = JSON.parse(user);
-    } 
+      if (this.userInfo === null) {
+        this.userInfo = this.$sessionStorage.retrieve('userInfo')
+      }
+    }catch(exception){
+      console.error(exception);
+    }
   }
 }
