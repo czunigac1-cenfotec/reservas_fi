@@ -7,6 +7,7 @@ export const MENU: MenuItem[] = [
   },
   {
     label: 'Administrador',
+    auth: '1,2',
     icon: 'user-check',
     subItems: [
       {
@@ -26,6 +27,7 @@ export const MENU: MenuItem[] = [
   {
     label: 'Reservaciones',
     icon: 'calendar',
+    auth: '1,2,3',
     subItems: [
       {
         label: 'Nueva Reservación',
