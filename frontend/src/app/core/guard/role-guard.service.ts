@@ -46,10 +46,12 @@ debugger;
         for (let expRole of expectedRole.split(',')){
           if(auth===expRole){
             this.isAllowed = true;
+          }else{
+            this.isAllowed=false;
           }
         }
       }
-    }
+    } 
 
     if (!this.isAllowed) {
       this.router.navigate(['/auth/login']);
