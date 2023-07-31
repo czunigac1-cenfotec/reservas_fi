@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import ac.cr.ucr.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import ac.cr.ucr.model.UserInfo;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,9 @@ public class UserInfoService {
 
     public UserInfo findUserInfo(UUID userInfoId) {
         return repository.findById(userInfoId).get();
+    }
+    public UserInfo findUserInfoByEmail(String email) {
+        return repository.findUserInfoByEmail(email);
     }
 
     public List<UserInfo> findAllUserInfo() {
