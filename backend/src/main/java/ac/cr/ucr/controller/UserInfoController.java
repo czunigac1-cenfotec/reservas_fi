@@ -29,9 +29,14 @@ public class UserInfoController {
         return this.userInfoService.findAllUserInfo();
     }
 
-    @GetMapping("/{uuid}")
+    @GetMapping("/uuid/{uuid}")
     public UserInfo getUserInfo(@PathVariable("uuid") UUID uuid) {
         return this.userInfoService.findUserInfo(uuid);
+    }
+
+    @GetMapping("/email/{email}")
+    public UserInfo getUserInfoByEmail(@PathVariable("email") String email) {
+        return this.userInfoService.findUserInfoByEmail(email);
     }
 
 

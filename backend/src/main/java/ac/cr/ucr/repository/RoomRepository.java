@@ -13,7 +13,7 @@ import ac.cr.ucr.model.Room;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, UUID> {
 
-    @Query("SELECT r from Room r where inactive = false")
+    @Query("SELECT r from Room r where r.inactive = false")
     List<Room> findAllAvailableRooms();
 
 }
