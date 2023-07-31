@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import ac.cr.ucr.model.AvailabilityPeriod;
+import ac.cr.ucr.model.Reservation;
 import ac.cr.ucr.repository.CustomAttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,6 +25,9 @@ public class CustomAttributeService {
         return repository.findAll();
     }
 
+    public List<CustomAttribute> findByRoomAvailabilityUuid(UUID roomAvailabilityUuid) {
+        return repository.findByRoomAvailabilityUuid(roomAvailabilityUuid);
+    }
     public CustomAttribute addCustomAttribute(CustomAttribute customAttribute) {
         CustomAttribute newCustomAttribute = customAttribute;
         return repository.save(newCustomAttribute);
