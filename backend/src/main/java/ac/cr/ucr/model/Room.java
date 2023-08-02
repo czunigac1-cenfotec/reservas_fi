@@ -13,6 +13,10 @@ public class Room implements Serializable {
     @Id
     private UUID roomUuid;
 
+    private UUID roomAvailabilityUuid;
+
+    private boolean inactive;
+
     private String code;
 
     private String name;
@@ -40,6 +44,7 @@ public class Room implements Serializable {
         this.location = location;
         this.capacity = capacity;
         this.administratorUuid = administratorUuid;
+        this.inactive = false;
     }
 
     public UUID getRoomUuid() {
@@ -48,6 +53,22 @@ public class Room implements Serializable {
 
     public void setRoomUuid(UUID roomUuid) {
         this.roomUuid = roomUuid;
+    }
+
+    public UUID getRoomAvailabilityUuid() {
+        return roomAvailabilityUuid;
+    }
+
+    public void setRoomAvailabilityUuid(UUID roomAvailabilityUuid) {
+        this.roomAvailabilityUuid = roomAvailabilityUuid;
+    }
+
+    public boolean isInactive() {
+        return inactive;
+    }
+
+    public void setInactive(boolean inactive) {
+        this.inactive = inactive;
     }
 
     public String getCode() {

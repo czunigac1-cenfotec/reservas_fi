@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpConfigInterceptor } from './core/httpconfig.interceptor';
 
 import { LayoutModule } from './views/layout/layout.module';
 import { AuthGuard } from './core/guard/auth.guard';
@@ -14,8 +15,8 @@ import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-
-import {NgxMaskModule} from 'ngx-mask'
+import {NgxWebstorageModule} from 'ngx-webstorage';
+import {NgxMaskModule} from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {NgxMaskModule} from 'ngx-mask'
     HttpClientModule,
     FormsModule,
     NgxMaskModule.forRoot(),
+    NgxWebstorageModule.forRoot(),
   ],
   providers: [
     AuthGuard,
@@ -43,7 +45,8 @@ import {NgxMaskModule} from 'ngx-mask'
           scss: () => import('highlight.js/lib/languages/scss'),
         }
       }
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

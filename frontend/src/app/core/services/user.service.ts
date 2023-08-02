@@ -24,8 +24,8 @@ export class UserService {
     return this.http.post(serviceUrl, pData);
   }
 
-  update(pData: any): Observable<any> {
-    return this.http.put(serviceUrl, pData);
+  update(pData: any, pUuid:any): Observable<any> {
+    return this.http.put(`${serviceUrl}/${pUuid}`, pData);
   }
 
   delete(pUuid: any): Observable<any> {

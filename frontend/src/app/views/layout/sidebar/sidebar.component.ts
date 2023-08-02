@@ -6,6 +6,7 @@ import MetisMenu from 'metismenujs';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { Router, NavigationEnd } from '@angular/router';
+import {LocalStorageService, SessionStorageService} from "ngx-webstorage";
 
 @Component({
   selector: 'app-sidebar',
@@ -14,12 +15,15 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
 
+  private userInfo:any;
+  private authorities: any[] = [];
+
   @ViewChild('sidebarToggler') sidebarToggler: ElementRef;
 
   menuItems: MenuItem[] = [];
   @ViewChild('sidebarMenu') sidebarMenu: ElementRef;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, router: Router) { 
+  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, router: Router, private $localStorage: LocalStorageService, private $sessionStorage: SessionStorageService) { 
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
 
@@ -40,8 +44,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.menuItems = MENU;
-
+    //this.menuItems = MENU;
+    this.getMenuByRole();
     /**
      * Sidebar-folded on desktop (min-width:992px and max-width: 1199px)
      */
@@ -247,5 +251,52 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   };
 
+  getUserInfo(){
+    debugger;
+    try {
+      this.userInfo  = this.$localStorage.retrieve('userInfo')
+
+      if (this.userInfo === null) {
+        this.userInfo = this.$sessionStorage.retrieve('userInfo')
+      }
+    }catch(exception){
+      console.error(exception);
+    }
+  }
+
+  getMenuByRole(){  
+    this.getRoles();
+
+    let indexABorrar=[]
+      // this.menuItems = MENU;
+      for (let menuItem of MENU) {
+          let added = false;
+          //valida que tenga el campo AUTH y que si tenga los permisos indicados
+          if (menuItem.auth != null && menuItem.auth.split(',').some(permiso => this.authorities.includes(permiso))) {
+              let newItem=JSON.parse(JSON.stringify(menuItem));
+  
+              //valida que tenga subItems
+              if (menuItem.subItems != null) {
+                  for (let menuSub of menuItem.subItems) {
+
+                      if(menuItem.subItems.length>0 && menuSub.auth!=null){
+                          if(!menuSub.auth.split(',').some((permiso: any) => this.authorities.includes(permiso))){
+                              newItem.subItems.splice(newItem.subItems.findIndex((element: { label: string | any[]; }) => element.label.includes(menuSub.label)),1)
+                          }
+                      }
+                  }
+              }
+              //agrega el nuevo menuItem
+              this.menuItems.push(newItem)
+          }
+        }
+  }
+
+  getRoles(){
+    this.getUserInfo();
+    for (let auth of this.userInfo.unidadAcademica.toString().split(',')){
+      this.authorities.push(auth);
+    } 
+  }
 
 }

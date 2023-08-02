@@ -1,6 +1,6 @@
 <form novalidate name="frmRoomDetail">
     <div class="row">
-        <div class="col-md-8 grid-margin stretch-card">
+        <div class="col-md-10 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Datos del Sala</h6>
@@ -9,7 +9,7 @@
                             <span class="text-danger form-check-inline" *ngIf="txtCodeReq?.errors?.required"> *</span>
                         </label>
                             <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtCode" placeholder="Identificación" name="txtCode"
+                            <input type="text" class="form-control" id="txtCode" placeholder="Código" name="txtCode"
                             [(ngModel)]="room.code" #txtCodeReq="ngModel" required maxlength="14" minlength="1" [disabled]="isUpdate">
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                         </label>
                         <div class="col-sm-9">
                         <input type="text" class="form-control" id="txtDescription" autocomplete="off" placeholder="Descripción" name="txtDescription"
-                                [(ngModel)]="room.description" #txtDescriptionReq="ngModel" required maxlength="30">
+                                [(ngModel)]="room.description" #txtDescriptionReq="ngModel" required maxlength="120">
                         </div>
                     </div>
 
@@ -50,7 +50,7 @@
                         </label>
                         <div class="col-sm-9">
                         <input type="text" class="form-control" id="txtCapacity" autocomplete="off" placeholder="Capacidad" name="txtCapacity"
-                                [(ngModel)]="room.capacity" #txtCapacityReq="ngModel" required maxlength="10">
+                                [(ngModel)]="room.capacity" #txtCapacityReq="ngModel" required mask="00000">
                         </div>
                     </div>
 
@@ -59,9 +59,9 @@
                             <span></span>
                         </label>                           
                         <div class="col-sm-9">
-                            <input type="checkbox" class="form-check-input" id="chkState" [(ngModel)]="room.state" name="state">
+                            <input type="checkbox" class="form-check-input" id="chkState" [(ngModel)]="room.inactive" name="inactive">
                             <label class="form-check-label" for="chkState">
-                              &nbsp;Activo
+                              &nbsp;Inactivo
                             </label>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                         <ngb-accordion [closeOthers]="true" activeIds="roomAvailability" [class.collapsed]="true">
                             <ngb-panel id="roomAvailability" title="Disponibilidad de Sala">
                               <ng-template ngbPanelContent>
-                                <app-room-availability [roomAvailabilityId]="roomAvailabilityId"></app-room-availability>
+                                <app-room-availability (roomAvailabilityEmitter)="saveRoomAvailability($event)" [roomAvailabilityId]="roomAvailabilityId" [roomId]="roomId"></app-room-availability>
                               </ng-template>
                             </ngb-panel>
                           </ngb-accordion>

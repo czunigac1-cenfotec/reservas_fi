@@ -3,6 +3,7 @@ package ac.cr.ucr.controller;
 import java.util.List;
 import java.util.UUID;
 
+import ac.cr.ucr.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ac.cr.ucr.model.UserInfo;
-import ac.cr.ucr.service.UserInfoService;
 
 @RequestMapping("/userInfo")
 @CrossOrigin
@@ -29,9 +29,14 @@ public class UserInfoController {
         return this.userInfoService.findAllUserInfo();
     }
 
-    @GetMapping("/{uuid}")
+    @GetMapping("/uuid/{uuid}")
     public UserInfo getUserInfo(@PathVariable("uuid") UUID uuid) {
         return this.userInfoService.findUserInfo(uuid);
+    }
+
+    @GetMapping("/email/{email}")
+    public UserInfo getUserInfoByEmail(@PathVariable("email") String email) {
+        return this.userInfoService.findUserInfoByEmail(email);
     }
 
 

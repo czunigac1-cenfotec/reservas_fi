@@ -21,6 +21,17 @@ public class Resource {
     @Column(nullable = false)
     private LocalDateTime creationDateTime;
 
+    public Resource() {
+        this.resourceUuid = UUID.randomUUID();
+        this.creationDateTime = LocalDateTime.now();
+    }
+
+    public Resource(String name, String description, LocalDateTime creationDateTime) {
+        this();
+        this.name = name;
+        this.description = description;
+    }
+
     public UUID getResourceUuid() {
         return resourceUuid;
     }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
+import { ResourceService } from 'src/app/core/services/resource.service';
+import { RoomService } from 'src/app/core/services/room.service';
+import { Room } from 'src/app/interfaces/room.interface';
 
 @Component({
   selector: 'app-room-list',
@@ -10,7 +13,8 @@ import { DataTable } from 'simple-datatables';
 export class RoomListComponent implements OnInit {
 
   constructor(private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private service: RoomService) { }
 
   roomsDataTable: any;
   
@@ -34,50 +38,35 @@ export class RoomListComponent implements OnInit {
 
     const dataTableRows: any = [];
 
-    var room: any;
+    var room: Room;
 
-    room = {
-      code:'100',
-      name:'Auditorio #1',
-      description:'Auditorio de Ingeniería',
-      location:'Edificio A, Piso 2',
-      state:1,
-      capacity:'150',
-      creationDate:'',
-      roomUuid:"10000000-0000-0000-0000-0000000000"
-    }
+    this.service.getAll().subscribe({
+      next:(data)=>{
 
-    dataTableRows.push([
-      room.code,
-      room.name,
-      room.location,
-      room.state,
-      room.capacity,
-      `<a href="/admin/room-detail/${room.roomUuid}">Ver Detalles</a>`
-    ]);
+        console.log(data);   
 
+        if (data.length >= 1) {
+          for (const room of data) {
+            dataTableRows.push([
+              room.code,
+              room.name,
+              room.location,
+              String(room.inactive),
+              String(room.capacity),
+              `<a href="/admin/room-detail/${room.roomUuid}">Ver Detalles</a>`
+            ]);
+          }
 
-    room = {
-      code:'101',
-      name:'Biblioteca',
-      description:'Biblioteca de Ingeniería',
-      location:'Edificio C, Piso 1',
-      state:1,
-      capacity:'110',
-      creationDate:'',
-      roomUuid:"12000000-0000-0000-0000-0000000000"
-    }
-
-    dataTableRows.push([
-      room.code,
-      room.name,
-      room.location,
-      room.state,
-      room.capacity,
-      `<a href="/admin/room-detail/${room.roomUuid}">Ver Detalles</a>`
-    ]);
-
-    this.roomsDataTable.rows().add(dataTableRows);
+          this.roomsDataTable.rows().add(dataTableRows);
+        } 
+      },
+      error:(e)=>{
+        console.log(e);
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })              
   }
 
   new(): void{

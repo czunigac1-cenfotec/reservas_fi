@@ -1,0 +1,25 @@
+<div class="row grid-margin">
+    <div class="row">
+        <app-room-availability-period (availabilityPeriodEmitter)="savePeriod($event)" [roomAvailabilityId]="roomAvailabilityId"></app-room-availability-period>
+    </div>
+    <div class="row">
+        <hr>
+            <button type="button" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="saveAvailabilityPeriod()">Agregar Periodo</button>
+        <hr>
+    </div>  
+    <div class="row">
+        <div class="table-responsive">
+            <table id="availabilityPeriodDataTable" class="table table-hover table-container">
+                <thead>
+                <tr>
+                    <th>Día de la Semana</th>
+                    <th>Hora de Inicio</th>
+                    <th>Hora de Fin</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>

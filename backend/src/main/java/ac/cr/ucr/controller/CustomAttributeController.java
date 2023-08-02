@@ -21,6 +21,11 @@ public class CustomAttributeController {
         return customAttributeService.findCustomAttribute(customAttributeUuid);
     }
 
+    @GetMapping("/room-availability-uuid/{roomAvailabilityUuid}")
+    public List<CustomAttribute> getCustomAttributebyRoomUuid(@PathVariable UUID roomAvailabilityUuid) {
+        return customAttributeService.findByRoomAvailabilityUuid(roomAvailabilityUuid);
+    }
+
     @GetMapping
     public List<CustomAttribute> getAllCustomAttributes() {
         return customAttributeService.findAllCustomAttributes();

@@ -1,0 +1,24 @@
+<div class="row grid-margin">
+    <div class="row">
+        <app-custom-attribute (customAttributeEmitter)="saveCustomAttribute($event)" [roomAvailabilityId]="roomAvailabilityId"></app-custom-attribute>
+    </div>
+    <div class="row">
+        <hr>
+            <button type="button" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="saveAttribute()">Agregar Atributo Personalizado</button>
+        <hr>
+    </div>  
+    <div class="row">
+        <div class="table-responsive">
+            <table id="customAttributeDataTable" class="table table-hover table-container">
+                <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,18 +1,53 @@
 package ac.cr.ucr.service;
 
 import ac.cr.ucr.model.Resource;
+import ac.cr.ucr.repository.ResourceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface ResourceService {
-    Resource findResource(UUID resourceUuid);
+@Service
+public class ResourceService {
 
-    List<Resource> findAllResources();
+    @Autowired
+    private ResourceRepository repository;
 
-    Resource addResource(Resource resource);
+    public Resource findResource(UUID resourceUuid) {
+        Optional<Resource> resource = repository.findById(resourceUuid);
+        return resource.orElse(null);
+    }
 
-    Resource updateResource(Resource resource, UUID resourceUuid);
+    public List<Resource> findAllResources() {
+        return repository.findAll();
+    }
 
-    boolean deleteResource(UUID resourceUuid);
+    public Resource addResource(Resource resource) {
+        resource.setResourceUuid(UUID.randomUUID());
+        resource.setCreationDateTime(LocalDateTime.now());
+        return repository.save(resource);
+    }
+
+    public Resource updateResource(Resource resource, UUID resourceUuid) {
+        Optional<Resource> existingResource = repository.findById(resourceUuid);
+        if (existingResource.isPresent()) {
+            Resource updatedResource = existingResource.get();
+            updatedResource.setName(resource.getName());
+            updatedResource.setDescription(resource.getDescription());
+            return repository.save(updatedResource);
+        }
+        return null;
+    }
+
+    public boolean deleteResource(UUID resourceUuid) {
+        Optional<Resource> existingResource = repository.findById(resourceUuid);
+        if (existingResource.isPresent()) {
+            repository.delete(existingResource.get());
+            return true;
+        }
+        return false;
+    }
 }

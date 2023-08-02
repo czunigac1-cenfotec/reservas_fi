@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BaseComponent } from './views/layout/base/base.component';
-import { AuthGuard } from './core/guard/auth.guard';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
+import { RoleGuardService } from './core/guard/role-guard.service';
+import { AuthGuard } from './core/guard/auth.guard';
 
 
 const routes: Routes = [
-  { path:'auth', loadChildren: () => import('./core/components/auth/auth.module').then(m => m.AuthModule) },
+  { path:'auth', loadChildren: () => import('./core/auth/auth.module').then(m => m.AuthModule) },
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
   {
     path: '',
     component: BaseComponent,
@@ -14,19 +16,18 @@ const routes: Routes = [
     children: [
       {
         path: 'reservation',
-        loadChildren: () => import('./modules/reservation/reservation.module').then(m => m.ReservationModule)
-      },
-      {
-        path: 'dashboard',
-        loadChildren: () => import('./core/components/dashboard/dashboard.module').then(m => m.DashboardModule)
+        loadChildren: () => import('./modules/reservation/reservation.module').then(m => m.ReservationModule),
+        data: {expectedRole: '1,2'}
       },
       {
         path: 'admin',
-        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+        canActivate: [RoleGuardService],
+        data: {expectedRole: '1'}
       },
       {
         path: 'apps',
-        loadChildren: () => import('./views/pages/apps/apps.module').then(m => m.AppsModule)
+        loadChildren: () => import('./views/pages/apps/apps.module').then(m => m.AppsModule),
       },
       {
         path: 'ui-components',

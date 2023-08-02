@@ -1,41 +1,82 @@
-<form novalidate name="frmNewUser">
+<form novalidate name="frmRoomAvailability">
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <div class="form-group row mb-3">                            
-                        <label for="txtMinReservationTime" class="col-sm-3 col-form-label">Tiempo mínimo de reserva:
+                        <label for="txtMinReservationTime" class="col-sm-4 col-form-label">Tiempo mínimo de reserva:
                             <span class="text-danger form-check-inline" *ngIf="txtMinReservationTimeReq?.errors?.required"> *</span>
                         </label>
-                            <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtMinReservationTime" placeholder="Tiempo en segundos" name="txtMinReservationTime"
-                            [(ngModel)]="roomAvailability.minReservationTime" #txtMinReservationTimeReq="ngModel" required maxlength="14" minlength="1">
+                            <div class="col-sm-8">
+                            <input type="text" class="form-control" id="txtMinReservationTime" placeholder="Tiempo en minutos" name="txtMinReservationTime"
+                            [(ngModel)]="roomAvailability.minReservationTime" #txtMinReservationTimeReq="ngModel" required mask="00000">
                         </div>
                     </div>
                     <div class="form-group row mb-3">                            
-                        <label for="txtMaxReservationTime" class="col-sm-3 col-form-label">Tiempo mínimo de reserva:
+                        <label for="txtMaxReservationTime" class="col-sm-4 col-form-label">Tiempo máximo de reserva:
                             <span class="text-danger form-check-inline" *ngIf="txtMaxReservationTimeReq?.errors?.required"> *</span>
                         </label>
-                            <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtMaxReservationTime" placeholder="Tiempo en segundos" name="txtMaxReservationTime"
-                            [(ngModel)]="roomAvailability.maxReservationTime" #txtMaxReservationTimeReq="ngModel" required maxlength="14" minlength="1">
+                            <div class="col-sm-8">
+                            <input type="text" class="form-control" id="txtMaxReservationTime" placeholder="Tiempo en minutos" name="txtMaxReservationTime"
+                            [(ngModel)]="roomAvailability.maxReservationTime" #txtMaxReservationTimeReq="ngModel" required mask="00000">
                         </div>
                     </div>
                     
-                    <div class="form-group row mb-3">       
-                        <div class="col col-sm-6">
-                            <label for="selBeginTime" class="col-sm-12 col-form-label">Inicio de disponibilidad:</label>
-                            <div class="col-sm-9">
-                                <ngb-timepicker id="selBeginTime" [(ngModel)]="roomAvailability.startDate" name="selBeginTime"></ngb-timepicker>
+                    <div class="form-group row mb-3">
+                        <form class="d-flex range-selection">
+                            <div class="form-group hidden">
+                              <div class="input-group">
+                                <input name="datepicker"
+                                      class="form-control"
+                                      ngbDatepicker
+                                      #datepicker="ngbDatepicker"
+                                      [autoClose]="'outside'"
+                                      (dateSelect)="onDateSelection($event)"
+                                      [displayMonths]="2"
+                                      [dayTemplate]="t"
+                                      outsideDays="hidden"
+                                      [startDate]="fromDate!">
+                                <ng-template #t let-date let-focused="focused">
+                                  <span class="custom-day"
+                                        [class.focused]="focused"
+                                        [class.range]="isRange(date)"
+                                        [class.faded]="isHovered(date) || isInside(date)"
+                                        (mouseenter)="hoveredDate = date"
+                                        (mouseleave)="hoveredDate = null">
+                                    {{ date.day }}
+                                  </span>
+                                </ng-template>
+                              </div>
                             </div>
-                        </div>
-                        <div class="col col-sm-6">
-                            <label for="selEndTime" class="col-sm-12 col-form-label">Fin de disponibilidad:</label>
-                            <div class="col-sm-9">
-                                <ngb-timepicker id="selEndTime" [(ngModel)]="roomAvailability.endDate" name="selEndTime"></ngb-timepicker>
+                            <div class="mb-3">
+                              <div class="input-group" (click)="datepicker.toggle()">
+                                <input #dpAvailabilityFromDate
+                                      class="form-control" placeholder="yyyy-mm-dd"
+                                      name="selAvailabilityBeginDate"
+                                      [(ngModel)]="roomAvailability.startDateTime"
+                                      [value]="formatter.format(fromDate)"
+                                      (input)="fromDate = validateInput(fromDate, dpAvailabilityFromDate.value)">
+                                <button class="input-group-text" type="button">
+                                  <i class="feather icon-calendar icon-md text-muted"></i>
+                                </button>
+                              </div>
                             </div>
-                        </div>                     
+                            <div class="ms-2">
+                              <div class="input-group" (click)="datepicker.toggle()">
+                                <input #dpAvailabilityToDate
+                                      class="form-control" placeholder="yyyy-mm-dd"
+                                      name="selAvailabilityEndDate"
+                                      [(ngModel)]="roomAvailability.endDateTime"
+                                      [value]="formatter.format(toDate)"
+                                      (input)="toDate = validateInput(toDate, dpAvailabilityToDate.value)">
+                                <button class="input-group-text" type="button">
+                                  <i class="feather icon-calendar icon-md text-muted"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </form>
                     </div>
+
                     <div class="form-group row mb-3">                            
                         <label for="chkApprovalRequired" class="col-sm-3F col-form-label">
                             <span></span>
@@ -52,11 +93,29 @@
                             <span></span>
                         </label>                           
                         <div class="col-sm-9">
-                            <input type="checkbox" class="form-check-input" id="chkIsPrivate" [(ngModel)]="roomAvailability.private" name="private">
+                            <input type="checkbox" class="form-check-input" id="chkIsPrivate" [(ngModel)]="roomAvailability.privateReservationEnabled" name="private">
                             <label class="form-check-label" for="chkIsPrivate">
                                 &nbsp;Es privado
                             </label>
                         </div>
+                    </div>
+                    <div class="form-group row mb-3" >   
+                        <ngb-accordion [closeOthers]="true" [class.collapsed]="true">
+                            <ngb-panel id="availabilityPeriod" title="Periodo de Disponibilidad" [disabled]="availabilityPeriodDisabled">
+                              <ng-template ngbPanelContent>
+                                <app-room-availability-period-list [roomAvailabilityId]="roomAvailabilityId" [roomId]="roomId" [roomAvailability]="roomAvailability"></app-room-availability-period-list>
+                              </ng-template>
+                            </ngb-panel>
+                          </ngb-accordion>
+                    </div>
+                    <div class="form-group row mb-3" >   
+                        <ngb-accordion [closeOthers]="true" [class.collapsed]="true">
+                            <ngb-panel id="customAttributes" title="Atributos Personalizados" [disabled]="customAttributesDisabled">
+                              <ng-template ngbPanelContent>
+                                <app-custom-attributes-list [roomAvailabilityId]="roomAvailabilityId"></app-custom-attributes-list>
+                              </ng-template>
+                            </ngb-panel>
+                          </ngb-accordion>
                     </div>
                 </div>
             </div>

@@ -1,19 +1,52 @@
 package ac.cr.ucr.service;
 
-import ac.cr.ucr.model.CustomAttribute;
-
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface CustomAttributeService {
+import ac.cr.ucr.model.AvailabilityPeriod;
+import ac.cr.ucr.model.Reservation;
+import ac.cr.ucr.repository.CustomAttributeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
-    CustomAttribute findCustomAttribute(UUID customAttributeUuid);
+import ac.cr.ucr.model.CustomAttribute;
+import org.springframework.stereotype.Service;
 
-    List<CustomAttribute> findAllCustomAttributes();
+@Service
+public class CustomAttributeService {
 
-    CustomAttribute addCustomAttribute(CustomAttribute customAttribute);
+    @Autowired
+    private CustomAttributeRepository repository;
 
-    CustomAttribute updateCustomAttribute(CustomAttribute customAttribute, UUID customAttributeUuid);
+    public CustomAttribute findCustomAttribute(UUID customAttributeUuid) {
+        return repository.findById(customAttributeUuid).get();
+    }
+    public List<CustomAttribute> findAllCustomAttributes() {
+        return repository.findAll();
+    }
 
-    boolean deleteCustomAttribute(UUID customAttributeUuid);
+    public List<CustomAttribute> findByRoomAvailabilityUuid(UUID roomAvailabilityUuid) {
+        return repository.findByRoomAvailabilityUuid(roomAvailabilityUuid);
+    }
+    public CustomAttribute addCustomAttribute(CustomAttribute customAttribute) {
+        CustomAttribute newCustomAttribute = customAttribute;
+        return repository.save(newCustomAttribute);
+    }
+
+    public CustomAttribute updateCustomAttribute(CustomAttribute customAttribute, UUID customAttributeUuid) {
+        Optional<CustomAttribute> existingCustomAttribute = repository.findById(customAttributeUuid);
+        if (existingCustomAttribute.isPresent()) {
+            return repository.save(customAttribute);
+        }
+        return null;
+    }
+
+    public boolean deleteCustomAttribute(UUID customAttributeUuid) {
+        Optional<CustomAttribute> existingCustomAttribute = repository.findById(customAttributeUuid);
+        if (existingCustomAttribute.isPresent()) {
+            repository.delete(existingCustomAttribute.get());
+            return true;
+        }
+        return false;
+    }
 }

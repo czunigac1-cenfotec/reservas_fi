@@ -1,1 +1,47 @@
-<p>room-availability-period works!</p>
+<div class="form-group row mb-3">
+    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="selectedDay" required>
+        <label ngbButtonLabel class="btn-outline-primary">
+            <input ngbButton type="radio" class="btn-check" [value]=1>Lunes
+        </label>
+        <label ngbButtonLabel class="btn-outline-primary">
+            <input ngbButton type="radio" class="btn-check" [value]=2>Martes
+        </label>
+        <label ngbButtonLabel class="btn-outline-primary">
+            <input ngbButton type="radio" class="btn-check" [value]=3>Miércoles
+        </label>
+        <label ngbButtonLabel class="btn-outline-primary">
+            <input ngbButton type="radio" class="btn-check" [value]=4>Jueves
+        </label>
+        <label ngbButtonLabel class="btn-outline-primary">
+            <input ngbButton type="radio" class="btn-check" [value]=5>Viernes
+        </label>
+
+        <label ngbButtonLabel class="btn-outline-primary">
+            <input ngbButton type="radio" class="btn-check" [value]=6>Sábado
+        </label>
+
+        <label ngbButtonLabel class="btn-outline-primary">
+            <input ngbButton type="radio" class="btn-check" [value]=0>Domingo
+        </label>
+    </div>
+</div>
+<div class="form-group row mb-3">
+    <div class="form-group row mb-3">
+        <div class="col col-sm-6">
+            <label for="selScheduleBeginTime" class="col-sm-12 col-form-label">Hora de
+                inicio:</label>
+            <div class="col-sm-9">
+                <ngb-timepicker id="selScheduleBeginTime" [(ngModel)]=availabilityPeriodLocal.startDateTime
+                    name="selBeginTime"></ngb-timepicker>
+            </div>
+        </div>
+        <div class="col col-sm-6">
+            <label for="selScheduleEndTime" class="col-sm-12 col-form-label">Hora de
+                fin:</label>
+            <div class="col-sm-9">
+                <ngb-timepicker id="selScheduleEndTime" [(ngModel)]=availabilityPeriodLocal.endDateTime
+                    name="selEndTime"></ngb-timepicker>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { email } from 'ngx-custom-validators/src/app/email/validator';
 import { UserService } from 'src/app/core/services/user.service';
+import { Roles } from 'src/app/enum/roles.enum';
+import { User } from 'src/app/interfaces/user.interface';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -8,20 +11,30 @@ import Swal from 'sweetalert2';
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.scss']
 })
+
 export class UserDetailComponent implements OnInit {
 
   userInfoId: string;
   isUpdate: boolean = true; 
 
-  user = {
-    userInfoId:'',
+  public emailPattern = {'':{ pattern: new RegExp('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/')}};
+
+  user: User = {
+    userInfoUuid:'',
     nombre:'',
     primerApellido:'',
     segundoApellido:'',
     identificacion: '',
     unidadAcademica: '',
-    telefono:''
-  }
+    telefono:'',
+    email : ''
+  };
+
+  unidadAcademicaOptions = [
+    { label: 'Profesor', value: Roles.PROFESOR.toString() },
+    { label: 'Registro', value: Roles.REGISTRO.toString() },
+    { label: 'Administrador', value: Roles.ADMINISTRADOR.toString() }
+  ];
 
   constructor( private activeRoute: ActivatedRoute,
                private userService: UserService,
@@ -105,9 +118,12 @@ export class UserDetailComponent implements OnInit {
 
   save(): void {
     console.log('save');
-    this.user.userInfoId = "00000000-0000-0000-0000-000000000000";
-    console.log(this.user);
-    this.userService.create(this.user).subscribe({
+
+    const newUser = { ...this.user };
+    delete newUser.userInfoUuid;
+
+    console.log(newUser);
+    this.userService.create(newUser).subscribe({
       next:(result)=>{
         Swal.fire({
           position: 'top-end',
@@ -137,7 +153,7 @@ export class UserDetailComponent implements OnInit {
   update(): void {
     console.log('update');
 
-    this.userService.update(this.user).subscribe({
+    this.userService.update(this.user, this.userInfoId).subscribe({
       next:(result)=>{
         Swal.fire({
           position: 'top-end',

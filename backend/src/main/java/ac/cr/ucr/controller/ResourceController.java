@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/resource")
 public class ResourceController {
 
@@ -26,7 +27,7 @@ public class ResourceController {
         return ResponseEntity.ok(resource);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Resource>> getAllResources() {
         List<Resource> resources = resourceService.findAllResources();
         if (resources.isEmpty()) {
@@ -35,7 +36,7 @@ public class ResourceController {
         return ResponseEntity.ok(resources);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Resource> addResource(@RequestBody Resource resource) {
         Resource newResource = resourceService.addResource(resource);
         if (newResource == null) {
