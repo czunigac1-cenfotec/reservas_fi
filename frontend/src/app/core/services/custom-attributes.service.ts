@@ -32,4 +32,7 @@ export class CustomAttributesService {
     return this.http.delete(`${serviceUrl}/${pUuid}`);
   }
 
+  getByRoomAvailabilityId(pUuid: any): Observable<any> {
+    return this.http.get(`${serviceUrl}/room-availability-uuid/${pUuid}`);
+  }
 }

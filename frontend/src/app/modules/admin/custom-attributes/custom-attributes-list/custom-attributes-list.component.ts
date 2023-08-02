@@ -56,9 +56,10 @@ export class CustomAttributesListComponent implements OnInit {
 
     this.clearDataTable();
     
-    this.service.getAll().subscribe({
+    this.service.getByRoomAvailabilityId(this.roomAvailabilityId).subscribe({
       next: (data) => {
         console.log(data);
+        debugger;
         if (data != null) {
           if (data.length >= 1) {
             for (const attribute of data) {
@@ -77,22 +78,6 @@ export class CustomAttributesListComponent implements OnInit {
       complete: () => {
         console.log("done");
         this.addRowEvents();
-      }
-    })
-  }
-
-  get(attributeId: string): void {
-
-    this.service.get(attributeId).subscribe({
-      next: (data) => {
-        console.log(data);
-
-      },
-      error: (e) => {
-        console.log(e);
-      },
-      complete: () => {
-        console.log("done");
       }
     })
   }
