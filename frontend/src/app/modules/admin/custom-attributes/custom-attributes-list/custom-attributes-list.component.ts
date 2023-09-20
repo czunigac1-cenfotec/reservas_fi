@@ -59,7 +59,6 @@ export class CustomAttributesListComponent implements OnInit {
     this.service.getByRoomAvailabilityId(this.roomAvailabilityId).subscribe({
       next: (data) => {
         console.log(data);
-        debugger;
         if (data != null) {
           if (data.length >= 1) {
             for (const attribute of data) {

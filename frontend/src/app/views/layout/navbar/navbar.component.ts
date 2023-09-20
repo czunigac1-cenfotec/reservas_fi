@@ -45,7 +45,6 @@ export class NavbarComponent implements OnInit {
   }
 
   getUserInfo(){
-    debugger;
     try {
       this.userInfo  = this.$localStorage.retrieve('userInfo')
 

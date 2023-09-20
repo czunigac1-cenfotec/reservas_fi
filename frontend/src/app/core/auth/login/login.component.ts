@@ -78,7 +78,6 @@ export class LoginComponent implements OnInit {
           console.log(data);
         },
         error: (e) => {
-          debugger;
           console.log(e);
           //should be in the next block
           this.getUserInfo(this.loginForm.userName,this.loginForm.rememberMe);
@@ -154,7 +153,6 @@ export class LoginComponent implements OnInit {
     if(this.authenticated){
       localStorage.setItem('isLoggedin', 'true');
       if (localStorage.getItem('isLoggedin')) {
-        debugger;
         this.resolveURLByRole();
       }
     }else{

@@ -21,8 +21,7 @@ export class ReservationDetailComponent implements OnInit {
   isUpdate: boolean = true;
   scheduleModalCloseResult: string = '';
   scheduleDataTable: any;
-  isScheduledReservation = true;
-  roomUuid:string;
+  isScheduledReservation = false;
 
   formatter: NgbDateParserFormatter;
 
@@ -67,8 +66,9 @@ export class ReservationDetailComponent implements OnInit {
 
     this.activeRoute.params.subscribe((params: Params) => {
 
+      debugger;
       this.reserveId = params.reserveId;
-      this.roomUuid = params.roomUuid;
+      this.selectedRoom = params.roomUuid;
       
       this.reservation.startDateTime = {
         hour: parseInt(params.startStr.split("T")[1].split(":")[0]),
@@ -197,11 +197,12 @@ export class ReservationDetailComponent implements OnInit {
       next: (data) => {
 
         console.log(data);
-
-        if (data.length >= 1) {
-          for (const resource of data) {
-            console.log(resource.resourceUuid);
-            this.resources = data;
+        if(data != null){
+          if (data.length >= 1) {
+            for (const resource of data) {
+              console.log(resource.resourceUuid);
+              this.resources = data;
+            }
           }
         }
       },
@@ -360,6 +361,8 @@ export class ReservationDetailComponent implements OnInit {
   }
 
   getReservation(): any {
+    
+    debugger; 
     var newReservation = {
       reservationGroupUuid: this.reservation.reservationGroupUuid,
       startDateTime: this.getFormattedDate(this.reservation.beginDate) + "T" +
@@ -372,7 +375,7 @@ export class ReservationDetailComponent implements OnInit {
       roomUuid: this.selectedRoom,
       //TODO: Get it from local storage
       userUuid: "3afd91e5-ebcd-468a-b03e-5b63266d21d7",
-      resourceUuids: this.selectedResources
+      resourceUuids: this.selectedResources,
     }
 
     return newReservation;

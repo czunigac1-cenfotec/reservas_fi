@@ -18,6 +18,8 @@ export class ReservationCalendarComponent implements OnInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
   reservations: any = [];
+  availability: any = [];
+
   selectedRoom: string = '';
   rooms: [];
   showCalendar: boolean = true;
@@ -63,6 +65,53 @@ export class ReservationCalendarComponent implements OnInit {
 
   handleDateSelect(selectInfo: DateSelectArg) {
     console.log('handleDateSelect');
+
+    var isValidSelection = false;
+    //TODO: valid date?
+
+    debugger;
+    this.availability.length;
+
+    if(this.availability != null && this.availability.length>0){
+      this.availability.forEach((element: { startDate: Date; endDate: Date; }) => {
+        
+        selectInfo.start;
+        selectInfo.end;
+
+         if(selectInfo.start>=element.startDate && selectInfo.end<=element.endDate){
+            isValidSelection = true
+          }
+      });
+    }
+    
+    if(!isValidSelection){
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Horario no habilitado',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }else{
+      if(this.validateRoomSelected()){
+        this.router.navigate([`/reservation/reservation-detail/-1/${this.selectedRoom}/${selectInfo.startStr}/${selectInfo.endStr}`])
+      }  
+    }
+
+    /*if(this.selectedRoom !== null && this.selectedRoom !== "" ){
+      isRoomSelected = true;
+    }else{
+     
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Debe seleccionar un salón para continuar',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }*/
+
+
     /*const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
 
@@ -79,10 +128,6 @@ export class ReservationCalendarComponent implements OnInit {
         borderColor: '#00cccc'
       });
     }*/
-    if(this.validateRoomSelected()){
-      this.router.navigate([`/reservation/reservation-detail/-1/${this.selectedRoom}/${selectInfo.startStr}/${selectInfo.endStr}`])
-
-    }
 
     // this.router.navigate([`/reservation/reservation-detail/"-1"/${selectInfo.startStr}/${selectInfo.endStr}`]);
   }
@@ -256,16 +301,16 @@ export class ReservationCalendarComponent implements OnInit {
 
     availabilityPeriods.forEach((period: any) => {
       
-      const periodStartDate = new Date(startDate);
+      var periodStartDate = new Date(startDate);
        periodStartDate.setDate(periodStartDate.getDate() + period.weekday);
        periodStartDate.setHours(period.startTimeHour);
        periodStartDate.setMinutes(period.startTimeMinutes);
 
-      const periodEndDate = new Date(startDate);
+      var periodEndDate = new Date(startDate);
       periodEndDate.setDate(periodEndDate.getDate() + period.weekday);
       periodEndDate.setHours(period.endTimeHour);
       periodEndDate.setMinutes(period.endTimeMinutes);
-
+  
       calendarApi.addEvent({
         id: "-1",
         start: periodStartDate,
@@ -274,9 +319,15 @@ export class ReservationCalendarComponent implements OnInit {
         backgroundColor: 'rgba(0,204,68,.25)',
         borderColor: '#00cc44'
       });
-    });
 
-    //this.calendarOptions.events = this.reservations;
+      var schedule = {
+        startDate: periodStartDate,
+        endDate: periodEndDate
+      }
+
+      this.availability.push(schedule);
+
+    });
   }
 
   validateRoomSelected(): boolean{
