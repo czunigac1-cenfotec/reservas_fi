@@ -67,10 +67,6 @@ export class ReservationCalendarComponent implements OnInit {
     console.log('handleDateSelect');
 
     var isValidSelection = false;
-    //TODO: valid date?
-
-    debugger;
-    this.availability.length;
 
     if(this.availability != null && this.availability.length>0){
       this.availability.forEach((element: { startDate: Date; endDate: Date; }) => {
@@ -156,6 +152,8 @@ export class ReservationCalendarComponent implements OnInit {
     this.reservationService.getReservationsByStartDateEndDate(this.selectedRoom,startDate,endDate).subscribe({
       next: (data) => {
 
+        debugger;
+        
         if (data !== null) {
           console.log(data);
 
