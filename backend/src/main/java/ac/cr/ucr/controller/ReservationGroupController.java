@@ -17,6 +17,7 @@ import java.util.UUID;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/reservation-groups")
 public class ReservationGroupController {
 
