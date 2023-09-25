@@ -19,9 +19,9 @@
                             <div class="col-sm-12" >
                                 <div class="input-group">
                                     <input class="form-control" placeholder="yyyy-mm-dd" name="selBeginDate"
-                                        [(ngModel)]=reservation.beginDate ngbDatepicker #d="ngbDatepicker" [disabled]="isScheduledReservation"/>
+                                        [(ngModel)]=reservation.beginDate ngbDatepicker #d="ngbDatepicker" [disabled]="true"/>
                                     <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()"
-                                        type="button" [disabled]="isScheduledReservation"></button>
+                                        type="button" [disabled]="true"></button>
                                 </div>
                             </div>
                         </div>
@@ -30,9 +30,9 @@
                             <div class="col-sm-12">
                                 <div class="input-group">
                                     <input class="form-control" placeholder="yyyy-mm-dd" name="selEndDate"
-                                        [(ngModel)]=reservation.endDate ngbDatepicker #c="ngbDatepicker" [disabled]="isScheduledReservation"/>
+                                        [(ngModel)]=reservation.endDate ngbDatepicker #c="ngbDatepicker" [disabled]="true"/>
                                     <button class="btn btn-outline-secondary bi bi-calendar3" (click)="c.toggle()"
-                                        type="button" [disabled]="isScheduledReservation"></button>
+                                        type="button" [disabled]="true"></button>
                                 </div>
                             </div>
                         </div>

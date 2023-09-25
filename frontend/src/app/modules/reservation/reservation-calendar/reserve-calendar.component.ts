@@ -59,7 +59,7 @@ export class ReservationCalendarComponent implements OnInit {
     private reservationService: ReservationService) { }
 
   ngOnInit(): void {
-    //this.getResevations();
+
     this.getRoomsList();
   }
 
@@ -93,50 +93,13 @@ export class ReservationCalendarComponent implements OnInit {
         this.router.navigate([`/reservation/reservation-detail/-1/${this.selectedRoom}/${selectInfo.startStr}/${selectInfo.endStr}`])
       }  
     }
-
-    /*if(this.selectedRoom !== null && this.selectedRoom !== "" ){
-      isRoomSelected = true;
-    }else{
-     
-      Swal.fire({
-        position: 'top-end',
-        icon: 'warning',
-        title: 'Debe seleccionar un salón para continuar',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    }*/
-
-
-    /*const title = prompt('Please enter a new title for your event');
-    const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-        backgroundColor: 'rgba(0,204,204,.25)',
-        borderColor: '#00cccc'
-      });
-    }*/
-
-    // this.router.navigate([`/reservation/reservation-detail/"-1"/${selectInfo.startStr}/${selectInfo.endStr}`]);
   }
 
   handleEventClick(clickInfo: EventClickArg) {
 
     if(this.validateRoomSelected()){
       this.router.navigate([`/reservation/reservation-detail/${clickInfo.event.id}/${this.selectedRoom}/${clickInfo.event.startStr}/${clickInfo.event.endStr}`])
-
     }
-    /*if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }*/
   }
 
   handleEvents(events: EventApi[]) {
@@ -149,8 +112,9 @@ export class ReservationCalendarComponent implements OnInit {
     let startDate  = calendarApi.view.activeStart.toISOString().replace('Z','');
     let endDate = calendarApi.view.activeEnd.toISOString().replace('Z','');
 
-    this.reservationService.getReservationsByStartDateEndDate(this.selectedRoom,startDate,endDate).subscribe({
-      next: (data) => {
+    //this.reservationService.getReservationsByStartDateEndDate(this.selectedRoom,startDate,endDate).subscribe({
+    this.reservationService.getAll().subscribe({
+    next: (data) => {
 
         debugger;
         
@@ -172,7 +136,7 @@ export class ReservationCalendarComponent implements OnInit {
                 borderColor: '#f10075'
               }
 
-              //this.reservations.push(event);
+              this.reservations.push(event);
 
             }
           }
@@ -184,6 +148,7 @@ export class ReservationCalendarComponent implements OnInit {
       complete: () => {
         console.log("done");
         this.calendarOptions.events = this.reservations;
+        this.getAvailabilityByRoom();
       }
     })
   }
@@ -194,6 +159,7 @@ export class ReservationCalendarComponent implements OnInit {
       next: (data) => {
 
         console.log(data);
+        debugger;
 
         if (data.availabilityPeriods.length > 0) {
 
@@ -243,16 +209,9 @@ export class ReservationCalendarComponent implements OnInit {
       },
       complete: () => {
         console.log("done");
+        this.getAvailabilityByRoom();
       }
     })
-  }
-
-  getRoomInfo(roomId: string): void {
-
-  }
-
-  insertCalendarEvent() {
-
   }
 
   getRoomsList(): void {
@@ -285,7 +244,7 @@ export class ReservationCalendarComponent implements OnInit {
       this.showCalendar = true;
 
       this.getResevationsByRoom();
-      this.getAvailabilityByRoom();
+      
     } else {
       this.showCalendar = false;
     }
@@ -313,7 +272,7 @@ export class ReservationCalendarComponent implements OnInit {
         id: "-1",
         start: periodStartDate,
         end: periodEndDate,
-        title: 'Disponible',
+        title: '',
         backgroundColor: 'rgba(0,204,68,.25)',
         borderColor: '#00cc44'
       });

@@ -9,6 +9,7 @@ import { DataTable } from 'simple-datatables';
 import Swal from 'sweetalert2';
 import { Utility } from 'src/app/shared/utility';
 import { ReservationGroupsService } from 'src/app/core/services/reservation-groups.service';
+import { RoomAvailabilityService } from 'src/app/core/services/room-availability.service';
 
 @Component({
   selector: 'app-reserve-detail',
@@ -17,11 +18,17 @@ import { ReservationGroupsService } from 'src/app/core/services/reservation-grou
 })
 export class ReservationDetailComponent implements OnInit {
 
+  reservations: any = [];
+  availability: any = [];
+  
   reserveId: string;
   isUpdate: boolean = true;
   scheduleModalCloseResult: string = '';
   scheduleDataTable: any;
   isScheduledReservation = false;
+
+  scheduleStartDate = '';
+  scheduleEndDate = '';
 
   formatter: NgbDateParserFormatter;
 
@@ -58,6 +65,7 @@ export class ReservationDetailComponent implements OnInit {
     private roomService: RoomService,
     private resourceService: ResourceService,
     private reservationService: ReservationService,
+    private roomAvailabilityService: RoomAvailabilityService,
     private reservationGroupService: ReservationGroupsService,
     private modalService: NgbModal) { }
 
@@ -66,10 +74,12 @@ export class ReservationDetailComponent implements OnInit {
 
     this.activeRoute.params.subscribe((params: Params) => {
 
-      debugger;
       this.reserveId = params.reserveId;
       this.selectedRoom = params.roomUuid;
       
+      this.scheduleStartDate = params.startStr;
+      this.scheduleEndDate = params.endStr;
+
       this.reservation.startDateTime = {
         hour: parseInt(params.startStr.split("T")[1].split(":")[0]),
         minute: parseInt(params.startStr.split("T")[1].split(":")[1])
@@ -102,6 +112,10 @@ export class ReservationDetailComponent implements OnInit {
     } else {
       this.getReserveInfo();
     }
+
+    this.getResevations();
+    this.getAvailabilityByRoom();
+
   }
 
   initTable(): void {
@@ -354,15 +368,67 @@ export class ReservationDetailComponent implements OnInit {
 
   saveOrUpdate(): void {
     if (this.isUpdate) {
-      this.update();
+      if(this.validateTime()){
+        this.update();
+      }
     } else {
-      this.save();
+      if(this.validateTime()){
+        this.save();
+      }
     }
+  }
+
+  validateTime():boolean{
+    var isValid = false;
+    var isInRange = true;
+
+    debugger;
+    var beginDate = new Date(this.getFormattedDate(this.reservation.beginDate) + "T" +
+                                this.getFormattedTime(this.reservation.startDateTime));
+    var endDate = new Date(this.getFormattedDate(this.reservation.endDate) + "T" +
+                              this.getFormattedTime(this.reservation.endDateTime));
+
+    if(beginDate < new Date(this.scheduleStartDate)  || endDate > new Date(this.scheduleEndDate)){
+      isInRange = false;
+    }
+
+    if(!isInRange){
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Horario seleccionado fuera de rango',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+
+    this.reservations.forEach((element: any) => {
+      debugger;
+
+      if(beginDate.getDate() == new Date(element.startDateTime).getDate() &&
+         endDate.getDate() == new Date(element.endDateTime).getDate() ){
+
+          if(beginDate.getTime() >= new Date(element.startDateTime).getTime()  || endDate.getTime() <= new Date(element.endDateTime).getTime()){
+            isValid = false;
+          }     
+      }
+    });
+
+    if(!isValid){
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Horario ya ha sido reservado',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+
+    return (isInRange && isValid);
   }
 
   getReservation(): any {
     
-    debugger; 
     var newReservation = {
       reservationGroupUuid: this.reservation.reservationGroupUuid,
       startDateTime: this.getFormattedDate(this.reservation.beginDate) + "T" +
@@ -552,5 +618,79 @@ export class ReservationDetailComponent implements OnInit {
     console.log(JSON.stringify(newData));
     this.saveResevationGroup(JSON.stringify(newData));
 
+  }
+
+  getAvailabilityByRoom(): void {
+
+    this.roomAvailabilityService.getAvailabilityPeriods(this.selectedRoom).subscribe({
+      next: (data) => {
+
+        console.log(data);
+
+        if (data.availabilityPeriods.length > 0) {
+
+          this.getEventListFromAvailability(data.availabilityPeriods);
+        }
+      },
+      error: (e) => {
+        console.log(e);
+      },
+      complete: () => {
+        console.log("done");
+      }
+    })
+  }
+
+  getEventListFromAvailability(availabilityPeriods:any) {
+
+    let startDate  = this.getFormattedTime(this.reservation.startDateTime);
+    let endDate = this.getFormattedTime(this.reservation.endDateTime);
+
+    availabilityPeriods.forEach((period: any) => {
+      
+      var periodStartDate = new Date(startDate);
+       periodStartDate.setDate(periodStartDate.getDate() + period.weekday);
+       periodStartDate.setHours(period.startTimeHour);
+       periodStartDate.setMinutes(period.startTimeMinutes);
+
+      var periodEndDate = new Date(endDate);
+      periodEndDate.setDate(periodEndDate.getDate() + period.weekday);
+      periodEndDate.setHours(period.endTimeHour);
+      periodEndDate.setMinutes(period.endTimeMinutes);
+
+      var schedule = {
+        startDate: periodStartDate,
+        endDate: periodEndDate
+      }
+
+      this.availability.push(schedule);
+
+    });
+  }
+
+  getResevations(): void {
+
+    this.reservationService.getAll().subscribe({
+      next: (data) => {
+
+        console.log(data);
+
+        if (data !== null) {
+          if (data.length >= 1) {
+            for (const reservation of data) {
+              var roomName = '';
+              console.log(JSON.stringify(reservation));
+              this.reservations.push(reservation);
+            }
+          }
+        }
+      },
+      error: (e) => {
+        console.log(e);
+      },
+      complete: () => {
+        console.log("done");
+      }
+    })
   }
 }
