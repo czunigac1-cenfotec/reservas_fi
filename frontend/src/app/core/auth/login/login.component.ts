@@ -97,11 +97,25 @@ export class LoginComponent implements OnInit {
         console.log(data);
         
         data.forEach((user: any) => {
-          if(user.email===email){
+          //TODO: Only for test. This should be validated with LDAP
+          if(user.email===email || email === 'test@mail.com'){
 
             this.$localStorage.store('authenticationtoken','91C95003-ECDF-4B9B-8B9C-5AC072FA6F52');
-
             this.userRole = user.unidadAcademica;
+
+            if(email === 'test@mail.com'){
+              user: user = {
+                userInfoUuid:'010d20af-6555-494d-b2f1-6a38b77f87b5',
+                nombre:'Test User',
+                primerApellido:'Test',
+                segundoApellido:'User',
+                identificacion: '000000000',
+                unidadAcademica: '1',
+                telefono:'88888888',
+                email : 'test@mail.com'
+              };
+            
+            }
 
             if (rememberMe) {
                 this.$localStorage.store('userInfo', user);

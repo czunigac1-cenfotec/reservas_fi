@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { RoomAvailabilityService } from 'src/app/core/services/room-availability.service';
 import { RoomAvailability } from 'src/app/interfaces/room-availability.interface';
 import { Utility } from 'src/app/shared/utility';
@@ -15,6 +16,8 @@ export class RoomAvailabilityComponent implements OnInit {
   @Output() roomAvailabilityEmitter = new EventEmitter<any>();
   @Input() roomAvailabilityId: string;
   @Input() roomId: string;
+
+  userInfo:any;
 
   isUpdate: boolean = true; 
   availabilityPeriodDisabled = true;
@@ -39,7 +42,9 @@ export class RoomAvailabilityComponent implements OnInit {
 
   constructor( private service: RoomAvailabilityService,
                public formatter: NgbDateParserFormatter,
-               private calendar: NgbCalendar) { }
+               private calendar: NgbCalendar,
+               private $localStorage: LocalStorageService, 
+               private $sessionStorage: SessionStorageService) { }
     
   ngOnInit(): void {
     this.loadData();   
@@ -76,8 +81,11 @@ export class RoomAvailabilityComponent implements OnInit {
 
   saveOrUpdate(roomUuid:string, roomAvailabilityId:string):void{
 
+    debugger;
+    this.roomId = roomUuid;
+
     if(roomAvailabilityId!='-1'){
-      this.roomId = roomUuid;
+      
       this.roomAvailabilityId = roomAvailabilityId;
       this.isUpdate = true;
     }else{
@@ -116,15 +124,16 @@ export class RoomAvailabilityComponent implements OnInit {
     console.log('Inner method called [save]');
 
     if(this.validateTimeRange()){
+
+      this.getUserInfo();
+
       const newRoomAvailability = { ...this.roomAvailability };
       delete newRoomAvailability.roomAvailabilityUuid;
       
       newRoomAvailability.roomUuid = this.roomId;
       newRoomAvailability.startDateTime = Utility.getStringFormattedDate(this.roomAvailability.startDateTime);
       newRoomAvailability.endDateTime = Utility.getStringFormattedDate(this.roomAvailability.endDateTime);
-      //TODO:Get admin UUID from user security
-      
-      newRoomAvailability.administratorUuid = "9cff8d97-1a50-49fe-b173-93797d29c03b";
+      newRoomAvailability.administratorUuid = this.userInfo.userInfoUuid;
 
       this.service.create(newRoomAvailability).subscribe({
         next:(data: any)=>{
@@ -153,7 +162,6 @@ export class RoomAvailabilityComponent implements OnInit {
 
   update(): void {
     console.log('Inner method called [update]');
-
 
     if(this.validateTimeRange()){
 
@@ -223,6 +231,18 @@ export class RoomAvailabilityComponent implements OnInit {
   validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
     const parsed = this.formatter.parse(input);
     return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  }
+
+  getUserInfo(){
+    try {
+      this.userInfo  = this.$localStorage.retrieve('userInfo')
+
+      if (this.userInfo === null) {
+        this.userInfo = this.$sessionStorage.retrieve('userInfo')
+      }
+    }catch(exception){
+      console.error(exception);
+    }
   }
 
 }

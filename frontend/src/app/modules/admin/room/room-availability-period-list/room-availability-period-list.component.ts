@@ -6,6 +6,7 @@ import { RoomAvailabilityPeriodComponent } from '../room-availability-period/roo
 import { AvailabilityPeriod } from 'src/app/interfaces/availability-period.interface';
 import { Utility } from 'src/app/shared/utility';
 import Swal from 'sweetalert2';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-room-availability-period-list',
@@ -20,6 +21,7 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
   @Input() roomAvailability: any;
 
   dataTableRows: any = [];
+  userInfo:any;
 
   /**
   * ChildView callback
@@ -37,7 +39,9 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
 
   constructor(private service: AvailabilityPeriodService,
     private availabilityService: RoomAvailabilityService,
-    private elementRef: ElementRef) { }
+    private elementRef: ElementRef,
+    private $localStorage: LocalStorageService, 
+    private $sessionStorage: SessionStorageService) { }
 
   availabilityPeriodDataTable: any;
   isDelete = false;
@@ -125,6 +129,8 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
     var roomAvailabilityLocal: any;
     this.isDelete = isDelete;
 
+    this.getUserInfo();
+
     if (!isDelete) {
       availabilityPeriods.push(availabilityPeriodUuid);
     }
@@ -144,8 +150,7 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
     {
         roomAvailabilityUuid:this.roomAvailabilityId,
         roomUuid: this.roomId,
-        //TODO:Get admin UUID from user security
-        administratorUuid: "9cff8d97-1a50-49fe-b173-93797d29c03b",
+        administratorUuid: this.userInfo.userInfoUuid,
         minReservationTime: this.roomAvailability.minReservationTime,
         maxReservationTime: this.roomAvailability.maxReservationTime,
         approvalRequired: this.roomAvailability.approvalRequired,
@@ -270,5 +275,17 @@ export class RoomAvailabilityPeriodListComponent implements OnInit {
     }
 
     this.roomAvailabilityPeriodComponent.clearForm();
+  }
+
+  getUserInfo(){
+    try {
+      this.userInfo  = this.$localStorage.retrieve('userInfo')
+
+      if (this.userInfo === null) {
+        this.userInfo = this.$sessionStorage.retrieve('userInfo')
+      }
+    }catch(exception){
+      console.error(exception);
+    }
   }
 }

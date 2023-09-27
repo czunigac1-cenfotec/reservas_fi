@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { Utility } from 'src/app/shared/utility';
 import { ReservationGroupsService } from 'src/app/core/services/reservation-groups.service';
 import { RoomAvailabilityService } from 'src/app/core/services/room-availability.service';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-reserve-detail',
@@ -17,6 +18,8 @@ import { RoomAvailabilityService } from 'src/app/core/services/room-availability
   styleUrls: ['./reserve-detail.component.scss']
 })
 export class ReservationDetailComponent implements OnInit {
+
+  userInfo:any;
 
   reservations: any = [];
   availability: any = [];
@@ -67,8 +70,9 @@ export class ReservationDetailComponent implements OnInit {
     private reservationService: ReservationService,
     private roomAvailabilityService: RoomAvailabilityService,
     private reservationGroupService: ReservationGroupsService,
-    private modalService: NgbModal) { }
-
+    private modalService: NgbModal,
+    private $localStorage: LocalStorageService, 
+    private $sessionStorage: SessionStorageService) { }
 
   ngOnInit(): void {
 
@@ -79,6 +83,8 @@ export class ReservationDetailComponent implements OnInit {
       
       this.scheduleStartDate = params.startStr;
       this.scheduleEndDate = params.endStr;
+
+      this.reservation.roomUuid = this.selectedRoom;
 
       this.reservation.startDateTime = {
         hour: parseInt(params.startStr.split("T")[1].split(":")[0]),
@@ -429,6 +435,8 @@ export class ReservationDetailComponent implements OnInit {
 
   getReservation(): any {
     
+    this.getUserInfo();
+
     var newReservation = {
       reservationGroupUuid: this.reservation.reservationGroupUuid,
       startDateTime: this.getFormattedDate(this.reservation.beginDate) + "T" +
@@ -439,8 +447,7 @@ export class ReservationDetailComponent implements OnInit {
       motive: this.reservation.motive,
       notes: this.reservation.notes,
       roomUuid: this.selectedRoom,
-      //TODO: Get it from local storage
-      userUuid: "3afd91e5-ebcd-468a-b03e-5b63266d21d7",
+      userUuid: this.userInfo.userInfoUuid,
       resourceUuids: this.selectedResources,
     }
 
@@ -448,6 +455,7 @@ export class ReservationDetailComponent implements OnInit {
   }
 
   getReservationForUpdate(): any {
+
     var newReservation = {
       reservationGroupUuid: this.reservation.reservationGroupUuid,
       startDateTime: this.getFormattedDate(this.reservation.beginDate) + "T" +
@@ -458,8 +466,7 @@ export class ReservationDetailComponent implements OnInit {
       motive: this.reservation.motive,
       notes: this.reservation.notes,
       roomUuid: this.selectedRoom,
-      //TODO: Get it from local storage
-      userUuid: "3afd91e5-ebcd-468a-b03e-5b63266d21d7",
+      userUuid: this.userInfo.userInfoUuid,
       resourceUuids: this.selectedResources,
       reservationUuid: this.reservation.reservationUuid
     }
@@ -554,9 +561,10 @@ export class ReservationDetailComponent implements OnInit {
 
   saveSelectedDays(): any {
 
+    this.getUserInfo();
+
     var newData = {
-      //TODO:Get User
-      userUuid: "b66c689f-717b-43cc-a355-36ce71d58d3f",
+      userUuid: this.userInfo.userInfoUuid,
       schedule: {
         weekdays: {
           0: [] = ([{}]),
@@ -692,5 +700,17 @@ export class ReservationDetailComponent implements OnInit {
         console.log("done");
       }
     })
+  }
+
+  getUserInfo(){
+    try {
+      this.userInfo  = this.$localStorage.retrieve('userInfo')
+
+      if (this.userInfo === null) {
+        this.userInfo = this.$sessionStorage.retrieve('userInfo')
+      }
+    }catch(exception){
+      console.error(exception);
+    }
   }
 }
