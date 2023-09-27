@@ -81,7 +81,6 @@ export class RoomAvailabilityComponent implements OnInit {
 
   saveOrUpdate(roomUuid:string, roomAvailabilityId:string):void{
 
-    debugger;
     this.roomId = roomUuid;
 
     if(roomAvailabilityId!='-1'){

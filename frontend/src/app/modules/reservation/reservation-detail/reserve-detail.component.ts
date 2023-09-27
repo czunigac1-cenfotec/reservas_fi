@@ -388,7 +388,6 @@ export class ReservationDetailComponent implements OnInit {
     var isValid = false;
     var isInRange = true;
 
-    debugger;
     var beginDate = new Date(this.getFormattedDate(this.reservation.beginDate) + "T" +
                                 this.getFormattedTime(this.reservation.startDateTime));
     var endDate = new Date(this.getFormattedDate(this.reservation.endDate) + "T" +
@@ -409,8 +408,7 @@ export class ReservationDetailComponent implements OnInit {
     }
 
     this.reservations.forEach((element: any) => {
-      debugger;
-
+      
       if(beginDate.getDate() == new Date(element.startDateTime).getDate() &&
          endDate.getDate() == new Date(element.endDateTime).getDate() ){
 

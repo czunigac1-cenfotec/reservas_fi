@@ -116,8 +116,6 @@ export class ReservationCalendarComponent implements OnInit {
     //this.reservationService.getAll().subscribe({
     next: (data) => {
 
-        debugger;
-        
         if (data !== null) {
           console.log(data);
 
@@ -159,8 +157,6 @@ export class ReservationCalendarComponent implements OnInit {
       next: (data) => {
 
         console.log(data);
-        debugger;
-
         if (data.availabilityPeriods.length > 0) {
 
           this.getEventListFromAvailability(data.availabilityPeriods);
