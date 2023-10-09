@@ -11,6 +11,8 @@ import { Utility } from 'src/app/shared/utility';
 import { ReservationGroupsService } from 'src/app/core/services/reservation-groups.service';
 import { RoomAvailabilityService } from 'src/app/core/services/room-availability.service';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { RoomAvailability } from 'src/app/interfaces/room-availability.interface';
+import { Room } from 'src/app/interfaces/room.interface';
 
 @Component({
   selector: 'app-reserve-detail',
@@ -23,6 +25,7 @@ export class ReservationDetailComponent implements OnInit {
 
   reservations: any = [];
   availability: any = [];
+  availabilityPeriod: any = [];
   
   reserveId: string;
   isUpdate: boolean = true;
@@ -49,6 +52,32 @@ export class ReservationDetailComponent implements OnInit {
     notes: "",
     userId: "",
     creationDate: ""
+  }
+    
+  roomAvailability: RoomAvailability ={
+    roomAvailabilityUuid: '',
+    administratorUuid: '',
+    roomUuid: '',
+    minReservationTime: 0,
+    maxReservationTime: 0,
+    approvalRequired: false,
+    startDateTime: '',
+    endDateTime: '',
+    privateReservationEnabled: false,
+    availabilityPeriods: []
+  }
+  
+  room: Room = {
+    roomUuid: '',
+    roomAvailabilityUuid: '',
+    inactive: false,
+    code: '',
+    name: '',
+    description: '',
+    location: '',
+    capacity: 0,
+    creationDateTime: '',
+    administratorUuid: '',
   }
 
   approvalStatus: ApprobalStatusList[] = [];
@@ -121,6 +150,7 @@ export class ReservationDetailComponent implements OnInit {
 
     this.getResevations();
     this.getAvailabilityByRoom();
+    this.getRoomInfo();
 
   }
 
@@ -385,8 +415,9 @@ export class ReservationDetailComponent implements OnInit {
   }
 
   validateTime():boolean{
-    var isValid = false;
+    var isValid = true;
     var isInRange = true;
+    var isOrdered = true;
 
     var beginDate = new Date(this.getFormattedDate(this.reservation.beginDate) + "T" +
                                 this.getFormattedTime(this.reservation.startDateTime));
@@ -405,30 +436,171 @@ export class ReservationDetailComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       })
-    }
-
-    this.reservations.forEach((element: any) => {
       
-      if(beginDate.getDate() == new Date(element.startDateTime).getDate() &&
-         endDate.getDate() == new Date(element.endDateTime).getDate() ){
-
-          if(beginDate.getTime() >= new Date(element.startDateTime).getTime()  || endDate.getTime() <= new Date(element.endDateTime).getTime()){
-            isValid = false;
-          }     
-      }
-    });
-
-    if(!isValid){
+    }else if(beginDate>endDate){
+      isOrdered = false;
       Swal.fire({
         position: 'top-end',
         icon: 'warning',
-        title: 'Horario ya ha sido reservado',
+        title: 'Verifique la hora de inicio y hora de fin',
         showConfirmButton: false,
         timer: 1500
       })
+    }else{
+      
+      this.reservations.forEach((element: any) => {
+      
+        if(beginDate.getDate() == new Date(element.startDateTime).getDate() &&
+           endDate.getDate() == new Date(element.endDateTime).getDate() ){
+  
+            if(beginDate.getTime() >= new Date(element.startDateTime).getTime()  || endDate.getTime() <= new Date(element.endDateTime).getTime()){
+              isValid = false;
+            }     
+        }
+      });
+  
+      if(!isValid){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Horario ya ha sido reservado',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     }
 
-    return (isInRange && isValid);
+    return (isInRange && isValid && isOrdered);
+  }
+
+  validateGroupReservation():boolean{
+
+    this.getAvailabilityByRoom();
+    var isValid = false;
+    var isDateInRange = false;
+    var isTimeInRange = false;
+    var isDatetimeBlocked = false;
+
+    var dayOfWeekLetters = Utility.getWeekDayName(this.selectedDay);
+    var beginDate = new Date(this.getFormattedDate(this.reservation.beginDate) + "T" + this.getFormattedTime(this.reservation.startDateTime));
+    var endDate = new Date(this.getFormattedDate(this.reservation.endDate) + "T" + this.getFormattedTime(this.reservation.endDateTime));
+
+    //Validar fecha de inicio menor a fecha de fin [X]
+    //validar hora de inicio menor a hora de fin [X]
+    //Validar fecha de inicio y fecha fin de disponibilidad [X]
+    //Validar hora de inicio y hora de fin de disponibilidad segun dia de la semana seleccionada [X]
+    //validar fecha ocupada por otra reserva
+    //validar hora ocupada por otra reserva
+    //Validar timespan 
+
+    if(beginDate>endDate){
+      isValid = false;
+
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Verifique el rango de fecha',
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+    }else if(beginDate.getTime() > endDate.getTime()){
+
+      isValid = false;
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Verifique el rango de horas',
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+    }else{
+      
+        if(( new Date(beginDate) >=  new Date(this.roomAvailability.startDateTime) && 
+          new Date(endDate) <= new Date(this.roomAvailability.endDateTime)))
+        {
+          isDateInRange = true  ;
+        }
+
+        if(!isDateInRange){
+          Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Fecha seleccionada fuera de rango de disponibilidad',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }else{
+          this.availabilityPeriod.forEach((element: any) => {
+   
+            if(this.selectedDay === element.weekday){
+
+              if ((Number(this.reservation.startDateTime.hour) >= Number(element.startTimeHour) && Number(this.reservation.endDateTime.hour) <= Number(element.endTimeHour))) 
+              {
+                if((Number(this.reservation.startDateTime.minute) >= Number(element.startTimeMinutes) && Number(this.reservation.endDateTime.minute) <= Number(element.endTimeMinutes))){
+                  isTimeInRange = true;
+                }
+              }
+            }
+          });
+
+          if(!isTimeInRange){
+            Swal.fire({
+              position: 'top-end',
+              icon: 'warning',
+              title: 'La hora seleccionada no se encuentra en el rango habilitado para el salón.',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }else{
+
+            //todo validación de horario bloqueado
+
+            //startDateTime
+            //endDateTime
+
+            const currentDate = new Date(beginDate);
+
+            while (currentDate <= endDate) {
+              if (currentDate.getDay() === this.selectedDay) {
+       
+                if(this.reservations != null && this.reservations.length>0){
+                  this.reservations.forEach((reservation:any) => {
+                    debugger;
+                    if(reservation.startDateTime.getDate()===this.selectedDay){
+                        if(new Date(reservation.startDateTime) === currentDate ){
+
+                          if ((Number(this.reservation.startDateTime.hour) >= Number(reservation.startTimeHour) && Number(this.reservation.endDateTime.hour) <= Number(reservation.endTimeHour))) 
+                          {
+                            if((Number(this.reservation.startDateTime.minute) >= Number(reservation.startTimeMinutes) && Number(this.reservation.endDateTime.minute) <= Number(reservation.endTimeMinutes))){
+                              isDatetimeBlocked = true;
+                            }
+                          }
+                          
+                        }
+
+                        if(!isDatetimeBlocked){
+                          Swal.fire({
+                            position: 'top-end',
+                            icon: 'warning',
+                            title: 'El horario ya ha sido reservado prebiamente',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                        }
+                    }
+                  });
+                }
+
+              }
+              currentDate.setDate(currentDate.getDate() + 1);
+            }
+          }
+      }
+    }
+
+    return false;//(isInRange && isValid && isOrdered);
   }
 
   getReservation(): any {
@@ -522,16 +694,18 @@ export class ReservationDetailComponent implements OnInit {
       dayInWeek: dayOfWeekLetters
     }
 
-    this.schedules.push(schedule);
+    if(this.validateGroupReservation()){
+      this.schedules.push(schedule);
 
-    dataTableRows.push([
-      schedule.dayInWeek,
-      schedule.startDateTime,
-      schedule.endDateTime
-    ]);
+      dataTableRows.push([
+        schedule.dayInWeek,
+        schedule.startDateTime,
+        schedule.endDateTime
+      ]);
 
-    this.scheduleDataTable.rows().add(dataTableRows);
-
+      this.scheduleDataTable.rows().add(dataTableRows);
+    }
+  
   }
 
   getReservationGroup(): void {
@@ -620,7 +794,7 @@ export class ReservationDetailComponent implements OnInit {
 
       });
     }
-
+      
     console.log(JSON.stringify(newData));
     this.saveResevationGroup(JSON.stringify(newData));
 
@@ -653,23 +827,8 @@ export class ReservationDetailComponent implements OnInit {
     let endDate = this.getFormattedTime(this.reservation.endDateTime);
 
     availabilityPeriods.forEach((period: any) => {
-      
-      var periodStartDate = new Date(startDate);
-       periodStartDate.setDate(periodStartDate.getDate() + period.weekday);
-       periodStartDate.setHours(period.startTimeHour);
-       periodStartDate.setMinutes(period.startTimeMinutes);
-
-      var periodEndDate = new Date(endDate);
-      periodEndDate.setDate(periodEndDate.getDate() + period.weekday);
-      periodEndDate.setHours(period.endTimeHour);
-      periodEndDate.setMinutes(period.endTimeMinutes);
-
-      var schedule = {
-        startDate: periodStartDate,
-        endDate: periodEndDate
-      }
-
-      this.availability.push(schedule);
+    
+      this.availabilityPeriod.push(period);
 
     });
   }
@@ -684,7 +843,6 @@ export class ReservationDetailComponent implements OnInit {
         if (data !== null) {
           if (data.length >= 1) {
             for (const reservation of data) {
-              var roomName = '';
               console.log(JSON.stringify(reservation));
               this.reservations.push(reservation);
             }
@@ -697,6 +855,42 @@ export class ReservationDetailComponent implements OnInit {
       complete: () => {
         console.log("done");
       }
+    })
+  }
+
+  getRoomAvailability(roomAvailabilityId:any){
+    this.roomAvailabilityService.get(roomAvailabilityId).subscribe({
+      next:(data)=>{
+        console.log(data);
+        this.roomAvailability = data;
+        this.roomAvailability.startDateTime = Utility.getOnlyDateString(data.startDateTime);
+        this.roomAvailability.endDateTime = Utility.getOnlyDateString(data.endDateTime);
+
+      },
+      error:(e)=>{
+        console.log(e);
+      },
+      complete:()=>{
+        console.log("done");
+      } 
+    })
+  }
+
+  getRoomInfo():void{
+    this.roomService.get(this.selectedRoom).subscribe({
+      next:(data)=>{
+
+        console.log(data);
+        this.room = data;
+      
+      },
+      error:(e)=>{
+        console.log(e);
+      },
+      complete:()=>{
+        console.log("done");
+        this.getRoomAvailability(this.room.roomAvailabilityUuid);
+      } 
     })
   }
 

@@ -112,8 +112,8 @@ export class ReservationCalendarComponent implements OnInit {
     let startDate  = calendarApi.view.activeStart.toISOString().replace('Z','');
     let endDate = calendarApi.view.activeEnd.toISOString().replace('Z','');
 
-    this.reservationService.getReservationsByStartDateEndDate(this.selectedRoom,startDate,endDate).subscribe({
-    //this.reservationService.getAll().subscribe({
+    //this.reservationService.getReservationsByStartDateEndDate(this.selectedRoom,startDate,endDate).subscribe({
+    this.reservationService.getAll().subscribe({
     next: (data) => {
 
         if (data !== null) {
