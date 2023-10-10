@@ -116,6 +116,7 @@ export class ReservationCalendarComponent implements OnInit {
     this.reservationService.getAll().subscribe({
     next: (data) => {
 
+      debugger;
         if (data !== null) {
           console.log(data);
 

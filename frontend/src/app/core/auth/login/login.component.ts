@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     this.login();
   }
 
-  /*login(): void {
+  login(): void {
     this.authService
         .login({
             userName: this.loginForm.userName,
@@ -64,12 +64,14 @@ export class LoginComponent implements OnInit {
                     showConfirmButton: false,
                     timer: 1500
                 })
+
+                this.loginTest();
             }
         );
-  }*/
+  }
 
   /*For test purpose*/
-  login(): void {
+  loginTest(): void {
       this.authService.login({ userName: this.loginForm.userName, 
                                password: this.loginForm.password, 
                                rememberMe: this.loginForm.rememberMe})

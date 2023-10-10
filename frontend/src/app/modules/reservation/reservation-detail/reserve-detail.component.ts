@@ -13,6 +13,8 @@ import { RoomAvailabilityService } from 'src/app/core/services/room-availability
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { RoomAvailability } from 'src/app/interfaces/room-availability.interface';
 import { Room } from 'src/app/interfaces/room.interface';
+import { WeekdayEventsMap } from 'src/app/interfaces/weekday-events-map';
+import { WeekdayEvents } from 'src/app/interfaces/weekday-events';
 
 @Component({
   selector: 'app-reserve-detail',
@@ -476,22 +478,15 @@ export class ReservationDetailComponent implements OnInit {
   validateGroupReservation():boolean{
 
     this.getAvailabilityByRoom();
-    var isValid = false;
+    var isValid = true;
     var isDateInRange = false;
     var isTimeInRange = false;
     var isDatetimeBlocked = false;
+    var dateTimeBlocked = ''
 
     var dayOfWeekLetters = Utility.getWeekDayName(this.selectedDay);
     var beginDate = new Date(this.getFormattedDate(this.reservation.beginDate) + "T" + this.getFormattedTime(this.reservation.startDateTime));
     var endDate = new Date(this.getFormattedDate(this.reservation.endDate) + "T" + this.getFormattedTime(this.reservation.endDateTime));
-
-    //Validar fecha de inicio menor a fecha de fin [X]
-    //validar hora de inicio menor a hora de fin [X]
-    //Validar fecha de inicio y fecha fin de disponibilidad [X]
-    //Validar hora de inicio y hora de fin de disponibilidad segun dia de la semana seleccionada [X]
-    //validar fecha ocupada por otra reserva
-    //validar hora ocupada por otra reserva
-    //Validar timespan 
 
     if(beginDate>endDate){
       isValid = false;
@@ -520,7 +515,7 @@ export class ReservationDetailComponent implements OnInit {
         if(( new Date(beginDate) >=  new Date(this.roomAvailability.startDateTime) && 
           new Date(endDate) <= new Date(this.roomAvailability.endDateTime)))
         {
-          isDateInRange = true  ;
+          isDateInRange = true;
         }
 
         if(!isDateInRange){
@@ -555,11 +550,6 @@ export class ReservationDetailComponent implements OnInit {
             })
           }else{
 
-            //todo validación de horario bloqueado
-
-            //startDateTime
-            //endDateTime
-
             const currentDate = new Date(beginDate);
 
             while (currentDate <= endDate) {
@@ -567,24 +557,24 @@ export class ReservationDetailComponent implements OnInit {
        
                 if(this.reservations != null && this.reservations.length>0){
                   this.reservations.forEach((reservation:any) => {
-                    debugger;
-                    if(reservation.startDateTime.getDate()===this.selectedDay){
-                        if(new Date(reservation.startDateTime) === currentDate ){
+                   
+                    if((new Date(reservation.startDateTime).getDay())===this.selectedDay){
+                        if(new Date(reservation.startDateTime).setHours(0, 0, 0, 0) === currentDate.setHours(0, 0, 0, 0) ){
 
-                          if ((Number(this.reservation.startDateTime.hour) >= Number(reservation.startTimeHour) && Number(this.reservation.endDateTime.hour) <= Number(reservation.endTimeHour))) 
+                          if ((Number(this.reservation.startDateTime.hour) >= Number(new Date(reservation.startDateTime).getHours() && Number(this.reservation.endDateTime.hour) <= Number(new Date(reservation.endDateTime).getHours())))) 
                           {
-                            if((Number(this.reservation.startDateTime.minute) >= Number(reservation.startTimeMinutes) && Number(this.reservation.endDateTime.minute) <= Number(reservation.endTimeMinutes))){
+                            if((Number(this.reservation.startDateTime.minute) >= Number(new Date(reservation.startDateTime).getMinutes()) && Number(this.reservation.endDateTime.minute) <= Number(new Date(reservation.endDateTime).getMinutes()))){
                               isDatetimeBlocked = true;
+                              dateTimeBlocked = reservation.startDateTime + ' | ' + reservation.endDateTime
                             }
                           }
-                          
                         }
 
-                        if(!isDatetimeBlocked){
+                        if(isDatetimeBlocked){
                           Swal.fire({
                             position: 'top-end',
                             icon: 'warning',
-                            title: 'El horario ya ha sido reservado prebiamente',
+                            title: 'El horario ya ha sido reservado previamente: ' + dateTimeBlocked,
                             showConfirmButton: false,
                             timer: 1500
                           })
@@ -600,7 +590,7 @@ export class ReservationDetailComponent implements OnInit {
       }
     }
 
-    return false;//(isInRange && isValid && isOrdered);
+    return (isValid && isDateInRange && isTimeInRange && !isDatetimeBlocked);
   }
 
   getReservation(): any {
@@ -732,72 +722,65 @@ export class ReservationDetailComponent implements OnInit {
   }
 
   saveSelectedDays(): any {
-
     this.getUserInfo();
-
-    var newData = {
-      userUuid: this.userInfo.userInfoUuid,
-      schedule: {
-        weekdays: {
-          0: [] = ([{}]),
-          1: [] = ([{}]),
-          2: [] = ([{}]),
-          3: [] = ([{}]),
-          4: [] = ([{}]),
-          5: [] = ([{}]),
-          6: [] = ([{}])
-        }
-      }
-    }
-
+  
+    const weekdayEventsMap: WeekdayEventsMap = {};
+  
     if (this.schedules.length > 0) {
       this.schedules.forEach(item => {
-
-        var newItem = {
-          startDateTime: item.startDateTime,
-          endDateTime: item.endDateTime,
-          motive: this.reservation.motive,
-          notes: this.reservation.notes,
-          roomUuid: this.reservation.roomUuid
+        const dayNumber = this.getDayNumber(item.dayInWeek);
+        if (dayNumber !== undefined) {
+          if (!weekdayEventsMap[dayNumber]) {
+            weekdayEventsMap[dayNumber] = [];
+          }
+  
+          const newItem: WeekdayEvents = {
+            startDateTime: item.startDateTime,
+            endDateTime: item.endDateTime,
+            motive: this.reservation.motive,
+            notes: this.reservation.notes,
+            roomUuid: this.reservation.roomUuid
+          };
+  
+          weekdayEventsMap[dayNumber].push(newItem);
         }
-
-        switch (item.dayInWeek) {
-          case "Lunes":
-            newData.schedule.weekdays[0].push(newItem);
-            break;
-          case "Martes":
-            newData.schedule.weekdays[1].push(newItem);
-            break;
-
-          case "Miércoles":
-            newData.schedule.weekdays[2].push(newItem);
-            break;
-
-          case "Jueves":
-            newData.schedule.weekdays[3].push(newItem);
-            break;
-
-          case "Viernes":
-            newData.schedule.weekdays[4].push(newItem);
-            break;
-
-          case "Sábado":
-            newData.schedule.weekdays[5].push(newItem);
-            break;
-
-          case "Domingo":
-            newData.schedule.weekdays[6].push(newItem);
-            break;
-          default:
-            break;
-        }
-
       });
     }
-      
-    console.log(JSON.stringify(newData));
-    this.saveResevationGroup(JSON.stringify(newData));
+  
+    const weekdays: { dayNumber: number; weekdayEvents: WeekdayEvents[] }[] = [];
+    
+    // Convert weekdayEventsMap to the desired weekdays array format
+    for (let dayNumber in weekdayEventsMap) {
+      if (weekdayEventsMap.hasOwnProperty(dayNumber)) {
+        weekdays.push({
+          dayNumber: parseInt(dayNumber),
+          weekdayEvents: weekdayEventsMap[dayNumber]
+        });
+      }
+    }
+  
+    const newData = {
+      userUuid: this.userInfo.userInfoUuid,
+      weekdays: weekdays
+    };
+  
+    const jsonString = JSON.stringify(newData);
+    debugger;
+    console.log(jsonString);
+    this.saveResevationGroup(jsonString);
+  }  
 
+  getDayNumber(dayInWeek: string): number | undefined {
+    const dayIndexes: { [key: string]: number } = {
+      "Lunes": 1,
+      "Martes": 2,
+      "Miércoles": 3,
+      "Jueves": 4,
+      "Viernes": 5,
+      "Sábado": 6,
+      "Domingo": 7
+    };
+    return dayIndexes[dayInWeek];
   }
 
   getAvailabilityByRoom(): void {
