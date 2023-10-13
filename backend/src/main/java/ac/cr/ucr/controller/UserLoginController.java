@@ -46,7 +46,9 @@ public class UserLoginController {
             
             getConfig();
 
-            if(ldapDevMode){
+            System.out.println("debug-> ldapDevMode"  + " | " + ldapDevMode.toString() );
+
+            if(!ldapDevMode){
                 
                 Properties serviceEnv = new Properties();
                 serviceEnv.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");

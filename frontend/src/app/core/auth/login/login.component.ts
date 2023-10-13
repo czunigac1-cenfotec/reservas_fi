@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
+    debugger;
     this.authService
         .login({
             userName: this.loginForm.userName,
@@ -51,9 +52,21 @@ export class LoginComponent implements OnInit {
             rememberMe: false ,
         })
         .subscribe(
-            () => {
+            (data) => {
+              debugger;
+              if(data.isUserAuthorized){
                 this.authenticated = true;
                 this.getUserInfo(this.loginForm.userName,this.loginForm.rememberMe);
+              }else{
+                this.authenticated = false;
+                Swal.fire({
+                    position: 'center',
+                    icon: 'info',
+                    title: 'Credenciales incorrectos',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+              }
             },
             error =>{
                 this.authenticated = false;
@@ -64,8 +77,6 @@ export class LoginComponent implements OnInit {
                     showConfirmButton: false,
                     timer: 1500
                 })
-
-                this.loginTest();
             }
         );
   }
@@ -97,7 +108,7 @@ export class LoginComponent implements OnInit {
     .subscribe({
       next: (data) => {
         console.log(data);
-        
+        debugger;
         data.forEach((user: any) => {
           //TODO: Only for test. This should be validated with LDAP
           if(user.email===email || email === 'test@mail.com'){

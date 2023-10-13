@@ -48,7 +48,7 @@ public class PropertyManager {
             if(null!=input){
                 properties.load(input);
                 stringValue = properties.getProperty(key);
-                value = stringValue != null && stringValue == "true" ? true : false;
+                value = stringValue.trim() != null && stringValue.trim().equals("true") ? true : false;
             }
 
         } catch (IOException ex) {
