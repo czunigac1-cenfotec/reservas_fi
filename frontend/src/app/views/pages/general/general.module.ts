@@ -7,11 +7,6 @@ import { NgbAccordionModule, NgbDropdownModule, NgbTooltipModule } from '@ng-boo
 
 import { GeneralComponent } from './general.component';
 import { BlankComponent } from './blank/blank.component';
-import { FaqComponent } from './faq/faq.component';
-import { InvoiceComponent } from './invoice/invoice.component';
-import { ProfileComponent } from './profile/profile.component';
-import { PricingComponent } from './pricing/pricing.component';
-import { TimelineComponent } from './timeline/timeline.component';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
@@ -27,33 +22,13 @@ const routes: Routes = [
       {
         path: 'blank-page',
         component: BlankComponent
-      },
-      {
-        path: 'faq',
-        component: FaqComponent
-      },
-      {
-        path: 'invoice',
-        component: InvoiceComponent
-      },
-      {
-        path: 'profile',
-        component: ProfileComponent
-      },
-      {
-        path: 'pricing',
-        component: PricingComponent
-      },
-      {
-        path: 'timeline',
-        component: TimelineComponent
       }
     ]
   }
 ]
 
 @NgModule({
-  declarations: [GeneralComponent, BlankComponent, FaqComponent, InvoiceComponent, ProfileComponent, PricingComponent, TimelineComponent],
+  declarations: [GeneralComponent, BlankComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

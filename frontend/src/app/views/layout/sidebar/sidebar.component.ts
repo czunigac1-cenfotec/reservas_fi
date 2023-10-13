@@ -252,7 +252,6 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   };
 
   getUserInfo(){
-    debugger;
     try {
       this.userInfo  = this.$localStorage.retrieve('userInfo')
 

@@ -28,7 +28,6 @@ export class RoleGuardService implements CanActivate {
     // this will be passed from the route config
     // on the data property
 
-    debugger;
     this.getUserInfo();
     const expectedRole = route.data.expectedRole;
     this.token = this.$localStorage.retrieve('authenticationtoken')
@@ -40,19 +39,21 @@ export class RoleGuardService implements CanActivate {
     this.tokenPayload = decode(this.token);
 
     console.log(this.tokenPayload);*/
-debugger;
-    for (let auth of this.userInfo.unidadAcademica.toString().split(',')){
-      if (expectedRole != null){
-        for (let expRole of expectedRole.split(',')){
-          if(auth===expRole){
-            this.isAllowed = true;
-          }else{
-            this.isAllowed=false;
+
+    if(this.userInfo !== null){
+      for (let auth of this.userInfo.unidadAcademica.toString().split(',')){
+        if (expectedRole != null){
+          for (let expRole of expectedRole.split(',')){
+            if(auth===expRole){
+              this.isAllowed = true;
+            }else{
+              this.isAllowed=false;
+            }
           }
         }
-      }
-    } 
-
+      } 
+    }
+  
     if (!this.isAllowed) {
       this.router.navigate(['/auth/login']);
       return false;
@@ -61,7 +62,6 @@ debugger;
   }
 
   getUserInfo(){
-    debugger;
     try {
       this.userInfo  = this.$localStorage.retrieve('userInfo')
 

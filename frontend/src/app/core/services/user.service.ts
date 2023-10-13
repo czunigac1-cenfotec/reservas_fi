@@ -17,7 +17,7 @@ export class UserService {
   }
 
   get(pUuid: any): Observable<any> {
-    return this.http.get(`${serviceUrl}/${pUuid}`);
+    return this.http.get(`${serviceUrl}/uuid/${pUuid}`);
   }
 
   create(pData: any): Observable<any> {

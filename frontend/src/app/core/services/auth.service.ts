@@ -44,7 +44,6 @@ export class AuthService {
   private authenticateSuccess(response: JwtToken, rememberMe: boolean): void {
     const jwt = response.id_token;
 
-    debugger;
     if (rememberMe) {
       this.$localStorage.store('authenticationToken', jwt);
     } else {

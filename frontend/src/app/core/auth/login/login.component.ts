@@ -43,7 +43,8 @@ export class LoginComponent implements OnInit {
     this.login();
   }
 
-  /*login(): void {
+  login(): void {
+    debugger;
     this.authService
         .login({
             userName: this.loginForm.userName,
@@ -51,9 +52,21 @@ export class LoginComponent implements OnInit {
             rememberMe: false ,
         })
         .subscribe(
-            () => {
+            (data) => {
+              debugger;
+              if(data.isUserAuthorized){
                 this.authenticated = true;
                 this.getUserInfo(this.loginForm.userName,this.loginForm.rememberMe);
+              }else{
+                this.authenticated = false;
+                Swal.fire({
+                    position: 'center',
+                    icon: 'info',
+                    title: 'Credenciales incorrectos',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+              }
             },
             error =>{
                 this.authenticated = false;
@@ -66,10 +79,10 @@ export class LoginComponent implements OnInit {
                 })
             }
         );
-  }*/
+  }
 
   /*For test purpose*/
-  login(): void {
+  loginTest(): void {
       this.authService.login({ userName: this.loginForm.userName, 
                                password: this.loginForm.password, 
                                rememberMe: this.loginForm.rememberMe})
@@ -78,7 +91,6 @@ export class LoginComponent implements OnInit {
           console.log(data);
         },
         error: (e) => {
-          debugger;
           console.log(e);
           //should be in the next block
           this.getUserInfo(this.loginForm.userName,this.loginForm.rememberMe);
@@ -96,13 +108,27 @@ export class LoginComponent implements OnInit {
     .subscribe({
       next: (data) => {
         console.log(data);
-        
+        debugger;
         data.forEach((user: any) => {
-          if(user.email===email){
+          //TODO: Only for test. This should be validated with LDAP
+          if(user.email===email || email === 'test@mail.com'){
 
             this.$localStorage.store('authenticationtoken','91C95003-ECDF-4B9B-8B9C-5AC072FA6F52');
-
             this.userRole = user.unidadAcademica;
+
+            if(email === 'test@mail.com'){
+              user: user = {
+                userInfoUuid:'010d20af-6555-494d-b2f1-6a38b77f87b5',
+                nombre:'Test User',
+                primerApellido:'Test',
+                segundoApellido:'User',
+                identificacion: '000000000',
+                unidadAcademica: '1',
+                telefono:'88888888',
+                email : 'test@mail.com'
+              };
+            
+            }
 
             if (rememberMe) {
                 this.$localStorage.store('userInfo', user);
@@ -154,7 +180,6 @@ export class LoginComponent implements OnInit {
     if(this.authenticated){
       localStorage.setItem('isLoggedin', 'true');
       if (localStorage.getItem('isLoggedin')) {
-        debugger;
         this.resolveURLByRole();
       }
     }else{
