@@ -9,6 +9,7 @@ import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import ac.cr.ucr.model.UserLoginResponse;
 import ac.cr.ucr.util.PropertyManager;
 
 @RequestMapping("/userLogin")
+@CrossOrigin
 @RestController
 public class UserLoginController {
     
