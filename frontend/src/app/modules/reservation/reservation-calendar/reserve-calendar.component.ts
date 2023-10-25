@@ -66,44 +66,71 @@ export class ReservationCalendarComponent implements OnInit {
   handleDateSelect(selectInfo: DateSelectArg) {
     console.log('handleDateSelect');
 
+    debugger;
+
     var isValidSelection = false;
+    var isCurrentDateAvailable = true;
 
-    if(this.availability != null && this.availability.length>0){
-      this.availability.forEach((element: { startDate: Date; endDate: Date; }) => {
-        
-        selectInfo.start;
-        selectInfo.end;
-
-         if(selectInfo.start>=element.startDate && selectInfo.end<=element.endDate){
-            isValidSelection = true
-          }
-      });
-    }
-    
-    if(!isValidSelection){
-      Swal.fire({
-        position: 'top-end',
-        icon: 'warning',
-        title: 'Horario no habilitado',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    }else{
-      if(this.validateRoomSelected()){
-        this.router.navigate([`/reservation/reservation-detail/-1/${this.selectedRoom}/${selectInfo.startStr}/${selectInfo.endStr}`])
-      }  
+    if(this.validateCurrentDate(selectInfo.start)){
+      if(this.availability != null && this.availability.length>0){
+        this.availability.forEach((element: { startDate: Date; endDate: Date; }) => {
+          
+          selectInfo.start;
+          selectInfo.end;
+  
+           if(selectInfo.start>=element.startDate && selectInfo.end<=element.endDate){
+              isValidSelection = true
+            }
+        });
+      }
+      
+      if(!isValidSelection){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Horario no habilitado',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }else{
+        if(this.validateRoomSelected()){
+          this.router.navigate([`/reservation/reservation-detail/-1/${this.selectedRoom}/${selectInfo.startStr}/${selectInfo.endStr}`])
+        }  
+      }
     }
   }
 
   handleEventClick(clickInfo: EventClickArg) {
+    debugger;
 
-    if(this.validateRoomSelected()){
-      this.router.navigate([`/reservation/reservation-detail/${clickInfo.event.id}/${this.selectedRoom}/${clickInfo.event.startStr}/${clickInfo.event.endStr}`])
+    if(this.validateCurrentDate(new Date(clickInfo.event.startStr) ?? new Date() )){
+      if(this.validateRoomSelected()){
+        this.router.navigate([`/reservation/reservation-detail/${clickInfo.event.id}/${this.selectedRoom}/${clickInfo.event.startStr}/${clickInfo.event.endStr}`])
+      }
     }
   }
 
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
+  }
+
+  validateCurrentDate(selectedDate:Date) : boolean{
+    var isCurrentDateAvailable = true;
+    var currentDate: Date = new Date();
+
+    if(selectedDate.setHours(0, 0, 0, 0)<currentDate.setHours(0, 0, 0, 0)){
+      isCurrentDateAvailable = false;
+
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: 'No se puede agendar en días atrás de la fecha actual',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+
+    return isCurrentDateAvailable;
   }
 
   getResevationsByRoom(): void {
@@ -112,11 +139,10 @@ export class ReservationCalendarComponent implements OnInit {
     let startDate  = calendarApi.view.activeStart.toISOString().replace('Z','');
     let endDate = calendarApi.view.activeEnd.toISOString().replace('Z','');
 
-    //this.reservationService.getReservationsByStartDateEndDate(this.selectedRoom,startDate,endDate).subscribe({
-    this.reservationService.getAll().subscribe({
+     this.reservationService.getReservationsByStartDateEndDate(this.selectedRoom,startDate,endDate).subscribe({
+    //this.reservationService.getAll().subscribe({
+    //this.reservationService.get(this.selectedRoom).subscribe({
     next: (data) => {
-
-      debugger;
         if (data !== null) {
           console.log(data);
 
@@ -126,17 +152,14 @@ export class ReservationCalendarComponent implements OnInit {
               var roomName = '';
               console.log(JSON.stringify(reservation));
 
-              var event = {
+              calendarApi.addEvent({
                 id: reservation.reservationUuid,
                 start: reservation.startDateTime,
                 end: reservation.endDateTime,
-                title: reservation.motive,
+                title: 'RESERVADO',//reservation.motive,
                 backgroundColor: 'rgba(241,0,117,.25)',
                 borderColor: '#f10075'
-              }
-
-              this.reservations.push(event);
-
+              });
             }
           }
         }
@@ -145,8 +168,6 @@ export class ReservationCalendarComponent implements OnInit {
         console.log(e);
       },
       complete: () => {
-        console.log("done");
-        this.calendarOptions.events = this.reservations;
         this.getAvailabilityByRoom();
       }
     })
@@ -169,44 +190,6 @@ export class ReservationCalendarComponent implements OnInit {
       complete: () => {
         console.log("done");
         this.calendarOptions.events = this.reservations;
-      }
-    })
-  }
-
-  getResevations(): void {
-
-    this.reservationService.getAll().subscribe({
-      next: (data) => {
-
-        console.log(data);
-
-        if (data !== null) {
-          if (data.availabilityPeriods.length >= 1) {
-
-            for (const reservation of data) {
-              var roomName = '';
-              console.log(JSON.stringify(reservation));
-
-              let calendarApi = this.calendarComponent.getApi();
-
-              calendarApi.addEvent({
-                id: reservation.reservationUuid,
-                start: reservation.startDateTime,
-                end: reservation.endDateTime,
-                title: reservation.motive,
-                backgroundColor: 'rgba(241,0,117,.25)',
-                borderColor: '#00cc44'
-              });
-            }
-          }
-        }
-      },
-      error: (e) => {
-        console.log(e);
-      },
-      complete: () => {
-        console.log("done");
-        this.getAvailabilityByRoom();
       }
     })
   }
@@ -237,9 +220,13 @@ export class ReservationCalendarComponent implements OnInit {
     // Handle the event here
     console.log('Selected room:', this.selectedRoom);
 
+    let calendarApi = this.calendarComponent.getApi();
+    calendarApi.removeAllEvents();
+
+    this.availability = [];
+
     if (this.selectedRoom !== null) {
       this.showCalendar = true;
-
       this.getResevationsByRoom();
       
     } else {
@@ -252,7 +239,8 @@ export class ReservationCalendarComponent implements OnInit {
     let calendarApi = this.calendarComponent.getApi();
     let startDate  = calendarApi.view.activeStart.toISOString();
     let endDate = calendarApi.view.activeEnd.toISOString();
-
+    this.availability = [];
+    
     availabilityPeriods.forEach((period: any) => {
       
       var periodStartDate = new Date(startDate);

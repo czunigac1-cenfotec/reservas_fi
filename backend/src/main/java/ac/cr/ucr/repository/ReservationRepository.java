@@ -17,7 +17,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
     List<Reservation> findByRoomUuid(UUID roomUuid);
 
 
-    @Query("SELECT r FROM Reservation r WHERE r.roomUuid = ?1 and r.startDateTime = ?2 and r.endDateTime = ?3")
+    //@Query("SELECT r FROM Reservation r WHERE r.roomUuid = ?1 and r.startDateTime = ?2 and r.endDateTime = ?3")
+    @Query("SELECT r FROM Reservation r WHERE r.roomUuid = ?1")
     List <Reservation> findByRoomUuidStartDateEndDate(UUID roomUuid, LocalDateTime startDate, LocalDateTime endDate);
 
 
