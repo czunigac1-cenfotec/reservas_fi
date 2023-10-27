@@ -15,6 +15,7 @@ import { RoomAvailability } from 'src/app/interfaces/room-availability.interface
 import { Room } from 'src/app/interfaces/room.interface';
 import { WeekdayEventsMap } from 'src/app/interfaces/weekday-events-map';
 import { WeekdayEvents } from 'src/app/interfaces/weekday-events';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-reserve-detail',
@@ -334,8 +335,7 @@ export class ReservationDetailComponent implements OnInit {
   }
 
   update(): void {
-    console.log('update');
-
+    
     this.reservationService.update(this.getReservationForUpdate(), this.reserveId).subscribe({
       next: (result) => {
         Swal.fire({
@@ -499,7 +499,7 @@ export class ReservationDetailComponent implements OnInit {
         timer: 1500
       })
 
-    }else if(beginDate.getTime() > endDate.getTime()){
+    }else if(this.isValidTimeRange(beginDate,endDate) ){
 
       isValid = false;
       Swal.fire({
@@ -685,17 +685,19 @@ export class ReservationDetailComponent implements OnInit {
     }
 
     if(this.validateGroupReservation()){
-      this.schedules.push(schedule);
 
-      dataTableRows.push([
-        schedule.dayInWeek,
-        schedule.startDateTime,
-        schedule.endDateTime
-      ]);
+      if(!this.isDateOverlapping(this.schedules)){
+        this.schedules.push(schedule);
 
-      this.scheduleDataTable.rows().add(dataTableRows);
+        dataTableRows.push([
+          schedule.dayInWeek,
+          schedule.startDateTime,
+          schedule.endDateTime
+        ]);
+
+        this.scheduleDataTable.rows().add(dataTableRows);
+      }
     }
-  
   }
 
   getReservationGroup(): void {
@@ -733,16 +735,45 @@ export class ReservationDetailComponent implements OnInit {
           if (!weekdayEventsMap[dayNumber]) {
             weekdayEventsMap[dayNumber] = [];
           }
+
+          debugger;
+
+          const currentDate = new Date(item.startDateTime);
+          const today = new Date();
+          const lastDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (6 - today.getDay()));
+          var lastDayOfInterval = new Date();
+
+          if(this.areDatesEqual(currentDate,new Date(item.endDateTime))){
+            lastDayOfInterval = lastDay;
+          }else{
+            lastDayOfInterval = item.endDateTime;
+          }
+
+          while (currentDate <= new Date(lastDayOfInterval)) {
+            
+            if (currentDate.getDay() === dayNumber) {	
+            
+              var startDateTime = currentDate.setHours(new Date(item.startDateTime).getHours(),new Date(item.startDateTime).getMinutes());
+              var endDateTime = currentDate.setHours(new Date(item.endDateTime).getHours(),new Date(item.endDateTime).getMinutes());
+
+              var startDateTimeFormatted : string = <string> new DatePipe('en-US').transform(startDateTime, 'yyyy-MM-ddTHH:mm:ss');
+              var endDateTimeFormatted : string = <string> new DatePipe('en-US').transform(endDateTime, 'yyyy-MM-ddTHH:mm:ss');
+
+              debugger;
+
+                const newItem: WeekdayEvents = {
+                startDateTime: startDateTimeFormatted,
+                endDateTime: endDateTimeFormatted,
+                motive: this.reservation.motive,
+                notes: this.reservation.notes,
+                roomUuid: this.reservation.roomUuid
+                };
   
-          const newItem: WeekdayEvents = {
-            startDateTime: item.startDateTime,
-            endDateTime: item.endDateTime,
-            motive: this.reservation.motive,
-            notes: this.reservation.notes,
-            roomUuid: this.reservation.roomUuid
-          };
-  
-          weekdayEventsMap[dayNumber].push(newItem);
+                weekdayEventsMap[dayNumber].push(newItem);
+            }
+
+            currentDate.setDate(currentDate.getDate() + 1);
+          }
         }
       });
     }
@@ -887,5 +918,55 @@ export class ReservationDetailComponent implements OnInit {
     }catch(exception){
       console.error(exception);
     }
+  }
+
+  areDatesEqual(date1: Date, date2: Date): boolean {
+    return (
+      date1.getDate() === date2.getDate() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getFullYear() === date2.getFullYear()
+    );
+  }
+
+  isDateOverlapping(dataTableRows:any): boolean {
+
+    var overlapsExistingReservation = false;
+
+    // Convert reservation start and end times to Date objects
+    const newReservationStart = new Date(this.getFormattedDate(this.reservation.beginDate) + "T" + this.getFormattedTime(this.reservation.startDateTime));
+    const newReservationEnd = new Date(this.getFormattedDate(this.reservation.endDate) + "T" + this.getFormattedTime(this.reservation.endDateTime));
+
+    // Iterate through the existing reservations and check for overlaps
+    for (let i = 0; i < dataTableRows.length; i++) {
+        const existingReservationStart = new Date(dataTableRows[i].startDateTime);
+        const existingReservationEnd = new Date(dataTableRows[i].endDateTime);
+
+        // Check for overlap
+        if (
+            (newReservationStart >= existingReservationStart && newReservationStart <= existingReservationEnd) ||
+            (newReservationEnd >= existingReservationStart && newReservationEnd <= existingReservationEnd) ||
+            (existingReservationStart >= newReservationStart && existingReservationStart <= newReservationEnd) ||
+            (existingReservationEnd >= newReservationStart && existingReservationEnd <= newReservationEnd)
+        ) {
+            overlapsExistingReservation = true;
+            break; // Exit the loop if an overlap is found
+        }
+    }
+
+    if (overlapsExistingReservation) {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'La reserva se superpone con una reserva existente.',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+
+    return overlapsExistingReservation;
+  }
+
+  isValidTimeRange(beginDate: Date, endDate: Date): boolean {
+    return beginDate <= endDate && beginDate.getHours() === endDate.getHours() && beginDate.getMinutes() === endDate.getMinutes();
   }
 }
