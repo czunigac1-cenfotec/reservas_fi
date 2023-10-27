@@ -500,7 +500,7 @@ export class ReservationDetailComponent implements OnInit {
         timer: 1500
       })
 
-    }else if(beginDate.getTime() > endDate.getTime()){
+    }else if(this.isValidTimeRange(beginDate,endDate) ){
 
       isValid = false;
       Swal.fire({
@@ -686,17 +686,19 @@ export class ReservationDetailComponent implements OnInit {
     }
 
     if(this.validateGroupReservation()){
-      this.schedules.push(schedule);
 
-      dataTableRows.push([
-        schedule.dayInWeek,
-        schedule.startDateTime,
-        schedule.endDateTime
-      ]);
+      if(!this.isDateOverlapping(this.schedules)){
+        this.schedules.push(schedule);
 
-      this.scheduleDataTable.rows().add(dataTableRows);
+        dataTableRows.push([
+          schedule.dayInWeek,
+          schedule.startDateTime,
+          schedule.endDateTime
+        ]);
+
+        this.scheduleDataTable.rows().add(dataTableRows);
+      }
     }
-  
   }
 
   getReservationGroup(): void {
@@ -741,7 +743,6 @@ export class ReservationDetailComponent implements OnInit {
           const today = new Date();
           const lastDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (6 - today.getDay()));
           var lastDayOfInterval = new Date();
-
 
           if(this.areDatesEqual(currentDate,new Date(item.endDateTime))){
             lastDayOfInterval = lastDay;
@@ -926,5 +927,47 @@ export class ReservationDetailComponent implements OnInit {
       date1.getMonth() === date2.getMonth() &&
       date1.getFullYear() === date2.getFullYear()
     );
+  }
+
+  isDateOverlapping(dataTableRows:any): boolean {
+
+    var overlapsExistingReservation = false;
+
+    // Convert reservation start and end times to Date objects
+    const newReservationStart = new Date(this.getFormattedDate(this.reservation.beginDate) + "T" + this.getFormattedTime(this.reservation.startDateTime));
+    const newReservationEnd = new Date(this.getFormattedDate(this.reservation.endDate) + "T" + this.getFormattedTime(this.reservation.endDateTime));
+
+    // Iterate through the existing reservations and check for overlaps
+    for (let i = 0; i < dataTableRows.length; i++) {
+        const existingReservationStart = new Date(dataTableRows[i].startDateTime);
+        const existingReservationEnd = new Date(dataTableRows[i].endDateTime);
+
+        // Check for overlap
+        if (
+            (newReservationStart >= existingReservationStart && newReservationStart <= existingReservationEnd) ||
+            (newReservationEnd >= existingReservationStart && newReservationEnd <= existingReservationEnd) ||
+            (existingReservationStart >= newReservationStart && existingReservationStart <= newReservationEnd) ||
+            (existingReservationEnd >= newReservationStart && existingReservationEnd <= newReservationEnd)
+        ) {
+            overlapsExistingReservation = true;
+            break; // Exit the loop if an overlap is found
+        }
+    }
+
+    if (overlapsExistingReservation) {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'La reserva se superpone con una reserva existente.',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+
+    return overlapsExistingReservation;
+  }
+
+  isValidTimeRange(beginDate: Date, endDate: Date): boolean {
+    return beginDate <= endDate && beginDate.getHours() === endDate.getHours() && beginDate.getMinutes() === endDate.getMinutes();
   }
 }
