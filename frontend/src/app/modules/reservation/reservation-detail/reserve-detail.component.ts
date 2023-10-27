@@ -335,8 +335,7 @@ export class ReservationDetailComponent implements OnInit {
   }
 
   update(): void {
-    console.log('update');
-
+    
     this.reservationService.update(this.getReservationForUpdate(), this.reserveId).subscribe({
       next: (result) => {
         Swal.fire({
