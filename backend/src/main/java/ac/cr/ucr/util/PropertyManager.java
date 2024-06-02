@@ -12,7 +12,7 @@ public class PropertyManager {
     public static String LDAP_PROP_SERVICE_USR = "ldap.service.user.dn";
     public static String LDAP_PROP_SERVICE_PASS = "ldap.service.user.password";
     public static String LDAP_PROP_USR_IDNT = "ldap.user.identifying-attribute";
-    public static String LDAP_PROP_USR_BASE = "ldap.user.base ";
+    public static String LDAP_PROP_USR_BASE = "ldap.user.base";
     public static String LDAP_PROP_CONF_ADDRESS = "ldap.config.address";
     public static String LDAP_PROP_CONF_ADDRESS_PREFIX = "ldap.config.address.prefix";
     public static String LDAP_PROP_CONF_PORT = "ldap.config.port";
