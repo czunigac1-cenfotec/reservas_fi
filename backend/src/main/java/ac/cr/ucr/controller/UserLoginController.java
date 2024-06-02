@@ -28,7 +28,7 @@ public class UserLoginController {
     
     private static String ldapServiceUser = "";
     private static String ldapServicePassword = "";
-    private static String ldapUserIdentifying = "uid";
+    private static String ldapUserIdentifying = "";
     private static String ldapUserBase = "";
     private static String ldapConfigAddress = "";
     private static String ldapConfigAddressPrefix = "";
@@ -63,7 +63,9 @@ public class UserLoginController {
                 SearchControls sc = new SearchControls();
                 sc.setReturningAttributes(attributeFilter);
                 sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
+
     
+                System.out.println("debug-> userLogin.getUserName()"  + " | " + userLogin.getUserName() );
                 System.out.println("debug-> userLogin.getUserName()"  + " | " + userLogin.getUserName() );
                     
                 // use a search filter to find only the user we want to authenticate
@@ -114,6 +116,13 @@ public class UserLoginController {
         ldapConfigAddressPrefix = PropertyManager.GetStringValue(PropertyManager.LDAP_PROP_FILE, PropertyManager.LDAP_PROP_CONF_ADDRESS_PREFIX);
         ldapConfigPort = PropertyManager.GetStringValue(PropertyManager.LDAP_PROP_FILE, PropertyManager.LDAP_PROP_CONF_PORT);
         ldapDevMode = PropertyManager.GetBooleanValue(PropertyManager.LDAP_PROP_FILE, PropertyManager.LDAP_PROP_DEV_MODE);
+
+        System.out.println("debug-> ldapServiceUser"  + " | " + ldapServiceUser );
+        System.out.println("debug-> ldapServicePassword"  + " | " + ldapServicePassword );            
+        System.out.println("debug-> ldapUserIdentifying"  + " | " + ldapUserIdentifying );
+        System.out.println("debug-> ldapConfigAddress"  + " | " + ldapConfigAddress );
+        System.out.println("debug-> ldapConfigAddressPrefix"  + " | " + ldapConfigAddressPrefix );
+        System.out.println("debug-> ldapConfigPort"  + " | " + ldapConfigPort );
 
         ldapUrl = ldapConfigAddressPrefix + ldapConfigAddress + ":" + ldapConfigPort;
     }
