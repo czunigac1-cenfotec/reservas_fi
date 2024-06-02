@@ -28,7 +28,7 @@ public class UserLoginController {
     
     private static String ldapServiceUser = "";
     private static String ldapServicePassword = "";
-    private static String ldapUserIdentifying = "";
+    private static String ldapUserIdentifying = "uid";
     private static String ldapUserBase = "";
     private static String ldapConfigAddress = "";
     private static String ldapConfigAddressPrefix = "";
