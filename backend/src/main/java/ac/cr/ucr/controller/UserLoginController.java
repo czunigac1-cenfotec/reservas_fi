@@ -66,13 +66,15 @@ public class UserLoginController {
 
     
                 System.out.println("debug-> userLogin.getUserName()"  + " | " + userLogin.getUserName() );
-                System.out.println("debug-> userLogin.getUserName()"  + " | " + userLogin.getUserName() );
-                    
+                
                 // use a search filter to find only the user we want to authenticate
                 String searchFilter = "(" + ldapUserIdentifying + "=" + userLogin.getUserName() + ")";
+               
+                System.out.println("debug-> searchFilter"  + " | " + searchFilter );
+                    
                 NamingEnumeration<SearchResult> results = serviceCtx.search(ldapUserBase, searchFilter, sc);
                 
-                System.out.println("debug-> searchFilter"  + " | " + searchFilter );
+                System.out.println("debug->  after results ");
 
                 if (results.hasMore()) {
                     
