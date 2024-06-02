@@ -64,15 +64,21 @@ public class UserLoginController {
                 sc.setReturningAttributes(attributeFilter);
                 sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
     
+                System.out.println("debug-> userLogin.getUserName()"  + " | " + userLogin.getUserName() );
+                    
                 // use a search filter to find only the user we want to authenticate
                 String searchFilter = "(" + ldapUserIdentifying + "=" + userLogin.getUserName() + ")";
                 NamingEnumeration<SearchResult> results = serviceCtx.search(ldapUserBase, searchFilter, sc);
                 
+                System.out.println("debug-> searchFilter"  + " | " + searchFilter );
+
                 if (results.hasMore()) {
                     
                     // get the users DN (distinguishedName) from the result
                     SearchResult result = results.next();
                     String distinguishedName = result.getNameInNamespace();
+
+                    System.out.println("debug-> distinguishedName"  + " | " + distinguishedName );
                     
                     // attempt another authentication, now with the user
                     Properties authEnv = new Properties();
