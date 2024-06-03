@@ -81,27 +81,6 @@ export class LoginComponent implements OnInit {
         );
   }
 
-  /*For test purpose*/
-  loginTest(): void {
-      this.authService.login({ userName: this.loginForm.userName, 
-                               password: this.loginForm.password, 
-                               rememberMe: this.loginForm.rememberMe})
-      .subscribe({
-        next: (data) => {
-          console.log(data);
-        },
-        error: (e) => {
-          console.log(e);
-          //should be in the next block
-          this.getUserInfo(this.loginForm.userName,this.loginForm.rememberMe);
-        },
-        complete: () => {
-          console.log("done");
-          this.navigate();
-        }
-      })
-  }
-
   getUserInfo(email: string, rememberMe: boolean) {
 
     this.userService.getAll()
@@ -110,7 +89,7 @@ export class LoginComponent implements OnInit {
         console.log(data);
         debugger;
         data.forEach((user: any) => {
-          if(user.email===email){
+          if(user.email.text.contains(email)){
 
             this.$localStorage.store('authenticationtoken','91C95003-ECDF-4B9B-8B9C-5AC072FA6F52');
             this.userRole = user.unidadAcademica;
