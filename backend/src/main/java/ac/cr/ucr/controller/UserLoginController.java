@@ -63,27 +63,18 @@ public class UserLoginController {
                 SearchControls sc = new SearchControls();
                 sc.setReturningAttributes(attributeFilter);
                 sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
-
-                System.out.println("debug-> userLogin.getUserName()"  + " | " + userLogin.getUserName() );
                 
                 // use a search filter to find only the user we want to authenticate
                 String searchFilter = "(" + ldapUserIdentifying + "=" + userLogin.getUserName() + ")";
                
-                System.out.println("debug-> searchFilter"  + " | " + searchFilter );
-                System.out.println("debug-> ldapUserBase"  + " | " + ldapUserBase );
-                    
                 NamingEnumeration<SearchResult> results = serviceCtx.search(ldapUserBase, searchFilter, sc);
-                
-                System.out.println("debug->  after results ");
-
+            
                 if (results.hasMore()) {
                     
                     // get the users DN (distinguishedName) from the result
                     SearchResult result = results.next();
                     String distinguishedName = result.getNameInNamespace();
 
-                    System.out.println("debug-> distinguishedName"  + " | " + distinguishedName );
-                    
                     // attempt another authentication, now with the user
                     Properties authEnv = new Properties();
                     authEnv.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
@@ -119,16 +110,6 @@ public class UserLoginController {
         ldapConfigPort = PropertyManager.GetStringValue(PropertyManager.LDAP_PROP_FILE, PropertyManager.LDAP_PROP_CONF_PORT);
         ldapDevMode = PropertyManager.GetBooleanValue(PropertyManager.LDAP_PROP_FILE, PropertyManager.LDAP_PROP_DEV_MODE);
 
-        System.out.println("debug-> ldapServiceUser"  + " | " + ldapServiceUser );
-        System.out.println("debug-> ldapServicePassword"  + " | " + ldapServicePassword );            
-        System.out.println("debug-> ldapUserIdentifying"  + " | " + ldapUserIdentifying );            
-        System.out.println("debug-> ldapUserBase"  + " | " + ldapUserBase );
-        System.out.println("debug-> ldapConfigAddress"  + " | " + ldapConfigAddress );
-        System.out.println("debug-> ldapConfigAddressPrefix"  + " | " + ldapConfigAddressPrefix );
-        System.out.println("debug-> ldapConfigPort"  + " | " + ldapConfigPort );
-
         ldapUrl = ldapConfigAddressPrefix + ldapConfigAddress + ":" + ldapConfigPort;
-
-        System.out.println("debug-> ldapUrl"  + " | " + ldapUrl );
     }
 }
