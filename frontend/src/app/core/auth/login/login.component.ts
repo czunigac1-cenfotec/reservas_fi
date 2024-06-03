@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
         console.log(data);
         debugger;
         data.forEach((user: any) => {
-          if( user.email.text.contains(email)){
+          if( user.email.includes(email)){
 
             console.log("in user: " + email);
             //TODO: Use Jtoken
