@@ -90,6 +90,8 @@ export class LoginComponent implements OnInit {
         debugger;
         data.forEach((user: any) => {
           if( user.email.text.contains(email)){
+
+            console.log("in user: " + email);
             //TODO: Use Jtoken
             this.$localStorage.store('authenticationtoken','91C95003-ECDF-4B9B-8B9C-5AC072FA6F52');
             this.userRole = user.unidadAcademica;
@@ -101,6 +103,7 @@ export class LoginComponent implements OnInit {
             }
             
             this.authenticated = true;
+            this.navigate();
           }
         });
       },
@@ -109,7 +112,6 @@ export class LoginComponent implements OnInit {
       },
       complete: () => {
         console.log("done");
-        this.navigate();
       }
     })
   }
